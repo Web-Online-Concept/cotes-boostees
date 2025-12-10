@@ -57,9 +57,9 @@ export default function Header({ currentPage }) {
     { name: "S'abonner", path: '/abonnement', key: 'abonnement', emoji: '🚀', isAnchor: false },
   ];
 
-  // Ajouter Gestion si on est authentifié (visible seulement en admin)
+  // Ajouter Gestion si on est authentifié (visible seulement en admin) - À LA FIN
   if (currentPage === 'admin') {
-    navItems.splice(3, 0, { name: 'Gestion', path: '/admin', key: 'admin', emoji: '⚙️', isAnchor: false });
+    navItems.push({ name: 'Gestion', path: '/admin', key: 'admin', emoji: '⚙️', isAnchor: false });
   }
 
   return (
