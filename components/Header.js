@@ -5,10 +5,10 @@ export default function Header({ currentPage }) {
   const router = useRouter();
   
   const navItems = [
-    { name: 'Accueil', path: '/', key: 'home', emoji: '🏠' },
+    { name: 'Fonctionnement', path: '/#fonctionnement', key: 'home', emoji: '🎯' },
     { name: 'Résultats', path: '/resultats', key: 'resultats', emoji: '📊' },
     { name: 'Statistiques', path: '/stats', key: 'stats', emoji: '📈' },
-    { name: 'Abonnement', path: '/abonnement', key: 'abonnement', emoji: '🚀' },
+    { name: "S'abonner", path: '/abonnement', key: 'abonnement', emoji: '🚀' },
   ];
 
   // Ajouter Gestion si on est authentifié (visible seulement en admin)

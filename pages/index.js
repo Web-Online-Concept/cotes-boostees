@@ -22,6 +22,9 @@ export default function HomePage() {
         </video>
       </div>
 
+      {/* Ancre pour le lien Fonctionnement */}
+      <div id="fonctionnement"></div>
+
       {/* Contenu principal */}
       <div className="max-w-7xl mx-auto px-4 py-8 flex-1">
         <div className="space-y-8">
