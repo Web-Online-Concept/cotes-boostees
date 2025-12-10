@@ -17,9 +17,36 @@ export default function HomePage() {
           
           {/* Hero Section */}
           <div className="bg-gradient-to-r from-indigo-600 to-blue-500 rounded-xl shadow-2xl p-8 text-white text-center">
-            <h2 className="text-4xl font-bold mb-4">Ne jouez QUE les Cotes Boostees a VALEUR</h2>
+            <h2 className="text-4xl font-bold mb-4">Gagnez avec les meilleures Cotes Boostees ARJEL</h2>
             <p className="text-2xl mb-6">- CANAL & GROUPE PRIVES TELEGRAM -</p>
             <p className="text-xl opacity-90">Maximisez vos gains en ne pariant que sur les vraies opportunites ! 🚀</p>
+          </div>
+
+          {/* Avantages en cards */}
+          <div className="grid md:grid-cols-3 gap-6">
+            <div className="bg-white rounded-xl shadow-lg p-6 border-t-4 border-indigo-600">
+              <div className="text-4xl mb-4">🎯</div>
+              <h3 className="text-xl font-bold text-gray-900 mb-3">Selection Expert</h3>
+              <p className="text-gray-700">
+                Ne perdez plus de temps a analyser toutes les cotes boostees. Nous faisons le tri pour vous et ne gardons que les meilleures.
+              </p>
+            </div>
+
+            <div className="bg-white rounded-xl shadow-lg p-6 border-t-4 border-green-600">
+              <div className="text-4xl mb-4">📈</div>
+              <h3 className="text-xl font-bold text-gray-900 mb-3">Transparence Absolue</h3>
+              <p className="text-gray-700">
+                Tous nos resultats sont publics. ROI, taux de reussite, evolution mensuelle : suivez nos performances en temps reel.
+              </p>
+            </div>
+
+            <div className="bg-white rounded-xl shadow-lg p-6 border-t-4 border-blue-600">
+              <div className="text-4xl mb-4">💎</div>
+              <h3 className="text-xl font-bold text-gray-900 mb-3">Que de la Valeur</h3>
+              <p className="text-gray-700">
+                Zero perte de temps avec des cotes sans interet. Chaque notification = une vraie opportunite de gain.
+              </p>
+            </div>
           </div>
 
           {/* Presentation principale */}
@@ -72,33 +99,6 @@ export default function HomePage() {
             </div>
           </div>
 
-          {/* Avantages en cards */}
-          <div className="grid md:grid-cols-3 gap-6">
-            <div className="bg-white rounded-xl shadow-lg p-6 border-t-4 border-indigo-600">
-              <div className="text-4xl mb-4">🎯</div>
-              <h3 className="text-xl font-bold text-gray-900 mb-3">Selection Expert</h3>
-              <p className="text-gray-700">
-                Ne perdez plus de temps a analyser toutes les cotes boostees. Nous faisons le tri pour vous et ne gardons que les meilleures.
-              </p>
-            </div>
-
-            <div className="bg-white rounded-xl shadow-lg p-6 border-t-4 border-green-600">
-              <div className="text-4xl mb-4">📈</div>
-              <h3 className="text-xl font-bold text-gray-900 mb-3">Transparence Absolue</h3>
-              <p className="text-gray-700">
-                Tous nos resultats sont publics. ROI, taux de reussite, evolution mensuelle : suivez nos performances en temps reel.
-              </p>
-            </div>
-
-            <div className="bg-white rounded-xl shadow-lg p-6 border-t-4 border-blue-600">
-              <div className="text-4xl mb-4">💎</div>
-              <h3 className="text-xl font-bold text-gray-900 mb-3">Que de la Valeur</h3>
-              <p className="text-gray-700">
-                Zero perte de temps avec des cotes sans interet. Chaque notification = une vraie opportunite de gain.
-              </p>
-            </div>
-          </div>
-
           {/* Explication valeur */}
           <div className="bg-gradient-to-r from-purple-500 to-pink-500 rounded-xl shadow-2xl p-8 text-white">
             <h3 className="text-3xl font-bold mb-4 text-center">Pourquoi la VALEUR est essentielle ?</h3>
@@ -144,7 +144,7 @@ export default function HomePage() {
                 <div>
                   <h4 className="text-lg font-semibold text-gray-900 mb-2">Recevez vos acces Telegram</h4>
                   <p className="text-gray-700">
-                    Apres validation de votre paiement, nous vous envoyons un mail avec les liens d'acces au canal et groupe prive CB 2025.
+                    Apres validation de votre paiement, nous vous envoyons un mail avec les liens d'acces au canal et groupe prive CB 2026.
                   </p>
                 </div>
               </div>
@@ -185,7 +185,7 @@ export default function HomePage() {
               onClick={() => router.push('/abonnement')}
               className="bg-white text-green-600 px-8 py-4 rounded-lg text-xl font-bold hover:bg-gray-100 transition transform hover:scale-105"
             >
-              S'abonner aux Cotes Boostees 2025 🚀
+              S'abonner aux Cotes Boostees 2026 🚀
             </button>
           </div>
         </div>
