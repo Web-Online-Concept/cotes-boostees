@@ -88,6 +88,18 @@ export default function HomePage() {
             </div>
           </div>
 
+          {/* Offre speciale */}
+          <div className="bg-gradient-to-r from-yellow-400 to-orange-500 rounded-xl shadow-2xl p-8 text-center">
+            <div className="bg-white bg-opacity-20 rounded-lg p-6 inline-block mb-6">
+              <p className="text-white text-lg mb-2">Abonnement annuel</p>
+              <p className="text-white text-6xl font-bold">100€</p>
+              <p className="text-white text-xl mt-2">Acces illimite pendant 1 an</p>
+            </div>
+            <p className="text-white text-2xl font-semibold">
+              Soit moins de 8.5€ par mois pour des opportunites quotidiennes !
+            </p>
+          </div>
+
           {/* Comment ca marche */}
           <div className="bg-white rounded-xl shadow-lg p-8">
             <h3 className="text-2xl font-bold text-gray-900 mb-6 text-center">Comment ca marche ?</h3>
@@ -98,9 +110,9 @@ export default function HomePage() {
                   1
                 </div>
                 <div>
-                  <h4 className="text-lg font-semibold text-gray-900 mb-2">Abonnez-vous au groupe Telegram</h4>
+                  <h4 className="text-lg font-semibold text-gray-900 mb-2">Abonnez-vous a notre service</h4>
                   <p className="text-gray-700">
-                    Rejoignez notre communaute privee et accedez a toutes les cotes boostees selectionnees par nos experts.
+                    <strong className="text-indigo-600 text-xl">100€ par an</strong> - Un investissement minimal pour des gains optimises toute l'annee. Rendez-vous sur la page d'abonnement pour effectuer votre paiement securise.
                   </p>
                 </div>
               </div>
@@ -110,9 +122,9 @@ export default function HomePage() {
                   2
                 </div>
                 <div>
-                  <h4 className="text-lg font-semibold text-gray-900 mb-2">Recevez les notifications en temps reel</h4>
+                  <h4 className="text-lg font-semibold text-gray-900 mb-2">Confirmation et integration immediate</h4>
                   <p className="text-gray-700">
-                    Chaque cote boostee est postee instantanement avec toutes les informations : bookmaker, evenement, cote, mise recommandee.
+                    Une fois votre paiement effectue, nous vous envoyons un mail de confirmation avec les liens d'acces a notre canal et groupe de discussions Telegram pour les CB 2025.
                   </p>
                 </div>
               </div>
@@ -122,9 +134,9 @@ export default function HomePage() {
                   3
                 </div>
                 <div>
-                  <h4 className="text-lg font-semibold text-gray-900 mb-2">Placez vos paris en quelques clics</h4>
+                  <h4 className="text-lg font-semibold text-gray-900 mb-2">Recevez et placez vos paris</h4>
                   <p className="text-gray-700">
-                    Suivez les cotes boostees proposees. Chaque prono est identifie par un numero unique (CB 001, CB 002...) pour un suivi precis.
+                    Suivez les cotes boostees proposees en temps reel sur Telegram. Chaque prono est identifie par un numero unique (CB 001, CB 002...) pour un suivi precis.
                   </p>
                 </div>
               </div>
@@ -136,25 +148,19 @@ export default function HomePage() {
                 <div>
                   <h4 className="text-lg font-semibold text-gray-900 mb-2">Consultez les resultats et statistiques</h4>
                   <p className="text-gray-700">
-                    Tous les resultats sont publics et mis a jour en temps reel. Suivez notre ROI, nos performances par bookmaker et notre evolution.
+                    Tous les resultats sont publics et mis a jour en temps reel sur ce site. Suivez notre ROI, nos performances par bookmaker et notre evolution mensuelle.
                   </p>
                 </div>
               </div>
             </div>
           </div>
 
-          {/* CTA Final */}
+          {/* CTA Final simplifie */}
           <div className="bg-gradient-to-r from-green-500 to-emerald-600 rounded-xl shadow-2xl p-8 text-white text-center">
-            <h3 className="text-3xl font-bold mb-4">Pret a transformer vos paris en succes ?</h3>
+            <h3 className="text-3xl font-bold mb-4">Pret a rejoindre la communaute ?</h3>
             <p className="text-xl mb-6">
-              Rejoignez-nous des maintenant et decouvrez comment optimiser vos gains avec les meilleures cotes boostees ARJEL !
+              Decouvrez nos performances en consultant nos resultats et statistiques publics, puis abonnez-vous pour recevoir toutes les cotes boostees en temps reel !
             </p>
-            <button 
-              onClick={() => window.location.href = '/paiement'}
-              className="bg-white text-green-600 px-8 py-4 rounded-lg text-xl font-bold hover:bg-gray-100 transition transform hover:scale-105"
-            >
-              Rejoindre le groupe Telegram 🚀
-            </button>
           </div>
         </div>
       </div>
