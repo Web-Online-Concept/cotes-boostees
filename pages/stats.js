@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import Header from '../components/Header';
-import Navigation from '../components/Navigation';
 import Footer from '../components/Footer';
 
 export default function StatsPage() {
@@ -165,8 +164,7 @@ export default function StatsPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex flex-col">
-      <Header />
-      <Navigation currentPage="stats" />
+      <Header currentPage="stats" />
 
       <div className="max-w-7xl mx-auto px-4 py-8 flex-1">
         <h2 className="text-3xl font-bold text-gray-900 mb-6">Statistiques</h2>
@@ -180,7 +178,7 @@ export default function StatsPage() {
               <div className="text-2xl font-bold text-indigo-600 text-center">{totalPronos}</div>
             </div>
             <div className="bg-white rounded-lg shadow p-4">
-              <div className="text-sm text-gray-600 mb-1 text-center">Gagnes</div>
+              <div className="text-sm text-gray-600 mb-1 text-center">Gagnés</div>
               <div className="text-2xl font-bold text-green-600 text-center">{pronosGagnes}</div>
             </div>
             <div className="bg-white rounded-lg shadow p-4">
@@ -188,11 +186,11 @@ export default function StatsPage() {
               <div className="text-2xl font-bold text-red-600 text-center">{pronosPerdus}</div>
             </div>
             <div className="bg-white rounded-lg shadow p-4">
-              <div className="text-sm text-gray-600 mb-1 text-center">Rembourses</div>
+              <div className="text-sm text-gray-600 mb-1 text-center">Remboursés</div>
               <div className="text-2xl font-bold text-blue-600 text-center">{pronosRembourses}</div>
             </div>
             <div className="bg-white rounded-lg shadow p-4">
-              <div className="text-sm text-gray-600 mb-1 text-center">Taux de Reussite</div>
+              <div className="text-sm text-gray-600 mb-1 text-center">Taux de Réussite</div>
               <div className="text-2xl font-bold text-indigo-600 text-center">{tauxReussite.toFixed(2)}%</div>
             </div>
             <div className="bg-white rounded-lg shadow p-4">
@@ -216,7 +214,7 @@ export default function StatsPage() {
 
         {/* Evolution Mensuelle */}
         <div className="mb-8">
-          <h3 className="text-xl font-semibold text-gray-900 mb-4">Evolution Mensuelle</h3>
+          <h3 className="text-xl font-semibold text-gray-900 mb-4">Évolution Mensuelle</h3>
           <div className="bg-white rounded-lg shadow overflow-hidden">
             <div className="overflow-x-auto">
               <table className="w-full">
@@ -224,9 +222,9 @@ export default function StatsPage() {
                   <tr>
                     <th className="px-4 py-3 text-left text-xs font-medium text-gray-600 uppercase">Mois</th>
                     <th className="px-4 py-3 text-center text-xs font-medium text-gray-600 uppercase">Total</th>
-                    <th className="px-4 py-3 text-center text-xs font-medium text-gray-600 uppercase">Gagnes</th>
+                    <th className="px-4 py-3 text-center text-xs font-medium text-gray-600 uppercase">Gagnés</th>
                     <th className="px-4 py-3 text-center text-xs font-medium text-gray-600 uppercase">Perdus</th>
-                    <th className="px-4 py-3 text-center text-xs font-medium text-gray-600 uppercase">Rembourses</th>
+                    <th className="px-4 py-3 text-center text-xs font-medium text-gray-600 uppercase">Remboursés</th>
                     <th className="px-4 py-3 text-center text-xs font-medium text-gray-600 uppercase">Taux</th>
                     <th className="px-4 py-3 text-right text-xs font-medium text-gray-600 uppercase">Mise</th>
                     <th className="px-4 py-3 text-right text-xs font-medium text-gray-600 uppercase">Gain Net</th>
@@ -237,7 +235,7 @@ export default function StatsPage() {
                   {monthlyStats.length === 0 ? (
                     <tr>
                       <td colSpan="9" className="px-4 py-8 text-center text-gray-500">
-                        Aucune donnee disponible
+                        Aucune donnée disponible
                       </td>
                     </tr>
                   ) : (
@@ -283,9 +281,9 @@ export default function StatsPage() {
                   <tr>
                     <th className="px-4 py-3 text-left text-xs font-medium text-gray-600 uppercase">Bookmaker</th>
                     <th className="px-4 py-3 text-center text-xs font-medium text-gray-600 uppercase">Total</th>
-                    <th className="px-4 py-3 text-center text-xs font-medium text-gray-600 uppercase">Gagnes</th>
+                    <th className="px-4 py-3 text-center text-xs font-medium text-gray-600 uppercase">Gagnés</th>
                     <th className="px-4 py-3 text-center text-xs font-medium text-gray-600 uppercase">Perdus</th>
-                    <th className="px-4 py-3 text-center text-xs font-medium text-gray-600 uppercase">Rembourses</th>
+                    <th className="px-4 py-3 text-center text-xs font-medium text-gray-600 uppercase">Remboursés</th>
                     <th className="px-4 py-3 text-center text-xs font-medium text-gray-600 uppercase">Taux</th>
                     <th className="px-4 py-3 text-right text-xs font-medium text-gray-600 uppercase">Mise</th>
                     <th className="px-4 py-3 text-right text-xs font-medium text-gray-600 uppercase">Gain Net</th>
@@ -296,7 +294,7 @@ export default function StatsPage() {
                   {bookmakerStats.length === 0 ? (
                     <tr>
                       <td colSpan="9" className="px-4 py-8 text-center text-gray-500">
-                        Aucune donnee disponible
+                        Aucune donnée disponible
                       </td>
                     </tr>
                   ) : (
@@ -334,7 +332,7 @@ export default function StatsPage() {
 
         {/* Evolution Mensuelle par Bookmaker */}
         <div className="mb-8">
-          <h3 className="text-xl font-semibold text-gray-900 mb-4">Evolution Mensuelle par Bookmaker</h3>
+          <h3 className="text-xl font-semibold text-gray-900 mb-4">Évolution Mensuelle par Bookmaker</h3>
           <div className="bg-white rounded-lg shadow overflow-hidden">
             <div className="overflow-x-auto">
               <table className="w-full">
@@ -343,9 +341,9 @@ export default function StatsPage() {
                     <th className="px-4 py-3 text-left text-xs font-medium text-gray-600 uppercase">Mois</th>
                     <th className="px-4 py-3 text-left text-xs font-medium text-gray-600 uppercase">Bookmaker</th>
                     <th className="px-4 py-3 text-center text-xs font-medium text-gray-600 uppercase">Total</th>
-                    <th className="px-4 py-3 text-center text-xs font-medium text-gray-600 uppercase">Gagnes</th>
+                    <th className="px-4 py-3 text-center text-xs font-medium text-gray-600 uppercase">Gagnés</th>
                     <th className="px-4 py-3 text-center text-xs font-medium text-gray-600 uppercase">Perdus</th>
-                    <th className="px-4 py-3 text-center text-xs font-medium text-gray-600 uppercase">Rembourses</th>
+                    <th className="px-4 py-3 text-center text-xs font-medium text-gray-600 uppercase">Remboursés</th>
                     <th className="px-4 py-3 text-center text-xs font-medium text-gray-600 uppercase">Taux</th>
                     <th className="px-4 py-3 text-right text-xs font-medium text-gray-600 uppercase">Mise</th>
                     <th className="px-4 py-3 text-right text-xs font-medium text-gray-600 uppercase">Gain Net</th>
@@ -356,7 +354,7 @@ export default function StatsPage() {
                   {monthlyBookmakerStats.length === 0 ? (
                     <tr>
                       <td colSpan="10" className="px-4 py-8 text-center text-gray-500">
-                        Aucune donnee disponible
+                        Aucune donnée disponible
                       </td>
                     </tr>
                   ) : (

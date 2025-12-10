@@ -1,6 +1,5 @@
 import { useRouter } from 'next/router';
 import Header from '../components/Header';
-import Navigation from '../components/Navigation';
 import Footer from '../components/Footer';
 
 export default function HomePage() {
@@ -8,11 +7,10 @@ export default function HomePage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex flex-col">
-      <Header />
-      <Navigation currentPage="home" />
+      <Header currentPage="home" />
 
-      {/* Video Background Fullscreen (hauteur écran - header - nav) */}
-      <div className="relative w-full overflow-hidden" style={{ height: 'calc(100vh - 140px)' }}>
+      {/* Video Background Fullscreen (hauteur écran - header) */}
+      <div className="relative w-full overflow-hidden" style={{ height: 'calc(100vh - 110px)' }}>
         <video
           autoPlay
           loop

@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Search, X } from 'lucide-react';
 import Header from '../components/Header';
-import Navigation from '../components/Navigation';
 import Footer from '../components/Footer';
 
 export default function ResultatsPage() {
@@ -65,11 +64,10 @@ export default function ResultatsPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex flex-col">
-      <Header />
-      <Navigation currentPage="resultats" />
+      <Header currentPage="resultats" />
 
       <div className="max-w-7xl mx-auto px-4 py-8 flex-1">
-        <h2 className="text-3xl font-bold text-gray-900 mb-6">Resultats des CB</h2>
+        <h2 className="text-3xl font-bold text-gray-900 mb-6">Résultats des CB</h2>
 
         {/* Filtres */}
         <div className="bg-white rounded-lg shadow-lg p-6 mb-6">
@@ -78,7 +76,7 @@ export default function ResultatsPage() {
               <Search className="absolute left-3 top-3 w-5 h-5 text-gray-400" />
               <input
                 type="text"
-                placeholder="Rechercher par N CB..."
+                placeholder="Rechercher par N° CB..."
                 value={searchTerm}
                 onChange={(e) => {
                   setSearchTerm(e.target.value);
@@ -108,7 +106,7 @@ export default function ResultatsPage() {
               }}
               className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none"
             >
-              <option value="">Tous les resultats</option>
+              <option value="">Tous les résultats</option>
               {statuts.map(st => (
                 <option key={st} value={st}>{st}</option>
               ))}
@@ -118,7 +116,7 @@ export default function ResultatsPage() {
               className="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-300 transition flex items-center justify-center gap-2"
             >
               <X className="w-4 h-4" />
-              Reinitialiser
+              Réinitialiser
             </button>
           </div>
         </div>
@@ -129,12 +127,12 @@ export default function ResultatsPage() {
             <table className="w-full">
               <thead className="bg-indigo-50 border-b">
                 <tr>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-600 uppercase">N CB</th>
+                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-600 uppercase">N° CB</th>
                   <th className="px-4 py-3 text-left text-xs font-medium text-gray-600 uppercase">Date</th>
                   <th className="px-4 py-3 text-left text-xs font-medium text-gray-600 uppercase">Bookmaker</th>
                   <th className="px-4 py-3 text-right text-xs font-medium text-gray-600 uppercase">Mise</th>
                   <th className="px-4 py-3 text-right text-xs font-medium text-gray-600 uppercase">Cote</th>
-                  <th className="px-4 py-3 text-center text-xs font-medium text-gray-600 uppercase">Resultat</th>
+                  <th className="px-4 py-3 text-center text-xs font-medium text-gray-600 uppercase">Résultat</th>
                   <th className="px-4 py-3 text-right text-xs font-medium text-gray-600 uppercase">Gain</th>
                 </tr>
               </thead>
@@ -142,7 +140,7 @@ export default function ResultatsPage() {
                 {paginatedPronos.length === 0 ? (
                   <tr>
                     <td colSpan="7" className="px-4 py-8 text-center text-gray-500">
-                      Aucun resultat ne correspond a vos criteres.
+                      Aucun résultat ne correspond à vos critères.
                     </td>
                   </tr>
                 ) : (
@@ -198,7 +196,7 @@ export default function ResultatsPage() {
           {totalPages > 1 && (
             <div className="bg-gray-50 px-4 py-3 flex items-center justify-between border-t">
               <div className="text-sm text-gray-700">
-                Affichage de {startIndex + 1} a {Math.min(startIndex + itemsPerPage, sortedPronos.length)} sur {sortedPronos.length} resultats
+                Affichage de {startIndex + 1} à {Math.min(startIndex + itemsPerPage, sortedPronos.length)} sur {sortedPronos.length} résultats
               </div>
               <div className="flex gap-2">
                 <button
@@ -206,7 +204,7 @@ export default function ResultatsPage() {
                   disabled={currentPage === 1}
                   className="px-3 py-1 bg-white border border-gray-300 rounded hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  Precedent
+                  Précédent
                 </button>
                 <div className="flex items-center gap-2">
                   {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (

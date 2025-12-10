@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { Plus, Edit2, Trash2, LogOut } from 'lucide-react';
 import { useRouter } from 'next/router';
 import Header from '../components/Header';
-import Navigation from '../components/Navigation';
 import Footer from '../components/Footer';
 
 export default function AdminPage() {
@@ -203,8 +202,7 @@ export default function AdminPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex flex-col">
-      <Header />
-      <Navigation currentPage="admin" />
+      <Header currentPage="admin" />
 
       <div className="max-w-7xl mx-auto px-4 py-8 flex-1">
         <div className="flex justify-between items-center mb-6">
@@ -222,7 +220,7 @@ export default function AdminPage() {
               className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 flex items-center gap-2 transition"
             >
               <LogOut className="w-4 h-4" />
-              Deconnexion
+              Déconnexion
             </button>
           </div>
         </div>
@@ -235,7 +233,7 @@ export default function AdminPage() {
             </h3>
             <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Numero CB</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Numéro CB</label>
                 <input
                   type="text"
                   value={formData.cb_number}
@@ -285,7 +283,7 @@ export default function AdminPage() {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Resultat</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Résultat</label>
                 <select
                   value={formData.statut}
                   onChange={(e) => setFormData({...formData, statut: e.target.value})}
@@ -320,12 +318,12 @@ export default function AdminPage() {
             <table className="w-full">
               <thead className="bg-indigo-50 border-b">
                 <tr>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-600 uppercase">N CB</th>
+                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-600 uppercase">N° CB</th>
                   <th className="px-4 py-3 text-left text-xs font-medium text-gray-600 uppercase">Date</th>
                   <th className="px-4 py-3 text-left text-xs font-medium text-gray-600 uppercase">Bookmaker</th>
                   <th className="px-4 py-3 text-right text-xs font-medium text-gray-600 uppercase">Mise</th>
                   <th className="px-4 py-3 text-right text-xs font-medium text-gray-600 uppercase">Cote</th>
-                  <th className="px-4 py-3 text-center text-xs font-medium text-gray-600 uppercase">Resultat</th>
+                  <th className="px-4 py-3 text-center text-xs font-medium text-gray-600 uppercase">Résultat</th>
                   <th className="px-4 py-3 text-right text-xs font-medium text-gray-600 uppercase">Actions</th>
                 </tr>
               </thead>
@@ -333,7 +331,7 @@ export default function AdminPage() {
                 {pronos.length === 0 ? (
                   <tr>
                     <td colSpan="7" className="px-4 py-8 text-center text-gray-500">
-                      Aucun prono enregistre. Cliquez sur "Ajouter un prono" pour commencer.
+                      Aucun prono enregistré. Cliquez sur "Ajouter un prono" pour commencer.
                     </td>
                   </tr>
                 ) : (
