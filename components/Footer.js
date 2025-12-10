@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Lock, X } from 'lucide-react';
 import { useRouter } from 'next/router';
+import Link from 'next/link';
 
 export default function Footer() {
   const [showLoginModal, setShowLoginModal] = useState(false);
@@ -34,15 +35,31 @@ export default function Footer() {
     <>
       <footer className="bg-white border-t mt-12">
         <div className="max-w-7xl mx-auto px-4 py-6">
-          <div className="text-center text-gray-600 text-sm">
-            <p>&copy; {new Date().getFullYear()} Cotes-Boostees.com - Tous droits reserves</p>
-            <p className="mt-2">Suivi professionnel des cotes boostees</p>
-            <button
-              onClick={() => setShowLoginModal(true)}
-              className="mt-3 text-gray-400 hover:text-gray-600 text-xs transition"
-            >
-              Admin
-            </button>
+          <div className="text-center space-y-3">
+            <p className="text-gray-600 text-sm">&copy; 2026 Cotes-Boostées.com - Tous droits réservés</p>
+            <p className="text-gray-500 text-sm">Suivi professionnel des cotes boostées</p>
+            
+            {/* Liens légaux */}
+            <div className="flex items-center justify-center gap-4 text-xs text-gray-400">
+              <Link href="/cgv" className="hover:text-gray-600 transition">
+                CGV
+              </Link>
+              <span>•</span>
+              <Link href="/mentions-legales" className="hover:text-gray-600 transition">
+                Mentions légales
+              </Link>
+              <span>•</span>
+              <Link href="/politique-confidentialite" className="hover:text-gray-600 transition">
+                Confidentialité
+              </Link>
+              <span>•</span>
+              <button
+                onClick={() => setShowLoginModal(true)}
+                className="hover:text-gray-600 transition"
+              >
+                Admin
+              </button>
+            </div>
           </div>
         </div>
       </footer>
