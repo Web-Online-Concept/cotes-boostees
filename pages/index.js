@@ -11,6 +11,19 @@ export default function HomePage() {
       <Header />
       <Navigation currentPage="home" />
 
+      {/* Video Background Fullscreen */}
+      <div className="relative w-full h-screen overflow-hidden">
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="absolute top-0 left-0 w-full h-full object-cover"
+        >
+          <source src="/videos/video_accueil_cb.mp4" type="video/mp4" />
+        </video>
+      </div>
+
       {/* Contenu principal */}
       <div className="max-w-7xl mx-auto px-4 py-8 flex-1">
         <div className="space-y-8">
