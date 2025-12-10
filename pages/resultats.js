@@ -135,7 +135,7 @@ export default function ResultatsPage() {
                   <th className="px-4 py-3 text-right text-xs font-medium text-gray-600 uppercase">Mise</th>
                   <th className="px-4 py-3 text-right text-xs font-medium text-gray-600 uppercase">Cote</th>
                   <th className="px-4 py-3 text-center text-xs font-medium text-gray-600 uppercase">Resultat</th>
-                  <th className="px-4 py-3 text-right text-xs font-medium text-gray-600 uppercase">Gain Potentiel</th>
+                  <th className="px-4 py-3 text-right text-xs font-medium text-gray-600 uppercase">Gain</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-200">
@@ -147,11 +147,19 @@ export default function ResultatsPage() {
                   </tr>
                 ) : (
                   paginatedPronos.map(prono => {
-                    const gainPotentiel = prono.statut === 'Gagne' 
-                      ? (parseFloat(prono.mise) * parseFloat(prono.cote)).toFixed(2)
-                      : prono.statut === 'Rembourse'
-                      ? parseFloat(prono.mise).toFixed(2)
-                      : '0.00';
+                    let gain = 0;
+                    let gainDisplay = '';
+                    
+                    if (prono.statut === 'Gagne') {
+                      gain = (parseFloat(prono.mise) * parseFloat(prono.cote)) - parseFloat(prono.mise);
+                      gainDisplay = `+${gain.toFixed(2)} €`;
+                    } else if (prono.statut === 'Perdu') {
+                      gain = -parseFloat(prono.mise);
+                      gainDisplay = `${gain.toFixed(2)} €`;
+                    } else if (prono.statut === 'Rembourse') {
+                      gain = 0;
+                      gainDisplay = '0.00 €';
+                    }
 
                     return (
                       <tr key={prono.id} className="hover:bg-gray-50">
@@ -172,11 +180,11 @@ export default function ResultatsPage() {
                           </span>
                         </td>
                         <td className={`px-4 py-3 text-sm text-right font-semibold ${
-                          prono.statut === 'Gagne' ? 'text-green-600' :
-                          prono.statut === 'Perdu' ? 'text-red-600' :
-                          'text-blue-600'
+                          gain > 0 ? 'text-green-600' :
+                          gain < 0 ? 'text-red-600' :
+                          'text-gray-600'
                         }`}>
-                          {gainPotentiel} €
+                          {gainDisplay}
                         </td>
                       </tr>
                     );

@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { TrendingUp } from 'lucide-react';
 import Header from '../components/Header';
 import Navigation from '../components/Navigation';
 import Footer from '../components/Footer';
@@ -23,161 +22,138 @@ export default function StatsPage() {
     setLoading(false);
   };
 
-  const calculateStats = () => {
-    const stats = {
-      total: pronos.length,
-      enCours: 0,
-      gagnes: 0,
-      perdus: 0,
-      rembourses: 0,
-      miseTotal: 0,
-      gainTotal: 0,
-      gainNet: 0,
-      roi: 0,
-      tauxReussite: 0
-    };
+  // Calculs globaux
+  const totalPronos = pronos.length;
+  const pronosGagnes = pronos.filter(p => p.statut === 'Gagne').length;
+  const pronosPerdus = pronos.filter(p => p.statut === 'Perdu').length;
+  const pronosRembourses = pronos.filter(p => p.statut === 'Rembourse').length;
+  
+  const miseTotal = pronos.reduce((sum, p) => sum + parseFloat(p.mise), 0);
+  
+  const gainsTotal = pronos.reduce((sum, p) => {
+    if (p.statut === 'Gagne') {
+      return sum + (parseFloat(p.mise) * parseFloat(p.cote));
+    }
+    if (p.statut === 'Rembourse') {
+      return sum + parseFloat(p.mise);
+    }
+    return sum;
+  }, 0);
+  
+  const gainNet = gainsTotal - miseTotal;
+  const roi = miseTotal > 0 ? ((gainNet / miseTotal) * 100) : 0;
+  const tauxReussite = (pronosGagnes + pronosPerdus) > 0 
+    ? ((pronosGagnes / (pronosGagnes + pronosPerdus)) * 100) 
+    : 0;
 
-    pronos.forEach(p => {
-      stats.miseTotal += parseFloat(p.mise);
-      
-      if (p.statut === 'En cours') stats.enCours++;
-      else if (p.statut === 'Gagné') {
-        stats.gagnes++;
-        stats.gainTotal += parseFloat(p.mise) * parseFloat(p.cote);
-      } else if (p.statut === 'Perdu') {
-        stats.perdus++;
-      } else if (p.statut === 'Remboursé') {
-        stats.rembourses++;
-        stats.gainTotal += parseFloat(p.mise);
-      }
-    });
-
-    stats.gainNet = stats.gainTotal - stats.miseTotal;
-    stats.roi = stats.miseTotal > 0 ? ((stats.gainNet / stats.miseTotal) * 100).toFixed(2) : 0;
-    const termines = stats.gagnes + stats.perdus;
-    stats.tauxReussite = termines > 0 ? ((stats.gagnes / termines) * 100).toFixed(1) : 0;
-
-    return stats;
-  };
-
-  const getStatsByMonth = () => {
-    const byMonth = {};
+  // Evolution mensuelle
+  const pronosByMonth = pronos.reduce((acc, p) => {
+    const date = new Date(p.date);
+    const monthKey = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
     
-    pronos.forEach(p => {
-      const date = new Date(p.date);
-      const monthKey = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
-      
-      if (!byMonth[monthKey]) {
-        byMonth[monthKey] = {
-          miseTotal: 0,
-          gainTotal: 0,
-          gagnes: 0,
-          perdus: 0
-        };
-      }
-      
-      const month = byMonth[monthKey];
-      month.miseTotal += parseFloat(p.mise);
-      
-      if (p.statut === 'Gagné') {
-        month.gagnes++;
-        month.gainTotal += parseFloat(p.mise) * parseFloat(p.cote);
-      } else if (p.statut === 'Perdu') {
-        month.perdus++;
-      } else if (p.statut === 'Remboursé') {
-        month.gainTotal += parseFloat(p.mise);
-      }
-    });
-
-    Object.keys(byMonth).forEach(key => {
-      const month = byMonth[key];
-      month.gainNet = month.gainTotal - month.miseTotal;
-    });
-
-    return byMonth;
-  };
-
-  const getStatsByBookmaker = () => {
-    const byBookmaker = {};
+    if (!acc[monthKey]) {
+      acc[monthKey] = {
+        month: monthKey,
+        total: 0,
+        gagnes: 0,
+        perdus: 0,
+        rembourses: 0,
+        miseTotal: 0,
+        gainsTotal: 0
+      };
+    }
     
-    pronos.forEach(p => {
-      if (!byBookmaker[p.bookmaker]) {
-        byBookmaker[p.bookmaker] = {
-          total: 0,
-          gagnes: 0,
-          perdus: 0,
-          miseTotal: 0,
-          gainTotal: 0
-        };
-      }
-      
-      const bk = byBookmaker[p.bookmaker];
-      bk.total++;
-      bk.miseTotal += parseFloat(p.mise);
-      
-      if (p.statut === 'Gagné') {
-        bk.gagnes++;
-        bk.gainTotal += parseFloat(p.mise) * parseFloat(p.cote);
-      } else if (p.statut === 'Perdu') {
-        bk.perdus++;
-      } else if (p.statut === 'Remboursé') {
-        bk.gainTotal += parseFloat(p.mise);
-      }
-    });
-
-    Object.keys(byBookmaker).forEach(key => {
-      const bk = byBookmaker[key];
-      bk.gainNet = bk.gainTotal - bk.miseTotal;
-      bk.roi = bk.miseTotal > 0 ? ((bk.gainNet / bk.miseTotal) * 100).toFixed(2) : 0;
-    });
-
-    return byBookmaker;
-  };
-
-  const getStatsByMonthAndBookmaker = () => {
-    const byMonthBk = {};
+    acc[monthKey].total++;
+    acc[monthKey].miseTotal += parseFloat(p.mise);
     
-    pronos.forEach(p => {
-      const date = new Date(p.date);
-      const monthKey = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
-      const key = `${monthKey}|${p.bookmaker}`;
-      
-      if (!byMonthBk[key]) {
-        byMonthBk[key] = {
-          month: monthKey,
-          bookmaker: p.bookmaker,
-          miseTotal: 0,
-          gainTotal: 0,
-          gagnes: 0,
-          perdus: 0
-        };
-      }
-      
-      const stat = byMonthBk[key];
-      stat.miseTotal += parseFloat(p.mise);
-      
-      if (p.statut === 'Gagné') {
-        stat.gagnes++;
-        stat.gainTotal += parseFloat(p.mise) * parseFloat(p.cote);
-      } else if (p.statut === 'Perdu') {
-        stat.perdus++;
-      } else if (p.statut === 'Remboursé') {
-        stat.gainTotal += parseFloat(p.mise);
-      }
+    if (p.statut === 'Gagne') {
+      acc[monthKey].gagnes++;
+      acc[monthKey].gainsTotal += parseFloat(p.mise) * parseFloat(p.cote);
+    } else if (p.statut === 'Perdu') {
+      acc[monthKey].perdus++;
+    } else if (p.statut === 'Rembourse') {
+      acc[monthKey].rembourses++;
+      acc[monthKey].gainsTotal += parseFloat(p.mise);
+    }
+    
+    return acc;
+  }, {});
+
+  const monthlyStats = Object.values(pronosByMonth).sort((a, b) => b.month.localeCompare(a.month));
+
+  // Bilan par bookmaker
+  const pronosByBookmaker = pronos.reduce((acc, p) => {
+    if (!acc[p.bookmaker]) {
+      acc[p.bookmaker] = {
+        bookmaker: p.bookmaker,
+        total: 0,
+        gagnes: 0,
+        perdus: 0,
+        rembourses: 0,
+        miseTotal: 0,
+        gainsTotal: 0
+      };
+    }
+    
+    acc[p.bookmaker].total++;
+    acc[p.bookmaker].miseTotal += parseFloat(p.mise);
+    
+    if (p.statut === 'Gagne') {
+      acc[p.bookmaker].gagnes++;
+      acc[p.bookmaker].gainsTotal += parseFloat(p.mise) * parseFloat(p.cote);
+    } else if (p.statut === 'Perdu') {
+      acc[p.bookmaker].perdus++;
+    } else if (p.statut === 'Rembourse') {
+      acc[p.bookmaker].rembourses++;
+      acc[p.bookmaker].gainsTotal += parseFloat(p.mise);
+    }
+    
+    return acc;
+  }, {});
+
+  const bookmakerStats = Object.values(pronosByBookmaker).sort((a, b) => b.total - a.total);
+
+  // Evolution mensuelle par bookmaker
+  const monthlyByBookmaker = pronos.reduce((acc, p) => {
+    const date = new Date(p.date);
+    const monthKey = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
+    const key = `${monthKey}_${p.bookmaker}`;
+    
+    if (!acc[key]) {
+      acc[key] = {
+        month: monthKey,
+        bookmaker: p.bookmaker,
+        total: 0,
+        gagnes: 0,
+        perdus: 0,
+        rembourses: 0,
+        miseTotal: 0,
+        gainsTotal: 0
+      };
+    }
+    
+    acc[key].total++;
+    acc[key].miseTotal += parseFloat(p.mise);
+    
+    if (p.statut === 'Gagne') {
+      acc[key].gagnes++;
+      acc[key].gainsTotal += parseFloat(p.mise) * parseFloat(p.cote);
+    } else if (p.statut === 'Perdu') {
+      acc[key].perdus++;
+    } else if (p.statut === 'Rembourse') {
+      acc[key].rembourses++;
+      acc[key].gainsTotal += parseFloat(p.mise);
+    }
+    
+    return acc;
+  }, {});
+
+  const monthlyBookmakerStats = Object.values(monthlyByBookmaker)
+    .sort((a, b) => {
+      const dateCompare = b.month.localeCompare(a.month);
+      if (dateCompare !== 0) return dateCompare;
+      return a.bookmaker.localeCompare(b.bookmaker);
     });
-
-    Object.keys(byMonthBk).forEach(key => {
-      const stat = byMonthBk[key];
-      stat.gainNet = stat.gainTotal - stat.miseTotal;
-    });
-
-    return Object.values(byMonthBk).sort((a, b) => b.month.localeCompare(a.month));
-  };
-
-  const stats = calculateStats();
-  const statsByMonth = getStatsByMonth();
-  const statsByBookmaker = getStatsByBookmaker();
-  const statsByMonthBk = getStatsByMonthAndBookmaker();
 
   if (loading) {
     return (
@@ -193,184 +169,233 @@ export default function StatsPage() {
       <Navigation currentPage="stats" />
 
       <div className="max-w-7xl mx-auto px-4 py-8 flex-1">
-        <div className="space-y-6">
-          {/* Bilan Global */}
-          <div className="bg-white rounded-lg shadow-lg p-6">
-            <h2 className="text-2xl font-bold mb-4 flex items-center gap-2">
-              <TrendingUp className="w-6 h-6 text-indigo-600" />
-              Bilan Global
-            </h2>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              <div className="p-4 bg-blue-50 rounded-lg border border-blue-200">
-                <div className="text-sm text-gray-600">Total pronos</div>
-                <div className="text-2xl font-bold text-gray-900">{stats.total}</div>
+        <h2 className="text-3xl font-bold text-gray-900 mb-6">Statistiques</h2>
+
+        {/* Bilan Global */}
+        <div className="mb-8">
+          <h3 className="text-xl font-semibold text-gray-900 mb-4">Bilan Global</h3>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div className="bg-white rounded-lg shadow p-4">
+              <div className="text-sm text-gray-600 mb-1">Total Pronos</div>
+              <div className="text-2xl font-bold text-indigo-600">{totalPronos}</div>
+            </div>
+            <div className="bg-white rounded-lg shadow p-4">
+              <div className="text-sm text-gray-600 mb-1">Gagnes</div>
+              <div className="text-2xl font-bold text-green-600">{pronosGagnes}</div>
+            </div>
+            <div className="bg-white rounded-lg shadow p-4">
+              <div className="text-sm text-gray-600 mb-1">Perdus</div>
+              <div className="text-2xl font-bold text-red-600">{pronosPerdus}</div>
+            </div>
+            <div className="bg-white rounded-lg shadow p-4">
+              <div className="text-sm text-gray-600 mb-1">Rembourses</div>
+              <div className="text-2xl font-bold text-blue-600">{pronosRembourses}</div>
+            </div>
+            <div className="bg-white rounded-lg shadow p-4">
+              <div className="text-sm text-gray-600 mb-1">Taux de Reussite</div>
+              <div className="text-2xl font-bold text-indigo-600">{tauxReussite.toFixed(2)}%</div>
+            </div>
+            <div className="bg-white rounded-lg shadow p-4">
+              <div className="text-sm text-gray-600 mb-1">Mise Totale</div>
+              <div className="text-2xl font-bold text-gray-900">{miseTotal.toFixed(2)} €</div>
+            </div>
+            <div className="bg-white rounded-lg shadow p-4">
+              <div className="text-sm text-gray-600 mb-1">Gains Totaux</div>
+              <div className="text-2xl font-bold text-green-600">{gainsTotal.toFixed(2)} €</div>
+            </div>
+            <div className="bg-white rounded-lg shadow p-4">
+              <div className="text-sm text-gray-600 mb-1">Gain Net</div>
+              <div className={`text-2xl font-bold ${gainNet >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+                {gainNet >= 0 ? '+' : ''}{gainNet.toFixed(2)} €
               </div>
-              <div className="p-4 bg-green-50 rounded-lg border border-green-200">
-                <div className="text-sm text-gray-600">Gagnés</div>
-                <div className="text-2xl font-bold text-green-600">{stats.gagnes}</div>
-              </div>
-              <div className="p-4 bg-red-50 rounded-lg border border-red-200">
-                <div className="text-sm text-gray-600">Perdus</div>
-                <div className="text-2xl font-bold text-red-600">{stats.perdus}</div>
-              </div>
-              <div className="p-4 bg-gray-50 rounded-lg border border-gray-200">
-                <div className="text-sm text-gray-600">Taux de réussite</div>
-                <div className="text-2xl font-bold text-gray-900">{stats.tauxReussite}%</div>
-              </div>
-              <div className="p-4 bg-purple-50 rounded-lg border border-purple-200">
-                <div className="text-sm text-gray-600">Mise totale</div>
-                <div className="text-2xl font-bold text-gray-900">{stats.miseTotal.toFixed(2)}€</div>
-              </div>
-              <div className="p-4 bg-yellow-50 rounded-lg border border-yellow-200">
-                <div className="text-sm text-gray-600">Gains totaux</div>
-                <div className="text-2xl font-bold text-gray-900">{stats.gainTotal.toFixed(2)}€</div>
-              </div>
-              <div className={`p-4 rounded-lg border ${stats.gainNet >= 0 ? 'bg-green-50 border-green-200' : 'bg-red-50 border-red-200'}`}>
-                <div className="text-sm text-gray-600">Gain net</div>
-                <div className={`text-2xl font-bold ${stats.gainNet >= 0 ? 'text-green-600' : 'text-red-600'}`}>
-                  {stats.gainNet >= 0 ? '+' : ''}{stats.gainNet.toFixed(2)}€
-                </div>
-              </div>
-              <div className={`p-4 rounded-lg border ${stats.roi >= 0 ? 'bg-green-50 border-green-200' : 'bg-red-50 border-red-200'}`}>
-                <div className="text-sm text-gray-600">ROI</div>
-                <div className={`text-2xl font-bold ${stats.roi >= 0 ? 'text-green-600' : 'text-red-600'}`}>
-                  {stats.roi >= 0 ? '+' : ''}{stats.roi}%
-                </div>
+            </div>
+            <div className="bg-white rounded-lg shadow p-4">
+              <div className="text-sm text-gray-600 mb-1">ROI</div>
+              <div className={`text-2xl font-bold ${roi >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+                {roi >= 0 ? '+' : ''}{roi.toFixed(2)}%
               </div>
             </div>
           </div>
+        </div>
 
-          {/* Évolution Mensuelle Globale */}
-          <div className="bg-white rounded-lg shadow-lg p-6">
-            <h2 className="text-xl font-semibold mb-4">Évolution Mensuelle</h2>
+        {/* Evolution Mensuelle */}
+        <div className="mb-8">
+          <h3 className="text-xl font-semibold text-gray-900 mb-4">Evolution Mensuelle</h3>
+          <div className="bg-white rounded-lg shadow overflow-hidden">
             <div className="overflow-x-auto">
               <table className="w-full">
-                <thead className="bg-gray-50 border-b">
+                <thead className="bg-indigo-50 border-b">
                   <tr>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Mois</th>
-                    <th className="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase">G/P</th>
-                    <th className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase">Mise</th>
-                    <th className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase">Gains</th>
-                    <th className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase">Net</th>
+                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-600 uppercase">Mois</th>
+                    <th className="px-4 py-3 text-center text-xs font-medium text-gray-600 uppercase">Total</th>
+                    <th className="px-4 py-3 text-center text-xs font-medium text-gray-600 uppercase">Gagnes</th>
+                    <th className="px-4 py-3 text-center text-xs font-medium text-gray-600 uppercase">Perdus</th>
+                    <th className="px-4 py-3 text-center text-xs font-medium text-gray-600 uppercase">Rembourses</th>
+                    <th className="px-4 py-3 text-center text-xs font-medium text-gray-600 uppercase">Taux</th>
+                    <th className="px-4 py-3 text-right text-xs font-medium text-gray-600 uppercase">Mise</th>
+                    <th className="px-4 py-3 text-right text-xs font-medium text-gray-600 uppercase">Gains</th>
+                    <th className="px-4 py-3 text-right text-xs font-medium text-gray-600 uppercase">Gain Net</th>
+                    <th className="px-4 py-3 text-right text-xs font-medium text-gray-600 uppercase">ROI</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-200">
-                  {Object.keys(statsByMonth).length === 0 ? (
+                  {monthlyStats.length === 0 ? (
                     <tr>
-                      <td colSpan="5" className="px-4 py-8 text-center text-gray-500">
-                        Aucune statistique disponible
+                      <td colSpan="10" className="px-4 py-8 text-center text-gray-500">
+                        Aucune donnee disponible
                       </td>
                     </tr>
                   ) : (
-                    Object.entries(statsByMonth)
-                      .sort((a, b) => b[0].localeCompare(a[0]))
-                      .map(([month, data]) => (
-                        <tr key={month}>
-                          <td className="px-4 py-3 text-sm font-medium text-gray-900">
-                            {new Date(month + '-01').toLocaleDateString('fr-FR', { year: 'numeric', month: 'long' })}
+                    monthlyStats.map(stat => {
+                      const gainNet = stat.gainsTotal - stat.miseTotal;
+                      const roi = stat.miseTotal > 0 ? ((gainNet / stat.miseTotal) * 100) : 0;
+                      const taux = (stat.gagnes + stat.perdus) > 0 
+                        ? ((stat.gagnes / (stat.gagnes + stat.perdus)) * 100) 
+                        : 0;
+                      
+                      return (
+                        <tr key={stat.month} className="hover:bg-gray-50">
+                          <td className="px-4 py-3 text-sm font-medium text-gray-900">{stat.month}</td>
+                          <td className="px-4 py-3 text-sm text-center text-gray-900">{stat.total}</td>
+                          <td className="px-4 py-3 text-sm text-center text-green-600">{stat.gagnes}</td>
+                          <td className="px-4 py-3 text-sm text-center text-red-600">{stat.perdus}</td>
+                          <td className="px-4 py-3 text-sm text-center text-blue-600">{stat.rembourses}</td>
+                          <td className="px-4 py-3 text-sm text-center text-gray-900">{taux.toFixed(1)}%</td>
+                          <td className="px-4 py-3 text-sm text-right text-gray-900">{stat.miseTotal.toFixed(2)} €</td>
+                          <td className="px-4 py-3 text-sm text-right text-green-600">{stat.gainsTotal.toFixed(2)} €</td>
+                          <td className={`px-4 py-3 text-sm text-right font-semibold ${gainNet >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+                            {gainNet >= 0 ? '+' : ''}{gainNet.toFixed(2)} €
                           </td>
-                          <td className="px-4 py-3 text-sm text-gray-900 text-center">
-                            <span className="text-green-600">{data.gagnes}</span> / <span className="text-red-600">{data.perdus}</span>
-                          </td>
-                          <td className="px-4 py-3 text-sm text-gray-900 text-right">{data.miseTotal.toFixed(2)}€</td>
-                          <td className="px-4 py-3 text-sm text-gray-900 text-right">{data.gainTotal.toFixed(2)}€</td>
-                          <td className={`px-4 py-3 text-sm font-medium text-right ${data.gainNet >= 0 ? 'text-green-600' : 'text-red-600'}`}>
-                            {data.gainNet >= 0 ? '+' : ''}{data.gainNet.toFixed(2)}€
+                          <td className={`px-4 py-3 text-sm text-right font-semibold ${roi >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+                            {roi >= 0 ? '+' : ''}{roi.toFixed(2)}%
                           </td>
                         </tr>
-                      ))
+                      );
+                    })
                   )}
                 </tbody>
               </table>
             </div>
           </div>
+        </div>
 
-          {/* Bilan par Bookmaker */}
-          <div className="bg-white rounded-lg shadow-lg p-6">
-            <h2 className="text-xl font-semibold mb-4">Bilan par Bookmaker</h2>
+        {/* Bilan par Bookmaker */}
+        <div className="mb-8">
+          <h3 className="text-xl font-semibold text-gray-900 mb-4">Bilan par Bookmaker</h3>
+          <div className="bg-white rounded-lg shadow overflow-hidden">
             <div className="overflow-x-auto">
               <table className="w-full">
-                <thead className="bg-gray-50 border-b">
+                <thead className="bg-indigo-50 border-b">
                   <tr>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Bookmaker</th>
-                    <th className="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase">Pronos</th>
-                    <th className="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase">G/P</th>
-                    <th className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase">Mise</th>
-                    <th className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase">Gains</th>
-                    <th className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase">Net</th>
-                    <th className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase">ROI</th>
+                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-600 uppercase">Bookmaker</th>
+                    <th className="px-4 py-3 text-center text-xs font-medium text-gray-600 uppercase">Total</th>
+                    <th className="px-4 py-3 text-center text-xs font-medium text-gray-600 uppercase">Gagnes</th>
+                    <th className="px-4 py-3 text-center text-xs font-medium text-gray-600 uppercase">Perdus</th>
+                    <th className="px-4 py-3 text-center text-xs font-medium text-gray-600 uppercase">Rembourses</th>
+                    <th className="px-4 py-3 text-center text-xs font-medium text-gray-600 uppercase">Taux</th>
+                    <th className="px-4 py-3 text-right text-xs font-medium text-gray-600 uppercase">Mise</th>
+                    <th className="px-4 py-3 text-right text-xs font-medium text-gray-600 uppercase">Gains</th>
+                    <th className="px-4 py-3 text-right text-xs font-medium text-gray-600 uppercase">Gain Net</th>
+                    <th className="px-4 py-3 text-right text-xs font-medium text-gray-600 uppercase">ROI</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-200">
-                  {Object.keys(statsByBookmaker).length === 0 ? (
+                  {bookmakerStats.length === 0 ? (
                     <tr>
-                      <td colSpan="7" className="px-4 py-8 text-center text-gray-500">
-                        Aucune statistique disponible
+                      <td colSpan="10" className="px-4 py-8 text-center text-gray-500">
+                        Aucune donnee disponible
                       </td>
                     </tr>
                   ) : (
-                    Object.entries(statsByBookmaker).map(([bookmaker, data]) => (
-                      <tr key={bookmaker}>
-                        <td className="px-4 py-3 text-sm font-medium text-gray-900">{bookmaker}</td>
-                        <td className="px-4 py-3 text-sm text-gray-900 text-center">{data.total}</td>
-                        <td className="px-4 py-3 text-sm text-gray-900 text-center">
-                          <span className="text-green-600">{data.gagnes}</span> / <span className="text-red-600">{data.perdus}</span>
-                        </td>
-                        <td className="px-4 py-3 text-sm text-gray-900 text-right">{data.miseTotal.toFixed(2)}€</td>
-                        <td className="px-4 py-3 text-sm text-gray-900 text-right">{data.gainTotal.toFixed(2)}€</td>
-                        <td className={`px-4 py-3 text-sm font-medium text-right ${data.gainNet >= 0 ? 'text-green-600' : 'text-red-600'}`}>
-                          {data.gainNet >= 0 ? '+' : ''}{data.gainNet.toFixed(2)}€
-                        </td>
-                        <td className={`px-4 py-3 text-sm font-medium text-right ${data.roi >= 0 ? 'text-green-600' : 'text-red-600'}`}>
-                          {data.roi >= 0 ? '+' : ''}{data.roi}%
-                        </td>
-                      </tr>
-                    ))
+                    bookmakerStats.map(stat => {
+                      const gainNet = stat.gainsTotal - stat.miseTotal;
+                      const roi = stat.miseTotal > 0 ? ((gainNet / stat.miseTotal) * 100) : 0;
+                      const taux = (stat.gagnes + stat.perdus) > 0 
+                        ? ((stat.gagnes / (stat.gagnes + stat.perdus)) * 100) 
+                        : 0;
+                      
+                      return (
+                        <tr key={stat.bookmaker} className="hover:bg-gray-50">
+                          <td className="px-4 py-3 text-sm font-medium text-gray-900">{stat.bookmaker}</td>
+                          <td className="px-4 py-3 text-sm text-center text-gray-900">{stat.total}</td>
+                          <td className="px-4 py-3 text-sm text-center text-green-600">{stat.gagnes}</td>
+                          <td className="px-4 py-3 text-sm text-center text-red-600">{stat.perdus}</td>
+                          <td className="px-4 py-3 text-sm text-center text-blue-600">{stat.rembourses}</td>
+                          <td className="px-4 py-3 text-sm text-center text-gray-900">{taux.toFixed(1)}%</td>
+                          <td className="px-4 py-3 text-sm text-right text-gray-900">{stat.miseTotal.toFixed(2)} €</td>
+                          <td className="px-4 py-3 text-sm text-right text-green-600">{stat.gainsTotal.toFixed(2)} €</td>
+                          <td className={`px-4 py-3 text-sm text-right font-semibold ${gainNet >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+                            {gainNet >= 0 ? '+' : ''}{gainNet.toFixed(2)} €
+                          </td>
+                          <td className={`px-4 py-3 text-sm text-right font-semibold ${roi >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+                            {roi >= 0 ? '+' : ''}{roi.toFixed(2)}%
+                          </td>
+                        </tr>
+                      );
+                    })
                   )}
                 </tbody>
               </table>
             </div>
           </div>
+        </div>
 
-          {/* Évolution Mensuelle par Bookmaker */}
-          <div className="bg-white rounded-lg shadow-lg p-6">
-            <h2 className="text-xl font-semibold mb-4">Évolution Mensuelle par Bookmaker</h2>
+        {/* Evolution Mensuelle par Bookmaker */}
+        <div className="mb-8">
+          <h3 className="text-xl font-semibold text-gray-900 mb-4">Evolution Mensuelle par Bookmaker</h3>
+          <div className="bg-white rounded-lg shadow overflow-hidden">
             <div className="overflow-x-auto">
               <table className="w-full">
-                <thead className="bg-gray-50 border-b">
+                <thead className="bg-indigo-50 border-b">
                   <tr>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Mois</th>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Bookmaker</th>
-                    <th className="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase">G/P</th>
-                    <th className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase">Mise</th>
-                    <th className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase">Gains</th>
-                    <th className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase">Net</th>
+                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-600 uppercase">Mois</th>
+                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-600 uppercase">Bookmaker</th>
+                    <th className="px-4 py-3 text-center text-xs font-medium text-gray-600 uppercase">Total</th>
+                    <th className="px-4 py-3 text-center text-xs font-medium text-gray-600 uppercase">Gagnes</th>
+                    <th className="px-4 py-3 text-center text-xs font-medium text-gray-600 uppercase">Perdus</th>
+                    <th className="px-4 py-3 text-center text-xs font-medium text-gray-600 uppercase">Rembourses</th>
+                    <th className="px-4 py-3 text-center text-xs font-medium text-gray-600 uppercase">Taux</th>
+                    <th className="px-4 py-3 text-right text-xs font-medium text-gray-600 uppercase">Mise</th>
+                    <th className="px-4 py-3 text-right text-xs font-medium text-gray-600 uppercase">Gains</th>
+                    <th className="px-4 py-3 text-right text-xs font-medium text-gray-600 uppercase">Gain Net</th>
+                    <th className="px-4 py-3 text-right text-xs font-medium text-gray-600 uppercase">ROI</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-200">
-                  {statsByMonthBk.length === 0 ? (
+                  {monthlyBookmakerStats.length === 0 ? (
                     <tr>
-                      <td colSpan="6" className="px-4 py-8 text-center text-gray-500">
-                        Aucune statistique disponible
+                      <td colSpan="11" className="px-4 py-8 text-center text-gray-500">
+                        Aucune donnee disponible
                       </td>
                     </tr>
                   ) : (
-                    statsByMonthBk.map((stat, idx) => (
-                      <tr key={idx}>
-                        <td className="px-4 py-3 text-sm font-medium text-gray-900">
-                          {new Date(stat.month + '-01').toLocaleDateString('fr-FR', { year: 'numeric', month: 'long' })}
-                        </td>
-                        <td className="px-4 py-3 text-sm text-gray-900">{stat.bookmaker}</td>
-                        <td className="px-4 py-3 text-sm text-gray-900 text-center">
-                          <span className="text-green-600">{stat.gagnes}</span> / <span className="text-red-600">{stat.perdus}</span>
-                        </td>
-                        <td className="px-4 py-3 text-sm text-gray-900 text-right">{stat.miseTotal.toFixed(2)}€</td>
-                        <td className="px-4 py-3 text-sm text-gray-900 text-right">{stat.gainTotal.toFixed(2)}€</td>
-                        <td className={`px-4 py-3 text-sm font-medium text-right ${stat.gainNet >= 0 ? 'text-green-600' : 'text-red-600'}`}>
-                          {stat.gainNet >= 0 ? '+' : ''}{stat.gainNet.toFixed(2)}€
-                        </td>
-                      </tr>
-                    ))
+                    monthlyBookmakerStats.map(stat => {
+                      const gainNet = stat.gainsTotal - stat.miseTotal;
+                      const roi = stat.miseTotal > 0 ? ((gainNet / stat.miseTotal) * 100) : 0;
+                      const taux = (stat.gagnes + stat.perdus) > 0 
+                        ? ((stat.gagnes / (stat.gagnes + stat.perdus)) * 100) 
+                        : 0;
+                      
+                      return (
+                        <tr key={`${stat.month}_${stat.bookmaker}`} className="hover:bg-gray-50">
+                          <td className="px-4 py-3 text-sm text-gray-900">{stat.month}</td>
+                          <td className="px-4 py-3 text-sm font-medium text-gray-900">{stat.bookmaker}</td>
+                          <td className="px-4 py-3 text-sm text-center text-gray-900">{stat.total}</td>
+                          <td className="px-4 py-3 text-sm text-center text-green-600">{stat.gagnes}</td>
+                          <td className="px-4 py-3 text-sm text-center text-red-600">{stat.perdus}</td>
+                          <td className="px-4 py-3 text-sm text-center text-blue-600">{stat.rembourses}</td>
+                          <td className="px-4 py-3 text-sm text-center text-gray-900">{taux.toFixed(1)}%</td>
+                          <td className="px-4 py-3 text-sm text-right text-gray-900">{stat.miseTotal.toFixed(2)} €</td>
+                          <td className="px-4 py-3 text-sm text-right text-green-600">{stat.gainsTotal.toFixed(2)} €</td>
+                          <td className={`px-4 py-3 text-sm text-right font-semibold ${gainNet >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+                            {gainNet >= 0 ? '+' : ''}{gainNet.toFixed(2)} €
+                          </td>
+                          <td className={`px-4 py-3 text-sm text-right font-semibold ${roi >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+                            {roi >= 0 ? '+' : ''}{roi.toFixed(2)}%
+                          </td>
+                        </tr>
+                      );
+                    })
                   )}
                 </tbody>
               </table>
