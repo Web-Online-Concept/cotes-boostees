@@ -1,6 +1,9 @@
 import { useState, useEffect } from 'react';
-import { Home, BarChart3, Lock, Plus, Edit2, Trash2, LogOut } from 'lucide-react';
+import { Plus, Edit2, Trash2 } from 'lucide-react';
 import { useRouter } from 'next/router';
+import Header from '../components/Header';
+import Navigation from '../components/Navigation';
+import Footer from '../components/Footer';
 
 export default function AdminPage() {
   const [pronos, setPronos] = useState([]);
@@ -52,16 +55,6 @@ export default function AdminPage() {
     }
   };
 
-  const handleLogout = async () => {
-    try {
-      await fetch('/api/auth', { method: 'DELETE' });
-      setIsAuthenticated(false);
-      router.push('/');
-    } catch (error) {
-      console.error('Erreur logout:', error);
-    }
-  };
-
   const handleSubmit = async () => {
     if (!formData.cb_number || !formData.date || !formData.bookmaker || !formData.event || !formData.mise || !formData.cote) {
       alert('Veuillez remplir tous les champs');
@@ -70,7 +63,6 @@ export default function AdminPage() {
 
     try {
       if (editingId) {
-        // Mise à jour
         const res = await fetch('/api/pronos', {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
@@ -87,7 +79,6 @@ export default function AdminPage() {
           alert(data.message || 'Erreur lors de la modification');
         }
       } else {
-        // Création
         const res = await fetch('/api/pronos', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -173,62 +164,11 @@ export default function AdminPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
-      {/* Header */}
-      <header className="bg-white shadow-md border-b">
-        <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
-          <div>
-            <h1 className="text-3xl font-bold text-indigo-600">Cotes-Boostées.com</h1>
-            <p className="text-sm text-gray-600">Suivi intelligent de vos pronos</p>
-          </div>
-          <button
-            onClick={handleLogout}
-            className="flex items-center gap-2 bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition"
-          >
-            <LogOut className="w-4 h-4" />
-            Déconnexion
-          </button>
-        </div>
-      </header>
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex flex-col">
+      <Header />
+      <Navigation currentPage="admin" />
 
-      {/* Navigation */}
-      <nav className="bg-white border-b shadow-sm">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="flex space-x-8">
-            <button
-              onClick={() => router.push('/')}
-              className="py-4 px-2 border-b-2 border-transparent text-gray-500 hover:text-gray-700 font-medium text-sm flex items-center gap-2"
-            >
-              <Home className="w-4 h-4" />
-              Accueil
-            </button>
-            <button
-              onClick={() => router.push('/resultats')}
-              className="py-4 px-2 border-b-2 border-transparent text-gray-500 hover:text-gray-700 font-medium text-sm flex items-center gap-2"
-            >
-              <BarChart3 className="w-4 h-4" />
-              Résultats
-            </button>
-            <button
-              onClick={() => router.push('/stats')}
-              className="py-4 px-2 border-b-2 border-transparent text-gray-500 hover:text-gray-700 font-medium text-sm flex items-center gap-2"
-            >
-              <BarChart3 className="w-4 h-4" />
-              Statistiques
-            </button>
-            <button
-              onClick={() => router.push('/admin')}
-              className="py-4 px-2 border-b-2 border-indigo-500 text-indigo-600 font-medium text-sm flex items-center gap-2"
-            >
-              <Lock className="w-4 h-4" />
-              Gestion
-            </button>
-          </div>
-        </div>
-      </nav>
-
-      {/* Contenu */}
-      <div className="max-w-7xl mx-auto px-4 py-8">
+      <div className="max-w-7xl mx-auto px-4 py-8 flex-1">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-2xl font-bold text-gray-900">Gestion des Pronos</h2>
           <button
@@ -406,6 +346,8 @@ export default function AdminPage() {
           </div>
         </div>
       </div>
+
+      <Footer />
     </div>
   );
 }

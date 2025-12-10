@@ -1,37 +1,26 @@
 import { useState, useEffect } from 'react';
-import { Home, BarChart3, Lock, LogOut, Search, Filter, CreditCard } from 'lucide-react';
-import { useRouter } from 'next/router';
+import { Search, Filter } from 'lucide-react';
+import Header from '../components/Header';
+import Navigation from '../components/Navigation';
+import Footer from '../components/Footer';
 
 export default function ResultatsPage() {
   const [pronos, setPronos] = useState([]);
   const [filteredPronos, setFilteredPronos] = useState([]);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [filterBookmaker, setFilterBookmaker] = useState('');
   const [filterStatut, setFilterStatut] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(20);
-  const router = useRouter();
 
   useEffect(() => {
-    checkAuth();
     loadPronos();
   }, []);
 
   useEffect(() => {
     applyFilters();
   }, [pronos, searchTerm, filterBookmaker, filterStatut]);
-
-  const checkAuth = async () => {
-    try {
-      const res = await fetch('/api/auth');
-      const data = await res.json();
-      setIsAuthenticated(data.authenticated);
-    } catch (error) {
-      console.error('Erreur auth:', error);
-    }
-  };
 
   const loadPronos = async () => {
     try {
@@ -44,19 +33,9 @@ export default function ResultatsPage() {
     setLoading(false);
   };
 
-  const handleLogout = async () => {
-    try {
-      await fetch('/api/auth', { method: 'DELETE' });
-      setIsAuthenticated(false);
-    } catch (error) {
-      console.error('Erreur logout:', error);
-    }
-  };
-
   const applyFilters = () => {
     let filtered = [...pronos];
 
-    // Filtre par recherche (CB number, événement, bookmaker)
     if (searchTerm) {
       filtered = filtered.filter(p => 
         p.cb_number.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -65,18 +44,16 @@ export default function ResultatsPage() {
       );
     }
 
-    // Filtre par bookmaker
     if (filterBookmaker) {
       filtered = filtered.filter(p => p.bookmaker === filterBookmaker);
     }
 
-    // Filtre par statut
     if (filterStatut) {
       filtered = filtered.filter(p => p.statut === filterStatut);
     }
 
     setFilteredPronos(filtered);
-    setCurrentPage(1); // Reset à la page 1 quand on filtre
+    setCurrentPage(1);
   };
 
   const resetFilters = () => {
@@ -85,10 +62,8 @@ export default function ResultatsPage() {
     setFilterStatut('');
   };
 
-  // Récupérer les bookmakers uniques
   const bookmakers = [...new Set(pronos.map(p => p.bookmaker))].sort();
 
-  // Pagination
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentPronos = filteredPronos.slice(indexOfFirstItem, indexOfLastItem);
@@ -105,73 +80,11 @@ export default function ResultatsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
-      {/* Header */}
-      <header className="bg-white shadow-md border-b">
-        <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
-          <div>
-            <h1 className="text-3xl font-bold text-indigo-600">Cotes-Boostées.com</h1>
-            <p className="text-sm text-gray-600">Suivi intelligent de vos pronos</p>
-          </div>
-          {isAuthenticated && (
-            <button
-              onClick={handleLogout}
-              className="flex items-center gap-2 bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition"
-            >
-              <LogOut className="w-4 h-4" />
-              Déconnexion
-            </button>
-          )}
-        </div>
-      </header>
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex flex-col">
+      <Header />
+      <Navigation currentPage="resultats" />
 
-      {/* Navigation */}
-      <nav className="bg-white border-b shadow-sm">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="flex space-x-8">
-            <button
-              onClick={() => router.push('/')}
-              className="py-4 px-2 border-b-2 border-transparent text-gray-500 hover:text-gray-700 font-medium text-sm flex items-center gap-2"
-            >
-              <Home className="w-4 h-4" />
-              Accueil
-            </button>
-            <button
-              onClick={() => router.push('/resultats')}
-              className="py-4 px-2 border-b-2 border-indigo-500 text-indigo-600 font-medium text-sm flex items-center gap-2"
-            >
-              <Filter className="w-4 h-4" />
-              Résultats
-            </button>
-            <button
-              onClick={() => router.push('/stats')}
-              className="py-4 px-2 border-b-2 border-transparent text-gray-500 hover:text-gray-700 font-medium text-sm flex items-center gap-2"
-            >
-              <BarChart3 className="w-4 h-4" />
-              Statistiques
-            </button>
-            <button
-              onClick={() => router.push('/paiement')}
-              className="py-4 px-2 border-b-2 border-transparent text-gray-500 hover:text-gray-700 font-medium text-sm flex items-center gap-2"
-            >
-              <CreditCard className="w-4 h-4" />
-              S'abonner
-            </button>
-            {isAuthenticated && (
-              <button
-                onClick={() => router.push('/admin')}
-                className="py-4 px-2 border-b-2 border-transparent text-gray-500 hover:text-gray-700 font-medium text-sm flex items-center gap-2"
-              >
-                <Lock className="w-4 h-4" />
-                Gestion
-              </button>
-            )}
-          </div>
-        </div>
-      </nav>
-
-      {/* Contenu */}
-      <div className="max-w-7xl mx-auto px-4 py-8">
+      <div className="max-w-7xl mx-auto px-4 py-8 flex-1">
         <div className="mb-6">
           <h2 className="text-3xl font-bold text-gray-900 mb-2">Résultats des Cotes Boostées</h2>
           <p className="text-gray-600">Tous nos pronos en temps réel - {filteredPronos.length} résultat(s)</p>
@@ -185,7 +98,6 @@ export default function ResultatsPage() {
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-            {/* Recherche */}
             <div className="md:col-span-2">
               <label className="block text-sm font-medium text-gray-700 mb-1">
                 <Search className="w-4 h-4 inline mr-1" />
@@ -200,7 +112,6 @@ export default function ResultatsPage() {
               />
             </div>
 
-            {/* Filtre Bookmaker */}
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Bookmaker</label>
               <select
@@ -215,7 +126,6 @@ export default function ResultatsPage() {
               </select>
             </div>
 
-            {/* Filtre Statut */}
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Statut</label>
               <select
@@ -232,7 +142,6 @@ export default function ResultatsPage() {
             </div>
           </div>
 
-          {/* Bouton Reset */}
           {(searchTerm || filterBookmaker || filterStatut) && (
             <button
               onClick={resetFilters}
@@ -376,6 +285,8 @@ export default function ResultatsPage() {
           )}
         </div>
       </div>
+
+      <Footer />
     </div>
   );
 }

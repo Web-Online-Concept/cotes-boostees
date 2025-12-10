@@ -1,27 +1,16 @@
 import { useState, useEffect } from 'react';
-import { Home, BarChart3, Lock, TrendingUp, LogOut } from 'lucide-react';
-import { useRouter } from 'next/router';
+import { TrendingUp } from 'lucide-react';
+import Header from '../components/Header';
+import Navigation from '../components/Navigation';
+import Footer from '../components/Footer';
 
 export default function StatsPage() {
   const [pronos, setPronos] = useState([]);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [loading, setLoading] = useState(true);
-  const router = useRouter();
 
   useEffect(() => {
-    checkAuth();
     loadPronos();
   }, []);
-
-  const checkAuth = async () => {
-    try {
-      const res = await fetch('/api/auth');
-      const data = await res.json();
-      setIsAuthenticated(data.authenticated);
-    } catch (error) {
-      console.error('Erreur auth:', error);
-    }
-  };
 
   const loadPronos = async () => {
     try {
@@ -32,15 +21,6 @@ export default function StatsPage() {
       console.error('Erreur chargement pronos:', error);
     }
     setLoading(false);
-  };
-
-  const handleLogout = async () => {
-    try {
-      await fetch('/api/auth', { method: 'DELETE' });
-      setIsAuthenticated(false);
-    } catch (error) {
-      console.error('Erreur logout:', error);
-    }
   };
 
   const calculateStats = () => {
@@ -208,66 +188,11 @@ export default function StatsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
-      {/* Header */}
-      <header className="bg-white shadow-md border-b">
-        <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
-          <div>
-            <h1 className="text-3xl font-bold text-indigo-600">Cotes-Boostées.com</h1>
-            <p className="text-sm text-gray-600">Suivi intelligent de vos pronos</p>
-          </div>
-          {isAuthenticated && (
-            <button
-              onClick={handleLogout}
-              className="flex items-center gap-2 bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition"
-            >
-              <LogOut className="w-4 h-4" />
-              Déconnexion
-            </button>
-          )}
-        </div>
-      </header>
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex flex-col">
+      <Header />
+      <Navigation currentPage="stats" />
 
-      {/* Navigation */}
-      <nav className="bg-white border-b shadow-sm">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="flex space-x-8">
-            <button
-              onClick={() => router.push('/')}
-              className="py-4 px-2 border-b-2 border-transparent text-gray-500 hover:text-gray-700 font-medium text-sm flex items-center gap-2"
-            >
-              <Home className="w-4 h-4" />
-              Accueil
-            </button>
-            <button
-              onClick={() => router.push('/resultats')}
-              className="py-4 px-2 border-b-2 border-transparent text-gray-500 hover:text-gray-700 font-medium text-sm flex items-center gap-2"
-            >
-              <BarChart3 className="w-4 h-4" />
-              Résultats
-            </button>
-            <button
-              onClick={() => router.push('/stats')}
-              className="py-4 px-2 border-b-2 border-indigo-500 text-indigo-600 font-medium text-sm flex items-center gap-2"
-            >
-              <BarChart3 className="w-4 h-4" />
-              Statistiques
-            </button>
-            {isAuthenticated && (
-              <button
-                onClick={() => router.push('/admin')}
-                className="py-4 px-2 border-b-2 border-transparent text-gray-500 hover:text-gray-700 font-medium text-sm flex items-center gap-2"
-              >
-                <Lock className="w-4 h-4" />
-                Gestion
-              </button>
-            )}
-          </div>
-        </div>
-      </nav>
-
-      {/* Contenu */}
-      <div className="max-w-7xl mx-auto px-4 py-8">
+      <div className="max-w-7xl mx-auto px-4 py-8 flex-1">
         <div className="space-y-6">
           {/* Bilan Global */}
           <div className="bg-white rounded-lg shadow-lg p-6">
@@ -453,6 +378,8 @@ export default function StatsPage() {
           </div>
         </div>
       </div>
+
+      <Footer />
     </div>
   );
 }
