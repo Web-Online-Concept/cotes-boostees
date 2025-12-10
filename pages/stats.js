@@ -176,42 +176,38 @@ export default function StatsPage() {
           <h3 className="text-xl font-semibold text-gray-900 mb-4">Bilan Global</h3>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <div className="bg-white rounded-lg shadow p-4">
-              <div className="text-sm text-gray-600 mb-1">Total Pronos</div>
-              <div className="text-2xl font-bold text-indigo-600">{totalPronos}</div>
+              <div className="text-sm text-gray-600 mb-1 text-center">Total Pronos</div>
+              <div className="text-2xl font-bold text-indigo-600 text-center">{totalPronos}</div>
             </div>
             <div className="bg-white rounded-lg shadow p-4">
-              <div className="text-sm text-gray-600 mb-1">Gagnes</div>
-              <div className="text-2xl font-bold text-green-600">{pronosGagnes}</div>
+              <div className="text-sm text-gray-600 mb-1 text-center">Gagnes</div>
+              <div className="text-2xl font-bold text-green-600 text-center">{pronosGagnes}</div>
             </div>
             <div className="bg-white rounded-lg shadow p-4">
-              <div className="text-sm text-gray-600 mb-1">Perdus</div>
-              <div className="text-2xl font-bold text-red-600">{pronosPerdus}</div>
+              <div className="text-sm text-gray-600 mb-1 text-center">Perdus</div>
+              <div className="text-2xl font-bold text-red-600 text-center">{pronosPerdus}</div>
             </div>
             <div className="bg-white rounded-lg shadow p-4">
-              <div className="text-sm text-gray-600 mb-1">Rembourses</div>
-              <div className="text-2xl font-bold text-blue-600">{pronosRembourses}</div>
+              <div className="text-sm text-gray-600 mb-1 text-center">Rembourses</div>
+              <div className="text-2xl font-bold text-blue-600 text-center">{pronosRembourses}</div>
             </div>
             <div className="bg-white rounded-lg shadow p-4">
-              <div className="text-sm text-gray-600 mb-1">Taux de Reussite</div>
-              <div className="text-2xl font-bold text-indigo-600">{tauxReussite.toFixed(2)}%</div>
+              <div className="text-sm text-gray-600 mb-1 text-center">Taux de Reussite</div>
+              <div className="text-2xl font-bold text-indigo-600 text-center">{tauxReussite.toFixed(2)}%</div>
             </div>
             <div className="bg-white rounded-lg shadow p-4">
-              <div className="text-sm text-gray-600 mb-1">Mise Totale</div>
-              <div className="text-2xl font-bold text-gray-900">{miseTotal.toFixed(2)} €</div>
+              <div className="text-sm text-gray-600 mb-1 text-center">Mise Totale</div>
+              <div className="text-2xl font-bold text-gray-900 text-center">{miseTotal.toFixed(2)} €</div>
             </div>
             <div className="bg-white rounded-lg shadow p-4">
-              <div className="text-sm text-gray-600 mb-1">Gains Totaux</div>
-              <div className="text-2xl font-bold text-green-600">{gainsTotal.toFixed(2)} €</div>
-            </div>
-            <div className="bg-white rounded-lg shadow p-4">
-              <div className="text-sm text-gray-600 mb-1">Gain Net</div>
-              <div className={`text-2xl font-bold ${gainNet >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+              <div className="text-sm text-gray-600 mb-1 text-center">Gain Net</div>
+              <div className={`text-2xl font-bold text-center ${gainNet >= 0 ? 'text-green-600' : 'text-red-600'}`}>
                 {gainNet >= 0 ? '+' : ''}{gainNet.toFixed(2)} €
               </div>
             </div>
             <div className="bg-white rounded-lg shadow p-4">
-              <div className="text-sm text-gray-600 mb-1">ROI</div>
-              <div className={`text-2xl font-bold ${roi >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+              <div className="text-sm text-gray-600 mb-1 text-center">ROI</div>
+              <div className={`text-2xl font-bold text-center ${roi >= 0 ? 'text-green-600' : 'text-red-600'}`}>
                 {roi >= 0 ? '+' : ''}{roi.toFixed(2)}%
               </div>
             </div>
@@ -233,7 +229,6 @@ export default function StatsPage() {
                     <th className="px-4 py-3 text-center text-xs font-medium text-gray-600 uppercase">Rembourses</th>
                     <th className="px-4 py-3 text-center text-xs font-medium text-gray-600 uppercase">Taux</th>
                     <th className="px-4 py-3 text-right text-xs font-medium text-gray-600 uppercase">Mise</th>
-                    <th className="px-4 py-3 text-right text-xs font-medium text-gray-600 uppercase">Gains</th>
                     <th className="px-4 py-3 text-right text-xs font-medium text-gray-600 uppercase">Gain Net</th>
                     <th className="px-4 py-3 text-right text-xs font-medium text-gray-600 uppercase">ROI</th>
                   </tr>
@@ -241,7 +236,7 @@ export default function StatsPage() {
                 <tbody className="divide-y divide-gray-200">
                   {monthlyStats.length === 0 ? (
                     <tr>
-                      <td colSpan="10" className="px-4 py-8 text-center text-gray-500">
+                      <td colSpan="9" className="px-4 py-8 text-center text-gray-500">
                         Aucune donnee disponible
                       </td>
                     </tr>
@@ -262,7 +257,6 @@ export default function StatsPage() {
                           <td className="px-4 py-3 text-sm text-center text-blue-600">{stat.rembourses}</td>
                           <td className="px-4 py-3 text-sm text-center text-gray-900">{taux.toFixed(1)}%</td>
                           <td className="px-4 py-3 text-sm text-right text-gray-900">{stat.miseTotal.toFixed(2)} €</td>
-                          <td className="px-4 py-3 text-sm text-right text-green-600">{stat.gainsTotal.toFixed(2)} €</td>
                           <td className={`px-4 py-3 text-sm text-right font-semibold ${gainNet >= 0 ? 'text-green-600' : 'text-red-600'}`}>
                             {gainNet >= 0 ? '+' : ''}{gainNet.toFixed(2)} €
                           </td>
@@ -294,7 +288,6 @@ export default function StatsPage() {
                     <th className="px-4 py-3 text-center text-xs font-medium text-gray-600 uppercase">Rembourses</th>
                     <th className="px-4 py-3 text-center text-xs font-medium text-gray-600 uppercase">Taux</th>
                     <th className="px-4 py-3 text-right text-xs font-medium text-gray-600 uppercase">Mise</th>
-                    <th className="px-4 py-3 text-right text-xs font-medium text-gray-600 uppercase">Gains</th>
                     <th className="px-4 py-3 text-right text-xs font-medium text-gray-600 uppercase">Gain Net</th>
                     <th className="px-4 py-3 text-right text-xs font-medium text-gray-600 uppercase">ROI</th>
                   </tr>
@@ -302,7 +295,7 @@ export default function StatsPage() {
                 <tbody className="divide-y divide-gray-200">
                   {bookmakerStats.length === 0 ? (
                     <tr>
-                      <td colSpan="10" className="px-4 py-8 text-center text-gray-500">
+                      <td colSpan="9" className="px-4 py-8 text-center text-gray-500">
                         Aucune donnee disponible
                       </td>
                     </tr>
@@ -323,7 +316,6 @@ export default function StatsPage() {
                           <td className="px-4 py-3 text-sm text-center text-blue-600">{stat.rembourses}</td>
                           <td className="px-4 py-3 text-sm text-center text-gray-900">{taux.toFixed(1)}%</td>
                           <td className="px-4 py-3 text-sm text-right text-gray-900">{stat.miseTotal.toFixed(2)} €</td>
-                          <td className="px-4 py-3 text-sm text-right text-green-600">{stat.gainsTotal.toFixed(2)} €</td>
                           <td className={`px-4 py-3 text-sm text-right font-semibold ${gainNet >= 0 ? 'text-green-600' : 'text-red-600'}`}>
                             {gainNet >= 0 ? '+' : ''}{gainNet.toFixed(2)} €
                           </td>
@@ -356,7 +348,6 @@ export default function StatsPage() {
                     <th className="px-4 py-3 text-center text-xs font-medium text-gray-600 uppercase">Rembourses</th>
                     <th className="px-4 py-3 text-center text-xs font-medium text-gray-600 uppercase">Taux</th>
                     <th className="px-4 py-3 text-right text-xs font-medium text-gray-600 uppercase">Mise</th>
-                    <th className="px-4 py-3 text-right text-xs font-medium text-gray-600 uppercase">Gains</th>
                     <th className="px-4 py-3 text-right text-xs font-medium text-gray-600 uppercase">Gain Net</th>
                     <th className="px-4 py-3 text-right text-xs font-medium text-gray-600 uppercase">ROI</th>
                   </tr>
@@ -364,7 +355,7 @@ export default function StatsPage() {
                 <tbody className="divide-y divide-gray-200">
                   {monthlyBookmakerStats.length === 0 ? (
                     <tr>
-                      <td colSpan="11" className="px-4 py-8 text-center text-gray-500">
+                      <td colSpan="10" className="px-4 py-8 text-center text-gray-500">
                         Aucune donnee disponible
                       </td>
                     </tr>
@@ -386,7 +377,6 @@ export default function StatsPage() {
                           <td className="px-4 py-3 text-sm text-center text-blue-600">{stat.rembourses}</td>
                           <td className="px-4 py-3 text-sm text-center text-gray-900">{taux.toFixed(1)}%</td>
                           <td className="px-4 py-3 text-sm text-right text-gray-900">{stat.miseTotal.toFixed(2)} €</td>
-                          <td className="px-4 py-3 text-sm text-right text-green-600">{stat.gainsTotal.toFixed(2)} €</td>
                           <td className={`px-4 py-3 text-sm text-right font-semibold ${gainNet >= 0 ? 'text-green-600' : 'text-red-600'}`}>
                             {gainNet >= 0 ? '+' : ''}{gainNet.toFixed(2)} €
                           </td>
