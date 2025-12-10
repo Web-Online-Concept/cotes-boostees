@@ -1,77 +1,46 @@
-import { useState, useEffect } from 'react';
-import { Home, BarChart3, Lock, Filter } from 'lucide-react';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 
 export default function Navigation({ currentPage }) {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const router = useRouter();
+  
+  const navItems = [
+    { name: 'Accueil', path: '/', key: 'accueil' },
+    { name: 'Resultats', path: '/resultats', key: 'resultats' },
+    { name: 'Statistiques', path: '/stats', key: 'stats' },
+  ];
 
-  useEffect(() => {
-    checkAuth();
-  }, []);
-
-  const checkAuth = async () => {
-    try {
-      const res = await fetch('/api/auth');
-      const data = await res.json();
-      setIsAuthenticated(data.authenticated);
-    } catch (error) {
-      console.error('Erreur auth:', error);
-    }
-  };
-
-  const isActive = (page) => currentPage === page;
+  // Ajouter Gestion si on est authentifié (visible seulement en admin)
+  if (currentPage === 'admin') {
+    navItems.push({ name: 'Gestion', path: '/admin', key: 'admin' });
+  }
 
   return (
-    <nav className="bg-white border-b shadow-sm">
+    <nav className="bg-white shadow-md border-b-2 border-indigo-100">
       <div className="max-w-7xl mx-auto px-4">
-        <div className="flex justify-center space-x-8">
-          <button
-            onClick={() => router.push('/')}
-            className={`py-4 px-2 border-b-2 font-medium text-sm flex items-center gap-2 ${
-              isActive('home')
-                ? 'border-indigo-500 text-indigo-600'
-                : 'border-transparent text-gray-500 hover:text-gray-700'
-            }`}
-          >
-            <Home className="w-4 h-4" />
-            Accueil
-          </button>
-          <button
-            onClick={() => router.push('/resultats')}
-            className={`py-4 px-2 border-b-2 font-medium text-sm flex items-center gap-2 ${
-              isActive('resultats')
-                ? 'border-indigo-500 text-indigo-600'
-                : 'border-transparent text-gray-500 hover:text-gray-700'
-            }`}
-          >
-            <Filter className="w-4 h-4" />
-            Resultats
-          </button>
-          <button
-            onClick={() => router.push('/stats')}
-            className={`py-4 px-2 border-b-2 font-medium text-sm flex items-center gap-2 ${
-              isActive('stats')
-                ? 'border-indigo-500 text-indigo-600'
-                : 'border-transparent text-gray-500 hover:text-gray-700'
-            }`}
-          >
-            <BarChart3 className="w-4 h-4" />
-            Statistiques
-          </button>
-          {isAuthenticated && (
-            <button
-              onClick={() => router.push('/admin')}
-              className={`py-4 px-2 border-b-2 font-medium text-sm flex items-center gap-2 ${
-                isActive('admin')
-                  ? 'border-indigo-500 text-indigo-600'
-                  : 'border-transparent text-gray-500 hover:text-gray-700'
-              }`}
-            >
-              <Lock className="w-4 h-4" />
-              Gestion
-            </button>
-          )}
+        <div className="flex justify-center items-center space-x-2 py-4">
+          {navItems.map((item) => {
+            const isActive = currentPage === item.key;
+            return (
+              <Link key={item.key} href={item.path}>
+                <button
+                  className={`
+                    relative px-8 py-3 rounded-lg font-semibold text-base
+                    transition-all duration-300 ease-in-out
+                    ${isActive 
+                      ? 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-lg scale-105' 
+                      : 'bg-gray-100 text-gray-700 hover:bg-gradient-to-r hover:from-indigo-500 hover:to-purple-500 hover:text-white hover:shadow-md hover:scale-105'
+                    }
+                  `}
+                >
+                  {isActive && (
+                    <span className="absolute inset-0 rounded-lg bg-white opacity-20 animate-pulse"></span>
+                  )}
+                  <span className="relative z-10">{item.name}</span>
+                </button>
+              </Link>
+            );
+          })}
         </div>
       </div>
     </nav>
