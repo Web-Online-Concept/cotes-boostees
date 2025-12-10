@@ -240,6 +240,13 @@ export default function StatsPage() {
               Accueil
             </button>
             <button
+              onClick={() => router.push('/resultats')}
+              className="py-4 px-2 border-b-2 border-transparent text-gray-500 hover:text-gray-700 font-medium text-sm flex items-center gap-2"
+            >
+              <BarChart3 className="w-4 h-4" />
+              Résultats
+            </button>
+            <button
               onClick={() => router.push('/stats')}
               className="py-4 px-2 border-b-2 border-indigo-500 text-indigo-600 font-medium text-sm flex items-center gap-2"
             >

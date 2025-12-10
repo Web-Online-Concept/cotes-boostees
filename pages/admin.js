@@ -203,6 +203,13 @@ export default function AdminPage() {
               Accueil
             </button>
             <button
+              onClick={() => router.push('/resultats')}
+              className="py-4 px-2 border-b-2 border-transparent text-gray-500 hover:text-gray-700 font-medium text-sm flex items-center gap-2"
+            >
+              <BarChart3 className="w-4 h-4" />
+              Résultats
+            </button>
+            <button
               onClick={() => router.push('/stats')}
               className="py-4 px-2 border-b-2 border-transparent text-gray-500 hover:text-gray-700 font-medium text-sm flex items-center gap-2"
             >
@@ -357,7 +364,7 @@ export default function AdminPage() {
                     </td>
                   </tr>
                 ) : (
-                  pronos.map(prono => (
+                  pronos.sort((a, b) => new Date(b.date) - new Date(a.date)).map(prono => (
                     <tr key={prono.id} className="hover:bg-gray-50">
                       <td className="px-4 py-3 text-sm font-semibold text-indigo-600">{prono.cb_number}</td>
                       <td className="px-4 py-3 text-sm text-gray-900">
