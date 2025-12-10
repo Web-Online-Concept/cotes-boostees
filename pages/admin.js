@@ -74,7 +74,7 @@ export default function AdminPage() {
         if (res.ok) {
           await loadPronos();
           resetForm();
-          alert('Prono modifié avec succès');
+          alert('Prono modifie avec succes');
         } else {
           alert(data.message || 'Erreur lors de la modification');
         }
@@ -90,9 +90,9 @@ export default function AdminPage() {
         if (res.ok) {
           await loadPronos();
           resetForm();
-          alert('Prono ajouté avec succès');
+          alert('Prono ajoute avec succes');
         } else {
-          alert(data.message || 'Erreur lors de la création');
+          alert(data.message || 'Erreur lors de la creation');
         }
       }
     } catch (error) {
@@ -127,7 +127,7 @@ export default function AdminPage() {
 
       if (res.ok) {
         await loadPronos();
-        alert('Prono supprimé');
+        alert('Prono supprime');
       } else {
         alert('Erreur lors de la suppression');
       }
@@ -151,6 +151,14 @@ export default function AdminPage() {
     setShowForm(false);
   };
 
+  const toggleForm = () => {
+    if (showForm) {
+      resetForm();
+    } else {
+      setShowForm(true);
+    }
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center">
@@ -172,10 +180,7 @@ export default function AdminPage() {
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-2xl font-bold text-gray-900">Gestion des Pronos</h2>
           <button
-            onClick={() => {
-              setShowForm(!showForm);
-              if (!showForm) resetForm();
-            }}
+            onClick={toggleForm}
             className="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 flex items-center gap-2 transition"
           >
             <Plus className="w-4 h-4" />
@@ -191,7 +196,7 @@ export default function AdminPage() {
             </h3>
             <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Numéro CB</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Numero CB</label>
                 <input
                   type="text"
                   value={formData.cb_number}
@@ -220,7 +225,7 @@ export default function AdminPage() {
                 />
               </div>
               <div className="col-span-2">
-                <label className="block text-sm font-medium text-gray-700 mb-1">Événement</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Evenement</label>
                 <input
                   type="text"
                   value={formData.event}
@@ -230,7 +235,7 @@ export default function AdminPage() {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Mise (€)</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Mise</label>
                 <input
                   type="number"
                   step="0.01"
@@ -257,9 +262,9 @@ export default function AdminPage() {
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none"
                 >
                   <option>En cours</option>
-                  <option>Gagné</option>
+                  <option>Gagne</option>
                   <option>Perdu</option>
-                  <option>Remboursé</option>
+                  <option>Rembourse</option>
                 </select>
               </div>
               <div className="col-span-2 md:col-span-3 flex gap-2">
@@ -286,9 +291,9 @@ export default function AdminPage() {
             <table className="w-full">
               <thead className="bg-indigo-50 border-b">
                 <tr>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-600 uppercase">N° CB</th>
+                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-600 uppercase">N CB</th>
                   <th className="px-4 py-3 text-left text-xs font-medium text-gray-600 uppercase">Date</th>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-600 uppercase">Événement</th>
+                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-600 uppercase">Evenement</th>
                   <th className="px-4 py-3 text-left text-xs font-medium text-gray-600 uppercase">Bookmaker</th>
                   <th className="px-4 py-3 text-right text-xs font-medium text-gray-600 uppercase">Mise</th>
                   <th className="px-4 py-3 text-right text-xs font-medium text-gray-600 uppercase">Cote</th>
@@ -300,7 +305,7 @@ export default function AdminPage() {
                 {pronos.length === 0 ? (
                   <tr>
                     <td colSpan="8" className="px-4 py-8 text-center text-gray-500">
-                      Aucun prono enregistré. Cliquez sur "Ajouter un prono" pour commencer.
+                      Aucun prono enregistre. Cliquez sur "Ajouter un prono" pour commencer.
                     </td>
                   </tr>
                 ) : (
@@ -312,13 +317,13 @@ export default function AdminPage() {
                       </td>
                       <td className="px-4 py-3 text-sm text-gray-900">{prono.event}</td>
                       <td className="px-4 py-3 text-sm text-gray-600">{prono.bookmaker}</td>
-                      <td className="px-4 py-3 text-sm text-gray-900 text-right">{parseFloat(prono.mise).toFixed(2)}€</td>
+                      <td className="px-4 py-3 text-sm text-gray-900 text-right">{parseFloat(prono.mise).toFixed(2)}</td>
                       <td className="px-4 py-3 text-sm text-gray-900 text-right">{parseFloat(prono.cote).toFixed(2)}</td>
                       <td className="px-4 py-3 text-center">
                         <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
-                          prono.statut === 'Gagné' ? 'bg-green-100 text-green-800' :
+                          prono.statut === 'Gagne' ? 'bg-green-100 text-green-800' :
                           prono.statut === 'Perdu' ? 'bg-red-100 text-red-800' :
-                          prono.statut === 'Remboursé' ? 'bg-blue-100 text-blue-800' :
+                          prono.statut === 'Rembourse' ? 'bg-blue-100 text-blue-800' :
                           'bg-yellow-100 text-yellow-800'
                         }`}>
                           {prono.statut}
