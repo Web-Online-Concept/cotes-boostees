@@ -87,56 +87,6 @@ export default function AbonnementPage() {
               Abonnement Telegram CB 2026
             </h1>
 
-            {/* Description du service */}
-            <div className="bg-gradient-to-r from-indigo-50 to-purple-50 rounded-lg p-6 mb-8">
-              <h2 className="text-2xl font-bold text-indigo-900 mb-4">🎯 Rejoignez notre communauté exclusive</h2>
-              <p className="text-gray-700 mb-4 leading-relaxed">
-                En vous abonnant, vous accédez à notre <strong>canal et groupe privés Telegram CB 2026</strong> où nous 
-                partageons quotidiennement les meilleures cotes boostées à valeur positive (EV+).
-              </p>
-
-              <div className="grid md:grid-cols-2 gap-4 mt-6">
-                <div className="bg-white rounded-lg p-4 shadow">
-                  <div className="text-2xl mb-2">✅</div>
-                  <h3 className="font-bold text-gray-900 mb-2">Sélection experte quotidienne</h3>
-                  <p className="text-sm text-gray-600">
-                    Uniquement les CB avec une vraie valeur mathématique, analysées et vérifiées par nos experts.
-                  </p>
-                </div>
-
-                <div className="bg-white rounded-lg p-4 shadow">
-                  <div className="text-2xl mb-2">📊</div>
-                  <h3 className="font-bold text-gray-900 mb-2">Transparence totale</h3>
-                  <p className="text-sm text-gray-600">
-                    Tous nos résultats sont publics. Consultez nos statistiques et notre ROI en temps réel.
-                  </p>
-                </div>
-
-                <div className="bg-white rounded-lg p-4 shadow">
-                  <div className="text-2xl mb-2">💬</div>
-                  <h3 className="font-bold text-gray-900 mb-2">Groupe de discussion</h3>
-                  <p className="text-sm text-gray-600">
-                    Échangez avec la communauté, partagez vos analyses et bénéficiez de conseils.
-                  </p>
-                </div>
-
-                <div className="bg-white rounded-lg p-4 shadow">
-                  <div className="text-2xl mb-2">⚡</div>
-                  <h3 className="font-bold text-gray-900 mb-2">Notifications instantanées</h3>
-                  <p className="text-sm text-gray-600">
-                    Recevez les CB en temps réel pour ne manquer aucune opportunité rentable.
-                  </p>
-                </div>
-              </div>
-
-              <div className="mt-6 bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded">
-                <p className="text-sm text-gray-700">
-                  <strong>⚠️ Important :</strong> Notre approche est basée sur l'analyse mathématique et la sélection 
-                  rigoureuse. Nous ne publions QUE les cotes à valeur positive. Pas de volume inutile, que de la qualité !
-                </p>
-              </div>
-            </div>
-
             {/* Prix */}
             <div className="bg-gradient-to-r from-green-500 to-emerald-600 rounded-xl p-6 mb-8 text-white text-center">
               <div className="text-5xl font-bold mb-2">100 €</div>
@@ -223,6 +173,56 @@ export default function AbonnementPage() {
                 </button>
               </div>
             )}
+
+            {/* Description du service - DÉPLACÉ ICI */}
+            <div className="bg-gradient-to-r from-indigo-50 to-purple-50 rounded-lg p-6 mt-8">
+              <h2 className="text-2xl font-bold text-indigo-900 mb-4">🎯 Rejoignez notre communauté exclusive</h2>
+              <p className="text-gray-700 mb-4 leading-relaxed">
+                En vous abonnant, vous accédez à notre <strong>canal et groupe privés Telegram CB 2026</strong> où nous 
+                partageons quotidiennement les meilleures cotes boostées à valeur positive (EV+).
+              </p>
+
+              <div className="grid md:grid-cols-2 gap-4 mt-6">
+                <div className="bg-white rounded-lg p-4 shadow">
+                  <div className="text-2xl mb-2">✅</div>
+                  <h3 className="font-bold text-gray-900 mb-2">Sélection experte quotidienne</h3>
+                  <p className="text-sm text-gray-600">
+                    Uniquement les CB avec une vraie valeur mathématique, analysées et vérifiées par nos experts.
+                  </p>
+                </div>
+
+                <div className="bg-white rounded-lg p-4 shadow">
+                  <div className="text-2xl mb-2">📊</div>
+                  <h3 className="font-bold text-gray-900 mb-2">Transparence totale</h3>
+                  <p className="text-sm text-gray-600">
+                    Tous nos résultats sont publics. Consultez nos statistiques et notre ROI en temps réel.
+                  </p>
+                </div>
+
+                <div className="bg-white rounded-lg p-4 shadow">
+                  <div className="text-2xl mb-2">💬</div>
+                  <h3 className="font-bold text-gray-900 mb-2">Groupe de discussion</h3>
+                  <p className="text-sm text-gray-600">
+                    Échangez avec la communauté, partagez vos analyses et bénéficiez de conseils.
+                  </p>
+                </div>
+
+                <div className="bg-white rounded-lg p-4 shadow">
+                  <div className="text-2xl mb-2">⚡</div>
+                  <h3 className="font-bold text-gray-900 mb-2">Notifications instantanées</h3>
+                  <p className="text-sm text-gray-600">
+                    Recevez les CB en temps réel pour ne manquer aucune opportunité rentable.
+                  </p>
+                </div>
+              </div>
+
+              <div className="mt-6 bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded">
+                <p className="text-sm text-gray-700">
+                  <strong>⚠️ Important :</strong> Notre approche est basée sur l'analyse mathématique et la sélection 
+                  rigoureuse. Nous ne publions QUE les cotes à valeur positive. Pas de volume inutile, que de la qualité !
+                </p>
+              </div>
+            </div>
 
             {/* Informations légales */}
             <div className="mt-8 pt-6 border-t border-gray-200">
