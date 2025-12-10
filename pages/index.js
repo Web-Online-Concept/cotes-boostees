@@ -17,77 +17,106 @@ export default function HomePage() {
           
           {/* Hero Section */}
           <div className="bg-gradient-to-r from-indigo-600 to-blue-500 rounded-xl shadow-2xl p-8 text-white text-center">
-            <h2 className="text-4xl font-bold mb-4">Gagnez avec les meilleures Cotes Boostees ARJEL</h2>
+            <h2 className="text-4xl font-bold mb-4">Ne jouez QUE les Cotes Boostees a VALEUR</h2>
             <p className="text-2xl mb-6">- CANAL & GROUPE PRIVES TELEGRAM -</p>
-            <p className="text-xl opacity-90">Boostez vos gains en toute simplicite ! 🚀</p>
+            <p className="text-xl opacity-90">Maximisez vos gains en ne pariant que sur les vraies opportunites ! 🚀</p>
           </div>
 
           {/* Presentation principale */}
           <div className="bg-white rounded-xl shadow-lg p-8">
             <p className="text-lg text-gray-700 mb-6 leading-relaxed">
-              Sur le site des <strong>Cotes Boostees</strong>, l'objectif est clair : vous aider a maximiser vos profits grace aux paris sportifs 💰.
+              Chez <strong>Cotes Boostees</strong>, nous ne vous proposons PAS toutes les cotes boostees du marche. 
+              Notre objectif ? <strong>Selectionner UNIQUEMENT les cotes a valeur positive (EV+)</strong> pour maximiser vos profits 💰.
             </p>
             
-            <h3 className="text-2xl font-bold text-gray-900 mb-4">Comment ?</h3>
-            <p className="text-lg text-gray-700 mb-6">
-              En selectionnant pour vous les meilleures cotes boostees des bookmakers ARJEL, celles qui allient simplicite, efficacite et rentabilite 📈.
-            </p>
-
-            <div className="bg-indigo-50 border-l-4 border-indigo-600 p-6 rounded-lg mb-6">
-              <h3 className="text-xl font-bold text-indigo-900 mb-4">Notre concept est aussi simple qu'il est performant :</h3>
-              <ul className="space-y-3 text-gray-700">
-                <li className="flex items-start gap-3">
-                  <span className="text-2xl">⚽️</span>
-                  <span>Nous analysons les opportunites du marche</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="text-2xl">🎯</span>
-                  <span>Nous identifions les cotes boostees les plus prometteuses</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="text-2xl">💵</span>
-                  <span>Vous pariez malin et encaissez des gains optimises</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="text-2xl">⚡️</span>
-                  <span>Vous etes notifie en temps reel grace a notre canal Telegram</span>
-                </li>
+            <h3 className="text-2xl font-bold text-gray-900 mb-4">Notre methode selective :</h3>
+            
+            <div className="bg-red-50 border-l-4 border-red-600 p-6 rounded-lg mb-6">
+              <h3 className="text-xl font-bold text-red-900 mb-3">❌ Ce que nous ECARTONS :</h3>
+              <ul className="space-y-2 text-gray-700">
+                <li>• Les cotes boostees a EV neutre (EV=0)</li>
+                <li>• Les cotes boostees sans valeur reelle</li>
+                <li>• Les promotions trompeuses des bookmakers</li>
               </ul>
             </div>
 
-            <div className="bg-green-50 border-l-4 border-green-600 p-6 rounded-lg">
-              <h3 className="text-xl font-bold text-green-900 mb-4">Pas de complications, pas de pertes de temps ⏳ :</h3>
-              <p className="text-gray-700 leading-relaxed">
-                Nos experts travaillent pour vous denicher des opportunites rentables, testees et pretes a l'emploi ✅. 
-                Que vous soyez novice ou parieur aguerri, notre methode vous permet de tirer le meilleur parti de chaque mise.
-              </p>
+            <div className="bg-green-50 border-l-4 border-green-600 p-6 rounded-lg mb-6">
+              <h3 className="text-xl font-bold text-green-900 mb-3">✅ Ce que nous SELECTIONNONS :</h3>
+              <ul className="space-y-2 text-gray-700">
+                <li>• UNIQUEMENT les cotes boostees a valeur positive (EV+)</li>
+                <li>• Les vraies opportunites rentables sur le long terme</li>
+                <li>• Les cotes ou l'avantage mathematique est en votre faveur</li>
+              </ul>
+            </div>
+
+            <div className="bg-indigo-50 border-l-4 border-indigo-600 p-6 rounded-lg">
+              <h3 className="text-xl font-bold text-indigo-900 mb-4">Notre processus d'analyse :</h3>
+              <ul className="space-y-3 text-gray-700">
+                <li className="flex items-start gap-3">
+                  <span className="text-2xl">🔍</span>
+                  <span><strong>Analyse quotidienne :</strong> Nous scannons toutes les cotes boostees des bookmakers ARJEL</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="text-2xl">📊</span>
+                  <span><strong>Calcul de la valeur :</strong> Nous determinons si la cote boostee presente une esperance de gain positive</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="text-2xl">✂️</span>
+                  <span><strong>Selection rigoureuse :</strong> Nous ne gardons QUE les cotes avec un avantage reel</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="text-2xl">⚡️</span>
+                  <span><strong>Notification immediate :</strong> Vous recevez uniquement les vraies opportunites sur Telegram</span>
+                </li>
+              </ul>
             </div>
           </div>
 
           {/* Avantages en cards */}
           <div className="grid md:grid-cols-3 gap-6">
             <div className="bg-white rounded-xl shadow-lg p-6 border-t-4 border-indigo-600">
-              <div className="text-4xl mb-4">📊</div>
-              <h3 className="text-xl font-bold text-gray-900 mb-3">Transparence Totale</h3>
+              <div className="text-4xl mb-4">🎯</div>
+              <h3 className="text-xl font-bold text-gray-900 mb-3">Selection Expert</h3>
               <p className="text-gray-700">
-                Consultez tous nos resultats en temps reel. Chaque cote boostee est numerotee et tracee pour une transparence absolue.
+                Ne perdez plus de temps a analyser toutes les cotes boostees. Nous faisons le tri pour vous et ne gardons que les meilleures.
               </p>
             </div>
 
             <div className="bg-white rounded-xl shadow-lg p-6 border-t-4 border-green-600">
               <div className="text-4xl mb-4">📈</div>
-              <h3 className="text-xl font-bold text-gray-900 mb-3">Statistiques Detaillees</h3>
+              <h3 className="text-xl font-bold text-gray-900 mb-3">Transparence Absolue</h3>
               <p className="text-gray-700">
-                Suivez nos performances mois par mois, bookmaker par bookmaker. ROI, taux de reussite, tout est public.
+                Tous nos resultats sont publics. ROI, taux de reussite, evolution mensuelle : suivez nos performances en temps reel.
               </p>
             </div>
 
             <div className="bg-white rounded-xl shadow-lg p-6 border-t-4 border-blue-600">
-              <div className="text-4xl mb-4">⚡️</div>
-              <h3 className="text-xl font-bold text-gray-900 mb-3">Notifications Instantanees</h3>
+              <div className="text-4xl mb-4">💎</div>
+              <h3 className="text-xl font-bold text-gray-900 mb-3">Que de la Valeur</h3>
               <p className="text-gray-700">
-                Recevez chaque cote boostee directement sur Telegram. Ne manquez plus aucune opportunite rentable.
+                Zero perte de temps avec des cotes sans interet. Chaque notification = une vraie opportunite de gain.
               </p>
+            </div>
+          </div>
+
+          {/* Explication valeur */}
+          <div className="bg-gradient-to-r from-purple-500 to-pink-500 rounded-xl shadow-2xl p-8 text-white">
+            <h3 className="text-3xl font-bold mb-4 text-center">Pourquoi la VALEUR est essentielle ?</h3>
+            <div className="grid md:grid-cols-2 gap-6 mt-6">
+              <div className="bg-white bg-opacity-20 rounded-lg p-6">
+                <h4 className="text-xl font-bold mb-3">❌ Sans selection :</h4>
+                <p className="text-lg">
+                  Jouer toutes les cotes boostees = diluer vos gains avec des paris sans valeur. 
+                  Resultat : ROI mediocre voire negatif.
+                </p>
+              </div>
+              <div className="bg-white bg-opacity-20 rounded-lg p-6">
+                <h4 className="text-xl font-bold mb-3">✅ Avec notre selection :</h4>
+                <p className="text-lg">
+                  Ne jouer QUE les cotes a valeur = concentrer vos mises sur les vraies opportunites. 
+                  Resultat : ROI optimise sur le long terme.
+                </p>
+              </div>
             </div>
           </div>
 
@@ -101,9 +130,9 @@ export default function HomePage() {
                   1
                 </div>
                 <div>
-                  <h4 className="text-lg font-semibold text-gray-900 mb-2">Abonnez-vous a notre service</h4>
+                  <h4 className="text-lg font-semibold text-gray-900 mb-2">Abonnez-vous au service</h4>
                   <p className="text-gray-700">
-                    Rendez-vous sur notre page d'abonnement pour decouvrir nos offres et effectuer votre paiement securise.
+                    Rendez-vous sur notre page d'abonnement pour rejoindre la communaute des parieurs intelligents.
                   </p>
                 </div>
               </div>
@@ -113,9 +142,9 @@ export default function HomePage() {
                   2
                 </div>
                 <div>
-                  <h4 className="text-lg font-semibold text-gray-900 mb-2">Confirmation et integration immediate</h4>
+                  <h4 className="text-lg font-semibold text-gray-900 mb-2">Recevez vos acces Telegram</h4>
                   <p className="text-gray-700">
-                    Une fois votre paiement effectue, nous vous envoyons un mail de confirmation avec les liens d'acces a notre canal et groupe de discussions Telegram pour les CB 2025.
+                    Apres validation de votre paiement, nous vous envoyons un mail avec les liens d'acces au canal et groupe prive CB 2025.
                   </p>
                 </div>
               </div>
@@ -125,9 +154,9 @@ export default function HomePage() {
                   3
                 </div>
                 <div>
-                  <h4 className="text-lg font-semibold text-gray-900 mb-2">Recevez et placez vos paris</h4>
+                  <h4 className="text-lg font-semibold text-gray-900 mb-2">Ne jouez QUE les cotes a valeur</h4>
                   <p className="text-gray-700">
-                    Suivez les cotes boostees proposees en temps reel sur Telegram. Chaque prono est identifie par un numero unique (CB 001, CB 002...) pour un suivi precis.
+                    Chaque jour, recevez UNIQUEMENT les cotes boostees selectionnees pour leur valeur reelle. Chaque prono = numero unique (CB 001, CB 002...).
                   </p>
                 </div>
               </div>
@@ -137,9 +166,9 @@ export default function HomePage() {
                   4
                 </div>
                 <div>
-                  <h4 className="text-lg font-semibold text-gray-900 mb-2">Consultez les resultats et statistiques</h4>
+                  <h4 className="text-lg font-semibold text-gray-900 mb-2">Suivez vos gains en transparence</h4>
                   <p className="text-gray-700">
-                    Tous les resultats sont publics et mis a jour en temps reel sur ce site. Suivez notre ROI, nos performances par bookmaker et notre evolution mensuelle.
+                    Tous nos resultats sont publics sur ce site. Consultez notre ROI, nos stats par bookmaker et notre evolution en temps reel.
                   </p>
                 </div>
               </div>
@@ -148,15 +177,15 @@ export default function HomePage() {
 
           {/* CTA Final */}
           <div className="bg-gradient-to-r from-green-500 to-emerald-600 rounded-xl shadow-2xl p-8 text-white text-center">
-            <h3 className="text-3xl font-bold mb-4">Pret a rejoindre la communaute ?</h3>
+            <h3 className="text-3xl font-bold mb-4">Pret a parier intelligemment ?</h3>
             <p className="text-xl mb-6">
-              Decouvrez nos performances en consultant nos resultats et statistiques publics, puis abonnez-vous pour recevoir toutes les cotes boostees en temps reel !
+              Arretez de perdre du temps avec des cotes sans valeur. Rejoignez-nous et ne jouez plus QUE les vraies opportunites !
             </p>
             <button 
               onClick={() => router.push('/abonnement')}
               className="bg-white text-green-600 px-8 py-4 rounded-lg text-xl font-bold hover:bg-gray-100 transition transform hover:scale-105"
             >
-              Decouvrir nos offres d'abonnement 🚀
+              S'abonner aux Cotes Boostees 2025 🚀
             </button>
           </div>
         </div>
