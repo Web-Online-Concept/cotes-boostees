@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Plus, Edit2, Trash2 } from 'lucide-react';
+import { Plus, Edit2, Trash2, LogOut } from 'lucide-react';
 import { useRouter } from 'next/router';
 import Header from '../components/Header';
 import Navigation from '../components/Navigation';
@@ -14,13 +14,28 @@ export default function AdminPage() {
   const [formData, setFormData] = useState({
     cb_number: '',
     date: new Date().toISOString().split('T')[0],
-    bookmaker: '',
-    event: '',
+    bookmaker: 'Winamax',
+    event: '-',
     mise: '',
     cote: '',
-    statut: 'En cours'
+    statut: 'Gagne'
   });
   const router = useRouter();
+
+  const bookmakers = [
+    'Winamax',
+    'Betclic',
+    'Parions Sport',
+    'Unibet',
+    'PMU',
+    'Betsson',
+    'Bwin',
+    'Genybet',
+    'Netbet',
+    'Vbet',
+    'Olybet',
+    'DAZNBet'
+  ];
 
   useEffect(() => {
     checkAuth();
@@ -55,8 +70,17 @@ export default function AdminPage() {
     }
   };
 
+  const handleLogout = async () => {
+    try {
+      await fetch('/api/auth', { method: 'DELETE' });
+      router.push('/');
+    } catch (error) {
+      console.error('Erreur deconnexion:', error);
+    }
+  };
+
   const handleSubmit = async () => {
-    if (!formData.cb_number || !formData.date || !formData.bookmaker || !formData.event || !formData.mise || !formData.cote) {
+    if (!formData.cb_number || !formData.date || !formData.bookmaker || !formData.mise || !formData.cote) {
       alert('Veuillez remplir tous les champs');
       return;
     }
@@ -106,7 +130,7 @@ export default function AdminPage() {
       cb_number: prono.cb_number,
       date: prono.date,
       bookmaker: prono.bookmaker,
-      event: prono.event,
+      event: prono.event || '-',
       mise: prono.mise,
       cote: prono.cote,
       statut: prono.statut
@@ -141,11 +165,11 @@ export default function AdminPage() {
     setFormData({
       cb_number: '',
       date: new Date().toISOString().split('T')[0],
-      bookmaker: '',
-      event: '',
+      bookmaker: 'Winamax',
+      event: '-',
       mise: '',
       cote: '',
-      statut: 'En cours'
+      statut: 'Gagne'
     });
     setEditingId(null);
     setShowForm(false);
@@ -179,13 +203,22 @@ export default function AdminPage() {
       <div className="max-w-7xl mx-auto px-4 py-8 flex-1">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-2xl font-bold text-gray-900">Gestion des Pronos</h2>
-          <button
-            onClick={toggleForm}
-            className="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 flex items-center gap-2 transition"
-          >
-            <Plus className="w-4 h-4" />
-            Ajouter un prono
-          </button>
+          <div className="flex gap-2">
+            <button
+              onClick={toggleForm}
+              className="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 flex items-center gap-2 transition"
+            >
+              <Plus className="w-4 h-4" />
+              Ajouter un prono
+            </button>
+            <button
+              onClick={handleLogout}
+              className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 flex items-center gap-2 transition"
+            >
+              <LogOut className="w-4 h-4" />
+              Deconnexion
+            </button>
+          </div>
         </div>
 
         {/* Formulaire */}
@@ -216,23 +249,15 @@ export default function AdminPage() {
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Bookmaker</label>
-                <input
-                  type="text"
+                <select
                   value={formData.bookmaker}
                   onChange={(e) => setFormData({...formData, bookmaker: e.target.value})}
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none"
-                  placeholder="Betclic, Winamax..."
-                />
-              </div>
-              <div className="col-span-2">
-                <label className="block text-sm font-medium text-gray-700 mb-1">Evenement</label>
-                <input
-                  type="text"
-                  value={formData.event}
-                  onChange={(e) => setFormData({...formData, event: e.target.value})}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none"
-                  placeholder="PSG - OM"
-                />
+                >
+                  {bookmakers.map(bk => (
+                    <option key={bk} value={bk}>{bk}</option>
+                  ))}
+                </select>
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Mise</label>
@@ -255,13 +280,12 @@ export default function AdminPage() {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Statut</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Resultat</label>
                 <select
                   value={formData.statut}
                   onChange={(e) => setFormData({...formData, statut: e.target.value})}
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none"
                 >
-                  <option>En cours</option>
                   <option>Gagne</option>
                   <option>Perdu</option>
                   <option>Rembourse</option>
@@ -293,18 +317,17 @@ export default function AdminPage() {
                 <tr>
                   <th className="px-4 py-3 text-left text-xs font-medium text-gray-600 uppercase">N CB</th>
                   <th className="px-4 py-3 text-left text-xs font-medium text-gray-600 uppercase">Date</th>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-600 uppercase">Evenement</th>
                   <th className="px-4 py-3 text-left text-xs font-medium text-gray-600 uppercase">Bookmaker</th>
                   <th className="px-4 py-3 text-right text-xs font-medium text-gray-600 uppercase">Mise</th>
                   <th className="px-4 py-3 text-right text-xs font-medium text-gray-600 uppercase">Cote</th>
-                  <th className="px-4 py-3 text-center text-xs font-medium text-gray-600 uppercase">Statut</th>
+                  <th className="px-4 py-3 text-center text-xs font-medium text-gray-600 uppercase">Resultat</th>
                   <th className="px-4 py-3 text-right text-xs font-medium text-gray-600 uppercase">Actions</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-200">
                 {pronos.length === 0 ? (
                   <tr>
-                    <td colSpan="8" className="px-4 py-8 text-center text-gray-500">
+                    <td colSpan="7" className="px-4 py-8 text-center text-gray-500">
                       Aucun prono enregistre. Cliquez sur "Ajouter un prono" pour commencer.
                     </td>
                   </tr>
@@ -315,7 +338,6 @@ export default function AdminPage() {
                       <td className="px-4 py-3 text-sm text-gray-900">
                         {new Date(prono.date).toLocaleDateString('fr-FR')}
                       </td>
-                      <td className="px-4 py-3 text-sm text-gray-900">{prono.event}</td>
                       <td className="px-4 py-3 text-sm text-gray-600">{prono.bookmaker}</td>
                       <td className="px-4 py-3 text-sm text-gray-900 text-right">{parseFloat(prono.mise).toFixed(2)}</td>
                       <td className="px-4 py-3 text-sm text-gray-900 text-right">{parseFloat(prono.cote).toFixed(2)}</td>
