@@ -46,7 +46,7 @@ export default function Navigation({ currentPage }) {
             }`}
           >
             <Filter className="w-4 h-4" />
-            Résultats
+            Resultats
           </button>
           <button
             onClick={() => router.push('/stats')}

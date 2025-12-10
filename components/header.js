@@ -58,11 +58,10 @@ export default function Header() {
     <header className="bg-white shadow-md border-b">
       <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
         <div>
-          <h1 className="text-3xl font-bold text-indigo-600">Cotes-Boostées.com</h1>
+          <h1 className="text-3xl font-bold text-indigo-600">Cotes-Boostees.com</h1>
           <p className="text-sm text-gray-600">Suivi intelligent de vos pronos</p>
         </div>
         
-        {/* Connexion Admin à droite */}
         <div>
           {isAuthenticated ? (
             <button
@@ -70,7 +69,7 @@ export default function Header() {
               className="flex items-center gap-2 bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition"
             >
               <LogOut className="w-4 h-4" />
-              Déconnexion
+              Deconnexion
             </button>
           ) : (
             <div className="flex gap-2 items-center">
