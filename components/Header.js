@@ -61,7 +61,7 @@ export default function Header() {
           <img 
             src="/images/logo_cb_100.png" 
             alt="Logo Cotes Boostees" 
-            className="w-16 h-16"
+            className="h-20"
           />
           <div>
             <h1 className="text-3xl font-bold text-indigo-600">Cotes-Boostees.com</h1>
