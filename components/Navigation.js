@@ -25,7 +25,7 @@ export default function Navigation({ currentPage }) {
   return (
     <nav className="bg-white border-b shadow-sm">
       <div className="max-w-7xl mx-auto px-4">
-        <div className="flex space-x-8">
+        <div className="flex justify-center space-x-8">
           <button
             onClick={() => router.push('/')}
             className={`py-4 px-2 border-b-2 font-medium text-sm flex items-center gap-2 ${

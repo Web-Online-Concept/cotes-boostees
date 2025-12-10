@@ -65,7 +65,7 @@ export default function Header() {
           />
           <div>
             <h1 className="text-3xl font-bold text-indigo-600">Cotes-Boostees.com</h1>
-            <p className="text-sm text-gray-600">Suivi intelligent de vos pronos</p>
+            <p className="text-sm text-gray-600">Gagnez avec les meilleures CB ARJEL</p>
           </div>
         </div>
         
