@@ -12,7 +12,7 @@ export default function PolitiqueConfidentialitePage() {
             POLITIQUE DE CONFIDENTIALITÉ
           </h1>
           <p className="text-center text-gray-600 mb-8">www.cotes-boostees.com</p>
-          <p className="text-sm text-gray-500 mb-8">Date de dernière mise à jour : 10 décembre 2024</p>
+          <p className="text-sm text-gray-500 mb-8">Date de dernière mise à jour : 10 décembre 2025</p>
 
           <div className="prose prose-lg max-w-none space-y-6 text-gray-700">
             <p>
