@@ -76,7 +76,7 @@ export default function Header({ currentPage }) {
                 style={{ width: '200px', height: '100px' }}
               />
             </Link>
-            <div>
+            <div className="text-center">
               <h1 className="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-white via-yellow-200 to-white tracking-wide drop-shadow-2xl">
                 Cotes-Boostées.com
               </h1>

@@ -37,7 +37,7 @@ export default function Footer() {
         <div className="max-w-7xl mx-auto px-4 py-6">
           <div className="text-center space-y-3">
             <p className="text-gray-600 text-sm">&copy; 2026 Cotes-Boostées.com - Tous droits réservés</p>
-            <p className="text-gray-500 text-sm">Suivi professionnel des cotes boostées</p>
+            <p className="text-gray-500 text-sm">Gagnez avec les meilleures CB ARJEL</p>
             
             {/* Liens légaux */}
             <div className="flex items-center justify-center gap-4 text-xs text-gray-400">
