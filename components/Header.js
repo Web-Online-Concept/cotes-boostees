@@ -4,23 +4,47 @@ import { useRouter } from 'next/router';
 export default function Header({ currentPage }) {
   const router = useRouter();
   
+  const smoothScrollTo = (targetId) => {
+    const element = document.getElementById(targetId);
+    if (!element) return;
+
+    const targetPosition = element.getBoundingClientRect().top + window.pageYOffset;
+    const startPosition = window.pageYOffset;
+    const distance = targetPosition - startPosition;
+    const duration = 1500; // 1.5 secondes pour un scroll plus lent
+    let start = null;
+
+    const animation = (currentTime) => {
+      if (start === null) start = currentTime;
+      const timeElapsed = currentTime - start;
+      const progress = Math.min(timeElapsed / duration, 1);
+      
+      // Fonction d'easing pour un mouvement plus fluide (ease-in-out)
+      const ease = progress < 0.5
+        ? 4 * progress * progress * progress
+        : 1 - Math.pow(-2 * progress + 2, 3) / 2;
+
+      window.scrollTo(0, startPosition + distance * ease);
+
+      if (timeElapsed < duration) {
+        requestAnimationFrame(animation);
+      }
+    };
+
+    requestAnimationFrame(animation);
+  };
+  
   const handleSmoothScroll = (e, targetId) => {
     e.preventDefault();
     
     // Si on est déjà sur la page d'accueil
     if (router.pathname === '/') {
-      const element = document.getElementById(targetId);
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
+      smoothScrollTo(targetId);
     } else {
       // Si on est sur une autre page, d'abord naviguer puis scroller
       router.push('/').then(() => {
         setTimeout(() => {
-          const element = document.getElementById(targetId);
-          if (element) {
-            element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          }
+          smoothScrollTo(targetId);
         }, 100);
       });
     }
