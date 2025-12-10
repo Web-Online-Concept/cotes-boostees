@@ -11,8 +11,8 @@ export default function HomePage() {
       <Header />
       <Navigation currentPage="home" />
 
-      {/* Video Background Fullscreen */}
-      <div className="relative w-full h-screen overflow-hidden">
+      {/* Video Background Fullscreen (hauteur ecran - header - nav) */}
+      <div className="relative w-full overflow-hidden" style={{ height: 'calc(100vh - 140px)' }}>
         <video
           autoPlay
           loop
