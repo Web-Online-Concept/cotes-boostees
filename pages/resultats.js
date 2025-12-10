@@ -67,7 +67,7 @@ export default function ResultatsPage() {
       <Header currentPage="resultats" />
 
       <div className="max-w-7xl mx-auto px-4 py-8 flex-1">
-        <h2 className="text-3xl font-bold text-gray-900 mb-6 text-center">Résultats des CB 2026</h2>
+        <h2 className="text-3xl font-bold text-gray-900 mb-6 text-center">Résultats CB 2026</h2>
 
         {/* Filtres */}
         <div className="bg-white rounded-lg shadow-lg p-6 mb-6">
