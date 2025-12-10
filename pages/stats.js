@@ -167,14 +167,14 @@ export default function StatsPage() {
       <Header currentPage="stats" />
 
       <div className="max-w-7xl mx-auto px-4 py-8 flex-1">
-        <h2 className="text-3xl font-bold text-gray-900 mb-6">Statistiques</h2>
+        <h2 className="text-3xl font-bold text-gray-900 mb-6 text-center">Statistiques CB 2026</h2>
 
         {/* Bilan Global */}
         <div className="mb-8">
           <h3 className="text-xl font-semibold text-gray-900 mb-4">Bilan Global</h3>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <div className="bg-white rounded-lg shadow p-4">
-              <div className="text-sm text-gray-600 mb-1 text-center">Total Pronos</div>
+              <div className="text-sm text-gray-600 mb-1 text-center">Total CB</div>
               <div className="text-2xl font-bold text-indigo-600 text-center">{totalPronos}</div>
             </div>
             <div className="bg-white rounded-lg shadow p-4">
