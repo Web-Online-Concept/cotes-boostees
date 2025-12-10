@@ -86,6 +86,8 @@ export default function AdminPage() {
     }
 
     try {
+      console.log('Envoi des donnees:', formData);
+      
       if (editingId) {
         const res = await fetch('/api/pronos', {
           method: 'PUT',
@@ -94,13 +96,15 @@ export default function AdminPage() {
         });
 
         const data = await res.json();
+        console.log('Reponse serveur:', data);
         
         if (res.ok) {
           await loadPronos();
           resetForm();
           alert('Prono modifie avec succes');
         } else {
-          alert(data.message || 'Erreur lors de la modification');
+          console.error('Erreur complete:', data);
+          alert(`Erreur: ${data.message || JSON.stringify(data)}`);
         }
       } else {
         const res = await fetch('/api/pronos', {
@@ -110,18 +114,20 @@ export default function AdminPage() {
         });
 
         const data = await res.json();
+        console.log('Reponse serveur:', data);
         
         if (res.ok) {
           await loadPronos();
           resetForm();
           alert('Prono ajoute avec succes');
         } else {
-          alert(data.message || 'Erreur lors de la creation');
+          console.error('Erreur complete:', data);
+          alert(`Erreur: ${data.message || JSON.stringify(data)}`);
         }
       }
     } catch (error) {
-      console.error('Erreur:', error);
-      alert('Erreur lors de l\'enregistrement');
+      console.error('Erreur catch:', error);
+      alert(`Erreur lors de l'enregistrement: ${error.message}`);
     }
   };
 
@@ -235,7 +241,6 @@ export default function AdminPage() {
                   value={formData.cb_number}
                   onChange={(e) => setFormData({...formData, cb_number: e.target.value})}
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none"
-                  placeholder="CB 001"
                 />
               </div>
               <div>
