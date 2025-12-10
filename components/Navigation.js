@@ -18,14 +18,14 @@ export default function Navigation({ currentPage }) {
   return (
     <nav className="bg-gradient-to-r from-indigo-600 via-purple-600 to-indigo-700 shadow-2xl">
       <div className="max-w-7xl mx-auto px-4">
-        <div className="flex justify-center items-center space-x-2 py-4">
+        <div className="flex justify-center items-center space-x-2 py-2">
           {navItems.map((item) => {
             const isActive = currentPage === item.key;
             return (
               <Link key={item.key} href={item.path}>
                 <button
                   className={`
-                    relative px-8 py-3 rounded-lg font-semibold text-base
+                    relative px-5 py-2 rounded-lg font-semibold text-sm
                     transition-all duration-300 ease-in-out
                     ${isActive 
                       ? 'bg-white text-indigo-700 shadow-xl scale-105' 
@@ -37,7 +37,7 @@ export default function Navigation({ currentPage }) {
                     <span className="absolute inset-0 rounded-lg bg-gradient-to-r from-yellow-200/30 to-white/30 animate-pulse"></span>
                   )}
                   <span className="relative z-10 flex items-center gap-2">
-                    <span className="text-xl">{item.emoji}</span>
+                    <span className="text-base">{item.emoji}</span>
                     {item.name}
                   </span>
                 </button>
