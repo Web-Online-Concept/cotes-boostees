@@ -63,7 +63,7 @@ export default function Header() {
             alt="Logo Cotes Boostees" 
             className="h-20"
           />
-          <div>
+          <div className="text-center">
             <h1 className="text-3xl font-bold text-indigo-600">Cotes-Boostees.com</h1>
             <p className="text-sm text-gray-600">Gagnez avec les meilleures CB ARJEL</p>
           </div>
