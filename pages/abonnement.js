@@ -13,16 +13,13 @@ export default function AbonnementPage() {
   const [paypalLoaded, setPaypalLoaded] = useState(false);
   const router = useRouter();
 
-  // Charger le bouton PayPal après soumission
   useEffect(() => {
     if (isSubmitted && paypalLoaded && window.paypal) {
-      // Nettoyer l'ancien bouton
       const container = document.getElementById('paypal-container-YJXASTHAJTYYE');
       if (container) {
         container.innerHTML = '';
       }
       
-      // Rendre le nouveau bouton
       window.paypal.HostedButtons({
         hostedButtonId: "YJXASTHAJTYYE"
       }).render("#paypal-container-YJXASTHAJTYYE");
@@ -40,7 +37,6 @@ export default function AbonnementPage() {
       return;
     }
 
-    // Validation email
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
       setError('Veuillez entrer une adresse email valide');
@@ -87,14 +83,12 @@ export default function AbonnementPage() {
               Abonnement Telegram CB 2026
             </h1>
 
-            {/* Prix */}
             <div className="bg-gradient-to-r from-green-500 to-emerald-600 rounded-xl p-6 mb-8 text-white text-center">
               <div className="text-5xl font-bold mb-2">100 €</div>
               <div className="text-xl font-semibold">Abonnement annuel 2026</div>
               <p className="text-sm mt-2 opacity-90">Accès jusqu'au 31 décembre 2026</p>
             </div>
 
-            {/* Formulaire ou Bouton PayPal */}
             {!isSubmitted ? (
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div>
@@ -160,7 +154,6 @@ export default function AbonnementPage() {
                   </div>
                 </div>
 
-                {/* Bouton PayPal */}
                 <div className="text-center">
                   <div id="paypal-container-YJXASTHAJTYYE" className="flex justify-center" />
                 </div>
@@ -174,7 +167,80 @@ export default function AbonnementPage() {
               </div>
             )}
 
-            {/* Description du service - DÉPLACÉ ICI */}
+            {/* Comment ça marche */}
+            <div className="bg-blue-50 border-2 border-blue-200 rounded-lg p-6 mt-8">
+              <h2 className="text-2xl font-bold text-blue-900 mb-4 flex items-center gap-2">
+                <span className="text-3xl">🔄</span>
+                Comment ça marche ?
+              </h2>
+              
+              <div className="space-y-4">
+                <div className="flex items-start gap-3">
+                  <div className="flex-shrink-0 w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center font-bold text-sm">
+                    1
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-gray-900 mb-1">Remplissez le formulaire</h3>
+                    <p className="text-sm text-gray-700">
+                      Saisissez vos informations (nom et email) puis cliquez sur "Continuer vers le paiement".
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-3">
+                  <div className="flex-shrink-0 w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center font-bold text-sm">
+                    2
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-gray-900 mb-1">Effectuez le paiement sécurisé</h3>
+                    <p className="text-sm text-gray-700">
+                      Procédez au paiement de 100€ via PayPal en toute sécurité.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-3">
+                  <div className="flex-shrink-0 w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center font-bold text-sm">
+                    3
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-gray-900 mb-1">Recevez vos accès sous 12h</h3>
+                    <p className="text-sm text-gray-700">
+                      Après validation du paiement, vous recevrez <strong>dans les 12 heures</strong> via votre adresse email :
+                    </p>
+                    <ul className="list-disc pl-5 mt-2 space-y-1 text-sm text-gray-700">
+                      <li>Une confirmation de votre abonnement</li>
+                      <li>Le lien d'accès au <strong>Canal Telegram CB 2026</strong></li>
+                      <li>Le lien d'accès au <strong>Groupe Telegram CB 2026</strong></li>
+                    </ul>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-3">
+                  <div className="flex-shrink-0 w-8 h-8 bg-green-600 text-white rounded-full flex items-center justify-center font-bold text-sm">
+                    ✓
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-gray-900 mb-1">C'est parti !</h3>
+                    <p className="text-sm text-gray-700">
+                      Intégrez immédiatement le canal et le groupe pour commencer à recevoir nos sélections quotidiennes de cotes boostées EV+.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="mt-4 bg-white border-l-4 border-blue-600 p-4 rounded">
+                <p className="text-xs text-gray-600">
+                  <strong>📧 Astuce :</strong> Pensez à vérifier vos spams si vous ne recevez pas l'email dans les 12h. 
+                  En cas de problème, contactez-nous à{' '}
+                  <a href="mailto:cotes.boostees@gmail.com" className="text-blue-600 hover:underline font-semibold">
+                    cotes.boostees@gmail.com
+                  </a>
+                </p>
+              </div>
+            </div>
+
+            {/* Description du service */}
             <div className="bg-gradient-to-r from-indigo-50 to-purple-50 rounded-lg p-6 mt-8">
               <h2 className="text-2xl font-bold text-indigo-900 mb-4">🎯 Rejoignez notre communauté exclusive</h2>
               <p className="text-gray-700 mb-4 leading-relaxed">
@@ -224,7 +290,6 @@ export default function AbonnementPage() {
               </div>
             </div>
 
-            {/* Informations légales */}
             <div className="mt-8 pt-6 border-t border-gray-200">
               <p className="text-xs text-gray-500 text-center">
                 En procédant au paiement, vous acceptez nos{' '}
