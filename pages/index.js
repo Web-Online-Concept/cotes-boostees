@@ -1,8 +1,11 @@
+import { useRouter } from 'next/router';
 import Header from '../components/Header';
 import Navigation from '../components/Navigation';
 import Footer from '../components/Footer';
 
 export default function HomePage() {
+  const router = useRouter();
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex flex-col">
       <Header />
@@ -88,18 +91,6 @@ export default function HomePage() {
             </div>
           </div>
 
-          {/* Offre speciale */}
-          <div className="bg-gradient-to-r from-yellow-400 to-orange-500 rounded-xl shadow-2xl p-8 text-center">
-            <div className="bg-white bg-opacity-20 rounded-lg p-6 inline-block mb-6">
-              <p className="text-white text-lg mb-2">Abonnement annuel</p>
-              <p className="text-white text-6xl font-bold">100€</p>
-              <p className="text-white text-xl mt-2">Acces illimite pendant 1 an</p>
-            </div>
-            <p className="text-white text-2xl font-semibold">
-              Soit moins de 8.5€ par mois pour des opportunites quotidiennes !
-            </p>
-          </div>
-
           {/* Comment ca marche */}
           <div className="bg-white rounded-xl shadow-lg p-8">
             <h3 className="text-2xl font-bold text-gray-900 mb-6 text-center">Comment ca marche ?</h3>
@@ -112,7 +103,7 @@ export default function HomePage() {
                 <div>
                   <h4 className="text-lg font-semibold text-gray-900 mb-2">Abonnez-vous a notre service</h4>
                   <p className="text-gray-700">
-                    <strong className="text-indigo-600 text-xl">100€ par an</strong> - Un investissement minimal pour des gains optimises toute l'annee. Rendez-vous sur la page d'abonnement pour effectuer votre paiement securise.
+                    Rendez-vous sur notre page d'abonnement pour decouvrir nos offres et effectuer votre paiement securise.
                   </p>
                 </div>
               </div>
@@ -155,12 +146,18 @@ export default function HomePage() {
             </div>
           </div>
 
-          {/* CTA Final simplifie */}
+          {/* CTA Final */}
           <div className="bg-gradient-to-r from-green-500 to-emerald-600 rounded-xl shadow-2xl p-8 text-white text-center">
             <h3 className="text-3xl font-bold mb-4">Pret a rejoindre la communaute ?</h3>
             <p className="text-xl mb-6">
               Decouvrez nos performances en consultant nos resultats et statistiques publics, puis abonnez-vous pour recevoir toutes les cotes boostees en temps reel !
             </p>
+            <button 
+              onClick={() => router.push('/abonnement')}
+              className="bg-white text-green-600 px-8 py-4 rounded-lg text-xl font-bold hover:bg-gray-100 transition transform hover:scale-105"
+            >
+              Decouvrir nos offres d'abonnement 🚀
+            </button>
           </div>
         </div>
       </div>
