@@ -58,22 +58,25 @@ export default function HomePage() {
             
             <h3 className="text-2xl font-bold text-gray-900 mb-4">Notre methode selective :</h3>
             
-            <div className="bg-red-50 border-l-4 border-red-600 p-6 rounded-lg mb-6 transform transition hover:translate-x-2">
-              <h3 className="text-xl font-bold text-red-900 mb-3">❌ Ce que nous ECARTONS :</h3>
-              <ul className="space-y-2 text-gray-700">
-                <li>• Les cotes boostees a EV neutre (EV=0)</li>
-                <li>• Les cotes boostees sans valeur reelle</li>
-                <li>• Les promotions trompeuses des bookmakers</li>
-              </ul>
-            </div>
+            {/* Selection / Ecart cote a cote */}
+            <div className="grid md:grid-cols-2 gap-6 mb-6">
+              <div className="bg-green-50 border-l-4 border-green-600 p-6 rounded-lg transform transition hover:translate-x-2">
+                <h3 className="text-xl font-bold text-green-900 mb-3">✅ Ce que nous SELECTIONNONS :</h3>
+                <ul className="space-y-2 text-gray-700">
+                  <li>• UNIQUEMENT les cotes boostees a valeur positive (EV+)</li>
+                  <li>• Les vraies opportunites rentables sur le long terme</li>
+                  <li>• Les cotes ou l'avantage mathematique est en votre faveur</li>
+                </ul>
+              </div>
 
-            <div className="bg-green-50 border-l-4 border-green-600 p-6 rounded-lg mb-6 transform transition hover:translate-x-2">
-              <h3 className="text-xl font-bold text-green-900 mb-3">✅ Ce que nous SELECTIONNONS :</h3>
-              <ul className="space-y-2 text-gray-700">
-                <li>• UNIQUEMENT les cotes boostees a valeur positive (EV+)</li>
-                <li>• Les vraies opportunites rentables sur le long terme</li>
-                <li>• Les cotes ou l'avantage mathematique est en votre faveur</li>
-              </ul>
+              <div className="bg-red-50 border-l-4 border-red-600 p-6 rounded-lg transform transition hover:translate-x-2">
+                <h3 className="text-xl font-bold text-red-900 mb-3">❌ Ce que nous ECARTONS :</h3>
+                <ul className="space-y-2 text-gray-700">
+                  <li>• Les cotes boostees a EV neutre (EV=0)</li>
+                  <li>• Les cotes boostees sans valeur reelle</li>
+                  <li>• Les promotions trompeuses des bookmakers</li>
+                </ul>
+              </div>
             </div>
 
             <div className="bg-indigo-50 border-l-4 border-indigo-600 p-6 rounded-lg transform transition hover:translate-x-2">
@@ -143,8 +146,11 @@ export default function HomePage() {
                 </div>
                 <div>
                   <h4 className="text-lg font-semibold text-gray-900 mb-2">Recevez vos acces Telegram</h4>
+                  <p className="text-gray-700 mb-3">
+                    Apres validation de votre paiement, vous recevez un mail avec les liens d'invitations pour integrer le canal et le groupe prive CB 2026.
+                  </p>
                   <p className="text-gray-700">
-                    Apres validation de votre paiement, nous vous envoyons un mail avec les liens d'acces au canal et groupe prive CB 2026.
+                    Une fois integre au canal et au groupe, vous serez notifie a chaque CB publiee sur le canal, et vous pourrez discuter et echanger avec les autres membres du groupe.
                   </p>
                 </div>
               </div>
