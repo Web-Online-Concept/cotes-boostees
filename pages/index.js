@@ -16,7 +16,7 @@ export default function HomePage() {
         <div className="space-y-8">
           
           {/* Hero Section */}
-          <div className="bg-gradient-to-r from-indigo-600 to-blue-500 rounded-xl shadow-2xl p-8 text-white text-center">
+          <div className="bg-gradient-to-r from-indigo-600 to-blue-500 rounded-xl shadow-2xl p-8 text-white text-center transform transition hover:scale-105 hover:shadow-3xl">
             <h2 className="text-4xl font-bold mb-4">Gagnez avec les meilleures Cotes Boostees ARJEL</h2>
             <p className="text-2xl mb-6">- CANAL & GROUPE PRIVES TELEGRAM -</p>
             <p className="text-xl opacity-90">Maximisez vos gains en ne pariant que sur les vraies opportunites ! 🚀</p>
@@ -24,7 +24,7 @@ export default function HomePage() {
 
           {/* Avantages en cards */}
           <div className="grid md:grid-cols-3 gap-6">
-            <div className="bg-white rounded-xl shadow-lg p-6 border-t-4 border-indigo-600">
+            <div className="bg-white rounded-xl shadow-lg p-6 border-t-4 border-indigo-600 transform transition hover:scale-105 hover:shadow-2xl cursor-pointer">
               <div className="text-4xl mb-4">🎯</div>
               <h3 className="text-xl font-bold text-gray-900 mb-3">Selection Expert</h3>
               <p className="text-gray-700">
@@ -32,7 +32,7 @@ export default function HomePage() {
               </p>
             </div>
 
-            <div className="bg-white rounded-xl shadow-lg p-6 border-t-4 border-green-600">
+            <div className="bg-white rounded-xl shadow-lg p-6 border-t-4 border-green-600 transform transition hover:scale-105 hover:shadow-2xl cursor-pointer">
               <div className="text-4xl mb-4">📈</div>
               <h3 className="text-xl font-bold text-gray-900 mb-3">Transparence Absolue</h3>
               <p className="text-gray-700">
@@ -40,7 +40,7 @@ export default function HomePage() {
               </p>
             </div>
 
-            <div className="bg-white rounded-xl shadow-lg p-6 border-t-4 border-blue-600">
+            <div className="bg-white rounded-xl shadow-lg p-6 border-t-4 border-blue-600 transform transition hover:scale-105 hover:shadow-2xl cursor-pointer">
               <div className="text-4xl mb-4">💎</div>
               <h3 className="text-xl font-bold text-gray-900 mb-3">Que de la Valeur</h3>
               <p className="text-gray-700">
@@ -50,7 +50,7 @@ export default function HomePage() {
           </div>
 
           {/* Presentation principale */}
-          <div className="bg-white rounded-xl shadow-lg p-8">
+          <div className="bg-white rounded-xl shadow-lg p-8 transform transition hover:shadow-2xl">
             <p className="text-lg text-gray-700 mb-6 leading-relaxed">
               Chez <strong>Cotes Boostees</strong>, nous ne vous proposons PAS toutes les cotes boostees du marche. 
               Notre objectif ? <strong>Selectionner UNIQUEMENT les cotes a valeur positive (EV+)</strong> pour maximiser vos profits 💰.
@@ -58,7 +58,7 @@ export default function HomePage() {
             
             <h3 className="text-2xl font-bold text-gray-900 mb-4">Notre methode selective :</h3>
             
-            <div className="bg-red-50 border-l-4 border-red-600 p-6 rounded-lg mb-6">
+            <div className="bg-red-50 border-l-4 border-red-600 p-6 rounded-lg mb-6 transform transition hover:translate-x-2">
               <h3 className="text-xl font-bold text-red-900 mb-3">❌ Ce que nous ECARTONS :</h3>
               <ul className="space-y-2 text-gray-700">
                 <li>• Les cotes boostees a EV neutre (EV=0)</li>
@@ -67,7 +67,7 @@ export default function HomePage() {
               </ul>
             </div>
 
-            <div className="bg-green-50 border-l-4 border-green-600 p-6 rounded-lg mb-6">
+            <div className="bg-green-50 border-l-4 border-green-600 p-6 rounded-lg mb-6 transform transition hover:translate-x-2">
               <h3 className="text-xl font-bold text-green-900 mb-3">✅ Ce que nous SELECTIONNONS :</h3>
               <ul className="space-y-2 text-gray-700">
                 <li>• UNIQUEMENT les cotes boostees a valeur positive (EV+)</li>
@@ -76,7 +76,7 @@ export default function HomePage() {
               </ul>
             </div>
 
-            <div className="bg-indigo-50 border-l-4 border-indigo-600 p-6 rounded-lg">
+            <div className="bg-indigo-50 border-l-4 border-indigo-600 p-6 rounded-lg transform transition hover:translate-x-2">
               <h3 className="text-xl font-bold text-indigo-900 mb-4">Notre processus d'analyse :</h3>
               <ul className="space-y-3 text-gray-700">
                 <li className="flex items-start gap-3">
@@ -100,17 +100,17 @@ export default function HomePage() {
           </div>
 
           {/* Explication valeur */}
-          <div className="bg-gradient-to-r from-purple-500 to-pink-500 rounded-xl shadow-2xl p-8 text-white">
+          <div className="bg-gradient-to-r from-purple-500 to-pink-500 rounded-xl shadow-2xl p-8 text-white transform transition hover:scale-105 hover:shadow-3xl">
             <h3 className="text-3xl font-bold mb-4 text-center">Pourquoi la VALEUR est essentielle ?</h3>
             <div className="grid md:grid-cols-2 gap-6 mt-6">
-              <div className="bg-white bg-opacity-20 rounded-lg p-6">
+              <div className="bg-white bg-opacity-20 rounded-lg p-6 transform transition hover:bg-opacity-30">
                 <h4 className="text-xl font-bold mb-3">❌ Sans selection :</h4>
                 <p className="text-lg">
                   Jouer toutes les cotes boostees = diluer vos gains avec des paris sans valeur. 
                   Resultat : ROI mediocre voire negatif.
                 </p>
               </div>
-              <div className="bg-white bg-opacity-20 rounded-lg p-6">
+              <div className="bg-white bg-opacity-20 rounded-lg p-6 transform transition hover:bg-opacity-30">
                 <h4 className="text-xl font-bold mb-3">✅ Avec notre selection :</h4>
                 <p className="text-lg">
                   Ne jouer QUE les cotes a valeur = concentrer vos mises sur les vraies opportunites. 
@@ -121,11 +121,11 @@ export default function HomePage() {
           </div>
 
           {/* Comment ca marche */}
-          <div className="bg-white rounded-xl shadow-lg p-8">
+          <div className="bg-white rounded-xl shadow-lg p-8 transform transition hover:shadow-2xl">
             <h3 className="text-2xl font-bold text-gray-900 mb-6 text-center">Comment ca marche ?</h3>
             
             <div className="space-y-6">
-              <div className="flex gap-4">
+              <div className="flex gap-4 transform transition hover:translate-x-2">
                 <div className="flex-shrink-0 w-12 h-12 bg-indigo-600 text-white rounded-full flex items-center justify-center font-bold text-xl">
                   1
                 </div>
@@ -137,7 +137,7 @@ export default function HomePage() {
                 </div>
               </div>
 
-              <div className="flex gap-4">
+              <div className="flex gap-4 transform transition hover:translate-x-2">
                 <div className="flex-shrink-0 w-12 h-12 bg-indigo-600 text-white rounded-full flex items-center justify-center font-bold text-xl">
                   2
                 </div>
@@ -149,7 +149,7 @@ export default function HomePage() {
                 </div>
               </div>
 
-              <div className="flex gap-4">
+              <div className="flex gap-4 transform transition hover:translate-x-2">
                 <div className="flex-shrink-0 w-12 h-12 bg-indigo-600 text-white rounded-full flex items-center justify-center font-bold text-xl">
                   3
                 </div>
@@ -161,7 +161,7 @@ export default function HomePage() {
                 </div>
               </div>
 
-              <div className="flex gap-4">
+              <div className="flex gap-4 transform transition hover:translate-x-2">
                 <div className="flex-shrink-0 w-12 h-12 bg-indigo-600 text-white rounded-full flex items-center justify-center font-bold text-xl">
                   4
                 </div>
@@ -176,14 +176,14 @@ export default function HomePage() {
           </div>
 
           {/* CTA Final */}
-          <div className="bg-gradient-to-r from-green-500 to-emerald-600 rounded-xl shadow-2xl p-8 text-white text-center">
+          <div className="bg-gradient-to-r from-green-500 to-emerald-600 rounded-xl shadow-2xl p-8 text-white text-center transform transition hover:scale-105 hover:shadow-3xl">
             <h3 className="text-3xl font-bold mb-4">Pret a parier intelligemment ?</h3>
             <p className="text-xl mb-6">
               Arretez de perdre du temps avec des cotes sans valeur. Rejoignez-nous et ne jouez plus QUE les vraies opportunites !
             </p>
             <button 
               onClick={() => router.push('/abonnement')}
-              className="bg-white text-green-600 px-8 py-4 rounded-lg text-xl font-bold hover:bg-gray-100 transition transform hover:scale-105"
+              className="bg-white text-green-600 px-8 py-4 rounded-lg text-xl font-bold hover:bg-gray-100 transition transform hover:scale-110"
             >
               S'abonner aux Cotes Boostees 2026 🚀
             </button>
