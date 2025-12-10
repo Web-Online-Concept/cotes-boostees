@@ -57,9 +57,16 @@ export default function Header() {
   return (
     <header className="bg-white shadow-md border-b">
       <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
-        <div>
-          <h1 className="text-3xl font-bold text-indigo-600">Cotes-Boostees.com</h1>
-          <p className="text-sm text-gray-600">Suivi intelligent de vos pronos</p>
+        <div className="flex items-center gap-4">
+          <img 
+            src="/images/logo_cb_100.png" 
+            alt="Logo Cotes Boostees" 
+            className="w-16 h-16"
+          />
+          <div>
+            <h1 className="text-3xl font-bold text-indigo-600">Cotes-Boostees.com</h1>
+            <p className="text-sm text-gray-600">Suivi intelligent de vos pronos</p>
+          </div>
         </div>
         
         <div>
