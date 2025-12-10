@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import Head from 'next/head';
+import Script from 'next/script';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 
@@ -10,7 +10,24 @@ export default function AbonnementPage() {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [paypalLoaded, setPaypalLoaded] = useState(false);
   const router = useRouter();
+
+  // Charger le bouton PayPal après soumission
+  useEffect(() => {
+    if (isSubmitted && paypalLoaded && window.paypal) {
+      // Nettoyer l'ancien bouton
+      const container = document.getElementById('paypal-container-YJXASTHAJTYYE');
+      if (container) {
+        container.innerHTML = '';
+      }
+      
+      // Rendre le nouveau bouton
+      window.paypal.HostedButtons({
+        hostedButtonId: "YJXASTHAJTYYE"
+      }).render("#paypal-container-YJXASTHAJTYYE");
+    }
+  }, [isSubmitted, paypalLoaded]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -56,12 +73,10 @@ export default function AbonnementPage() {
 
   return (
     <>
-      <Head>
-        <script
-          src="https://www.paypal.com/sdk/js?client-id=BAAyGY891j1-xPHRbB7F4fWvVNwMca1Jdbuf2jVxLB5KC2a-7GjyT2LYLeMs0Grb174sluulT9xH9fd9VM&components=hosted-buttons&disable-funding=venmo&currency=EUR"
-          async
-        />
-      </Head>
+      <Script
+        src="https://www.paypal.com/sdk/js?client-id=BAAyGY891j1-xPHRbB7F4fWvVNwMca1Jdbuf2jVxLB5KC2a-7GjyT2LYLeMs0Grb174sluulT9xH9fd9VM&components=hosted-buttons&disable-funding=venmo&currency=EUR"
+        onLoad={() => setPaypalLoaded(true)}
+      />
 
       <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex flex-col">
         <Header currentPage="abonnement" />
@@ -197,21 +212,7 @@ export default function AbonnementPage() {
 
                 {/* Bouton PayPal */}
                 <div className="text-center">
-                  <div 
-                    id="paypal-container-YJXASTHAJTYYE"
-                    className="flex justify-center"
-                  />
-                  <script
-                    dangerouslySetInnerHTML={{
-                      __html: `
-                        if (window.paypal) {
-                          paypal.HostedButtons({
-                            hostedButtonId: "YJXASTHAJTYYE"
-                          }).render("#paypal-container-YJXASTHAJTYYE");
-                        }
-                      `
-                    }}
-                  />
+                  <div id="paypal-container-YJXASTHAJTYYE" className="flex justify-center" />
                 </div>
 
                 <button
