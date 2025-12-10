@@ -11,7 +11,7 @@ export default function HomePage() {
       <Header />
       <Navigation currentPage="home" />
 
-      {/* Video Background Fullscreen (hauteur ecran - header - nav) */}
+      {/* Video Background Fullscreen (hauteur écran - header - nav) */}
       <div className="relative w-full overflow-hidden" style={{ height: 'calc(100vh - 140px)' }}>
         <video
           autoPlay
@@ -30,18 +30,18 @@ export default function HomePage() {
           
           {/* Hero Section */}
           <div className="bg-gradient-to-r from-indigo-600 to-blue-500 rounded-xl shadow-2xl p-8 text-white text-center transform transition hover:scale-105 hover:shadow-3xl">
-            <h2 className="text-4xl font-bold mb-4">Gagnez avec les meilleures Cotes Boostees ARJEL</h2>
-            <p className="text-2xl mb-6">- CANAL & GROUPE PRIVES TELEGRAM -</p>
-            <p className="text-xl opacity-90">Maximisez vos gains en ne pariant que sur les vraies opportunites ! 🚀</p>
+            <h2 className="text-4xl font-bold mb-4">Gagnez avec les meilleures Cotes Boostées ARJEL</h2>
+            <p className="text-2xl mb-6">- CANAL & GROUPE PRIVÉS TELEGRAM -</p>
+            <p className="text-xl opacity-90">Maximisez vos gains en ne pariant que sur les vraies opportunités ! 🚀</p>
           </div>
 
           {/* Avantages en cards */}
           <div className="grid md:grid-cols-3 gap-6">
             <div className="bg-white rounded-xl shadow-lg p-6 border-t-4 border-indigo-600 transform transition hover:scale-105 hover:shadow-2xl cursor-pointer">
               <div className="text-4xl mb-4">🎯</div>
-              <h3 className="text-xl font-bold text-gray-900 mb-3">Selection Expert</h3>
+              <h3 className="text-xl font-bold text-gray-900 mb-3">Sélection Expert</h3>
               <p className="text-gray-700">
-                Ne perdez plus de temps a analyser toutes les cotes boostees. Nous faisons le tri pour vous et ne gardons que les meilleures.
+                Ne perdez plus de temps à analyser toutes les cotes boostées. Nous faisons le tri pour vous et ne gardons que les meilleures.
               </p>
             </div>
 
@@ -49,7 +49,7 @@ export default function HomePage() {
               <div className="text-4xl mb-4">📈</div>
               <h3 className="text-xl font-bold text-gray-900 mb-3">Transparence Absolue</h3>
               <p className="text-gray-700">
-                Tous nos resultats sont publics. ROI, taux de reussite, evolution mensuelle : suivez nos performances en temps reel.
+                Tous nos résultats sont publics. ROI, taux de réussite, évolution mensuelle : suivez nos performances en temps réel.
               </p>
             </div>
 
@@ -57,36 +57,36 @@ export default function HomePage() {
               <div className="text-4xl mb-4">💎</div>
               <h3 className="text-xl font-bold text-gray-900 mb-3">Que de la Valeur</h3>
               <p className="text-gray-700">
-                Zero perte de temps avec des cotes sans interet. Chaque notification = une vraie opportunite de gain.
+                Zéro perte de temps avec des cotes sans intérêt. Chaque notification = une vraie opportunité de gain.
               </p>
             </div>
           </div>
 
-          {/* Presentation principale */}
+          {/* Présentation principale */}
           <div className="bg-white rounded-xl shadow-lg p-8 transform transition hover:shadow-2xl">
             <p className="text-lg text-gray-700 mb-6 leading-relaxed">
-              Chez <strong>Cotes Boostees</strong>, nous ne vous proposons PAS toutes les cotes boostees du marche. 
-              Notre objectif ? <strong>Selectionner UNIQUEMENT les cotes a valeur positive (EV+)</strong> pour maximiser vos profits 💰.
+              Chez <strong>Cotes Boostées</strong>, nous ne vous proposons PAS toutes les cotes boostées du marché. 
+              Notre objectif ? <strong>Sélectionner UNIQUEMENT les cotes à valeur positive (EV+)</strong> pour maximiser vos profits 💰.
             </p>
             
-            <h3 className="text-2xl font-bold text-gray-900 mb-4">Notre methode selective :</h3>
+            <h3 className="text-2xl font-bold text-gray-900 mb-4">Notre méthode sélective :</h3>
             
-            {/* Selection / Ecart cote a cote */}
+            {/* Sélection / Écart côte à côte */}
             <div className="grid md:grid-cols-2 gap-6 mb-6">
               <div className="bg-green-50 border-l-4 border-green-600 p-6 rounded-lg transform transition hover:translate-x-2">
-                <h3 className="text-xl font-bold text-green-900 mb-3">✅ Ce que nous SELECTIONNONS :</h3>
+                <h3 className="text-xl font-bold text-green-900 mb-3">✅ Ce que nous SÉLECTIONNONS :</h3>
                 <ul className="space-y-2 text-gray-700">
-                  <li>• UNIQUEMENT les cotes boostees a valeur positive (EV+)</li>
-                  <li>• Les vraies opportunites rentables sur le long terme</li>
-                  <li>• Les cotes ou l'avantage mathematique est en votre faveur</li>
+                  <li>• UNIQUEMENT les cotes boostées à valeur positive (EV+)</li>
+                  <li>• Les vraies opportunités rentables sur le long terme</li>
+                  <li>• Les cotes où l'avantage mathématique est en votre faveur</li>
                 </ul>
               </div>
 
               <div className="bg-red-50 border-l-4 border-red-600 p-6 rounded-lg transform transition hover:translate-x-2">
-                <h3 className="text-xl font-bold text-red-900 mb-3">❌ Ce que nous ECARTONS :</h3>
+                <h3 className="text-xl font-bold text-red-900 mb-3">❌ Ce que nous ÉCARTONS :</h3>
                 <ul className="space-y-2 text-gray-700">
-                  <li>• Les cotes boostees a EV neutre (EV=0)</li>
-                  <li>• Les cotes boostees sans valeur reelle</li>
+                  <li>• Les cotes boostées à EV neutre (EV=0)</li>
+                  <li>• Les cotes boostées sans valeur réelle</li>
                   <li>• Les promotions trompeuses des bookmakers</li>
                 </ul>
               </div>
@@ -97,19 +97,19 @@ export default function HomePage() {
               <ul className="space-y-3 text-gray-700">
                 <li className="flex items-start gap-3">
                   <span className="text-2xl">🔍</span>
-                  <span><strong>Analyse quotidienne :</strong> Nous scannons toutes les cotes boostees des bookmakers ARJEL</span>
+                  <span><strong>Analyse quotidienne :</strong> Nous scannons toutes les cotes boostées des bookmakers ARJEL</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <span className="text-2xl">📊</span>
-                  <span><strong>Calcul de la valeur :</strong> Nous determinons si la cote boostee presente une esperance de gain positive</span>
+                  <span><strong>Calcul de la valeur :</strong> Nous déterminons si la cote boostée présente une espérance de gain positive</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <span className="text-2xl">✂️</span>
-                  <span><strong>Selection rigoureuse :</strong> Nous ne gardons QUE les cotes avec un avantage reel</span>
+                  <span><strong>Sélection rigoureuse :</strong> Nous ne gardons QUE les cotes avec un avantage réel</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <span className="text-2xl">⚡️</span>
-                  <span><strong>Notification immediate :</strong> Vous recevez uniquement les vraies opportunites sur Telegram</span>
+                  <span><strong>Notification immédiate :</strong> Vous recevez uniquement les vraies opportunités sur Telegram</span>
                 </li>
               </ul>
             </div>
@@ -120,25 +120,25 @@ export default function HomePage() {
             <h3 className="text-3xl font-bold mb-4 text-center">Pourquoi la VALEUR est essentielle ?</h3>
             <div className="grid md:grid-cols-2 gap-6 mt-6">
               <div className="bg-white bg-opacity-20 rounded-lg p-6 transform transition hover:bg-opacity-30">
-                <h4 className="text-xl font-bold mb-3">❌ Sans selection :</h4>
+                <h4 className="text-xl font-bold mb-3">❌ Sans sélection :</h4>
                 <p className="text-lg">
-                  Jouer toutes les cotes boostees = diluer vos gains avec des paris sans valeur. 
-                  Resultat : ROI mediocre voire negatif.
+                  Jouer toutes les cotes boostées = diluer vos gains avec des paris sans valeur. 
+                  Résultat : ROI médiocre voire négatif.
                 </p>
               </div>
               <div className="bg-white bg-opacity-20 rounded-lg p-6 transform transition hover:bg-opacity-30">
-                <h4 className="text-xl font-bold mb-3">✅ Avec notre selection :</h4>
+                <h4 className="text-xl font-bold mb-3">✅ Avec notre sélection :</h4>
                 <p className="text-lg">
-                  Ne jouer QUE les cotes a valeur = concentrer vos mises sur les vraies opportunites. 
-                  Resultat : ROI optimise sur le long terme.
+                  Ne jouer QUE les cotes à valeur = concentrer vos mises sur les vraies opportunités. 
+                  Résultat : ROI optimisé sur le long terme.
                 </p>
               </div>
             </div>
           </div>
 
-          {/* Comment ca marche */}
+          {/* Comment ça marche */}
           <div className="bg-white rounded-xl shadow-lg p-8 transform transition hover:shadow-2xl">
-            <h3 className="text-2xl font-bold text-gray-900 mb-6 text-center">Comment ca marche ?</h3>
+            <h3 className="text-2xl font-bold text-gray-900 mb-6 text-center">Comment ça marche ?</h3>
             
             <div className="space-y-6">
               <div className="flex gap-4 transform transition hover:translate-x-2">
@@ -148,7 +148,7 @@ export default function HomePage() {
                 <div>
                   <h4 className="text-lg font-semibold text-gray-900 mb-2">Abonnez-vous au service</h4>
                   <p className="text-gray-700">
-                    Rendez-vous sur notre page d'abonnement pour rejoindre la communaute des parieurs intelligents.
+                    Rendez-vous sur notre page d'abonnement pour rejoindre la communauté des parieurs intelligents.
                   </p>
                 </div>
               </div>
@@ -158,12 +158,12 @@ export default function HomePage() {
                   2
                 </div>
                 <div>
-                  <h4 className="text-lg font-semibold text-gray-900 mb-2">Recevez vos acces Telegram</h4>
+                  <h4 className="text-lg font-semibold text-gray-900 mb-2">Recevez vos accès Telegram</h4>
                   <p className="text-gray-700 mb-3">
-                    Apres validation de votre paiement, vous recevez un mail avec les liens d'invitations pour integrer le canal et le groupe prive CB 2026.
+                    Après validation de votre paiement, vous recevez un mail avec les liens d'invitations pour intégrer le canal et le groupe privé CB 2026.
                   </p>
                   <p className="text-gray-700">
-                    Une fois integre au canal et au groupe, vous serez notifie a chaque CB publiee sur le canal, et vous pourrez discuter et echanger avec les autres membres du groupe.
+                    Une fois intégré au canal et au groupe, vous serez notifié à chaque CB publiée sur le canal, et vous pourrez discuter et échanger avec les autres membres du groupe.
                   </p>
                 </div>
               </div>
@@ -173,9 +173,9 @@ export default function HomePage() {
                   3
                 </div>
                 <div>
-                  <h4 className="text-lg font-semibold text-gray-900 mb-2">Ne jouez QUE les cotes a valeur</h4>
+                  <h4 className="text-lg font-semibold text-gray-900 mb-2">Ne jouez QUE les cotes à valeur</h4>
                   <p className="text-gray-700">
-                    Chaque jour, recevez UNIQUEMENT les cotes boostees selectionnees pour leur valeur reelle. Chaque prono = numero unique (CB 001, CB 002...).
+                    Chaque jour, recevez UNIQUEMENT les cotes boostées sélectionnées pour leur valeur réelle. Chaque prono = numéro unique (CB 001, CB 002...).
                   </p>
                 </div>
               </div>
@@ -187,7 +187,7 @@ export default function HomePage() {
                 <div>
                   <h4 className="text-lg font-semibold text-gray-900 mb-2">Suivez vos gains en transparence</h4>
                   <p className="text-gray-700">
-                    Tous nos resultats sont publics sur ce site. Consultez notre ROI, nos stats par bookmaker et notre evolution en temps reel.
+                    Tous nos résultats sont publics sur ce site. Consultez notre ROI, nos stats par bookmaker et notre évolution en temps réel.
                   </p>
                 </div>
               </div>
@@ -196,15 +196,15 @@ export default function HomePage() {
 
           {/* CTA Final */}
           <div className="bg-gradient-to-r from-green-500 to-emerald-600 rounded-xl shadow-2xl p-8 text-white text-center transform transition hover:scale-105 hover:shadow-3xl">
-            <h3 className="text-3xl font-bold mb-4">Pret a parier intelligemment ?</h3>
+            <h3 className="text-3xl font-bold mb-4">Prêt à parier intelligemment ?</h3>
             <p className="text-xl mb-6">
-              Arretez de perdre du temps avec des cotes sans valeur. Rejoignez-nous et ne jouez plus QUE les vraies opportunites !
+              Arrêtez de perdre du temps avec des cotes sans valeur. Rejoignez-nous et ne jouez plus QUE les vraies opportunités !
             </p>
             <button 
               onClick={() => router.push('/abonnement')}
               className="bg-white text-green-600 px-8 py-4 rounded-lg text-xl font-bold hover:bg-gray-100 transition transform hover:scale-110"
             >
-              S'abonner aux Cotes Boostees 2026 🚀
+              S'abonner aux Cotes Boostées 2026 🚀
             </button>
           </div>
         </div>
