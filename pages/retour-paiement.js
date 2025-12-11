@@ -1,196 +1,156 @@
-import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
+import Link from 'next/link';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 
-export default function RetourPaiementPage() {
+export default function RetourPaiement() {
   const router = useRouter();
-  const [statut, setStatut] = useState('loading'); // loading, success, cancel, error
-  const [details, setDetails] = useState({});
+  const [status, setStatus] = useState(null);
 
   useEffect(() => {
-    // Récupération des paramètres de retour PayPal
-    const params = new URLSearchParams(window.location.search);
+    // Déterminer le statut en fonction des paramètres URL
+    const { st, tx, amt, cc, cm, item_number } = router.query;
     
-    // PayPal renvoie généralement ces paramètres
-    const paymentId = params.get('paymentId') || params.get('token');
-    const payerId = params.get('PayerID');
-    const status = params.get('st'); // Success/Failure status
-    
-    // Détection du statut
-    if (paymentId && payerId) {
-      // Paiement probablement réussi
-      setStatut('success');
-      setDetails({
-        paymentId,
-        payerId
-      });
-    } else if (params.get('cancel') === 'true' || params.get('cancelled') === 'true') {
-      // Paiement annulé
-      setStatut('cancel');
-    } else if (status === 'Completed' || status === 'Success') {
-      // Paiement confirmé
-      setStatut('success');
-    } else if (paymentId && !payerId) {
-      // Paiement en attente ou incomplet
-      setStatut('cancel');
+    // PayPal renvoie 'Completed' dans le paramètre 'st' en cas de succès
+    if (st === 'Completed' || tx) {
+      setStatus('success');
+    } else if (st === 'Failed' || st === 'Canceled') {
+      setStatus('failure');
     } else {
-      // Par défaut, on considère que c'est un succès si on arrive sur cette page
-      setStatut('success');
+      // Par défaut, on considère que c'est un succès si la page est chargée
+      // (le client a été redirigé depuis PayPal)
+      setStatus('success');
     }
-  }, []);
+  }, [router.query]);
 
-  if (statut === 'loading') {
+  if (!status) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-indigo-600 mx-auto mb-4"></div>
-          <p className="text-xl text-gray-600">Vérification de votre paiement...</p>
-        </div>
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
+        <Header />
+        <main className="container mx-auto px-4 py-12">
+          <div className="max-w-2xl mx-auto text-center text-white">
+            <p className="text-xl">Chargement...</p>
+          </div>
+        </main>
+        <Footer />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex flex-col">
-      <Header currentPage="abonnement" />
-
-      <div className="max-w-3xl mx-auto px-4 py-8 flex-1">
-        {statut === 'success' ? (
-          // PAIEMENT RÉUSSI
-          <div className="bg-white rounded-xl shadow-2xl p-8 text-center">
-            <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
-              <svg className="w-12 h-12 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
-              </svg>
-            </div>
-
-            <h1 className="text-4xl font-bold text-gray-900 mb-4">
-              🎉 Paiement réussi !
-            </h1>
-            
-            <p className="text-xl text-gray-700 mb-8">
-              Merci pour votre abonnement aux Cotes Boostées 2026 !
-            </p>
-
-            <div className="bg-gradient-to-r from-indigo-50 to-purple-50 rounded-lg p-6 mb-8 text-left">
-              <h2 className="text-xl font-bold text-indigo-900 mb-4">📧 Prochaines étapes :</h2>
-              <ol className="space-y-3 text-gray-700">
-                <li className="flex items-start gap-3">
-                  <span className="flex-shrink-0 w-8 h-8 bg-indigo-600 text-white rounded-full flex items-center justify-center font-bold">1</span>
-                  <span>
-                    <strong>Vérifiez votre boîte mail</strong> (y compris les spams) : vous recevrez vos liens d'accès 
-                    au <strong>canal et groupe Telegram CB 2026</strong> dans les <strong>12 heures</strong> suivant votre paiement.
-                  </span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="flex-shrink-0 w-8 h-8 bg-indigo-600 text-white rounded-full flex items-center justify-center font-bold">2</span>
-                  <span>
-                    <strong>Rejoignez le canal Telegram</strong> pour recevoir toutes nos sélections de cotes boostées en temps réel.
-                  </span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="flex-shrink-0 w-8 h-8 bg-indigo-600 text-white rounded-full flex items-center justify-center font-bold">3</span>
-                  <span>
-                    <strong>Intégrez le groupe de discussion</strong> pour échanger avec la communauté et poser vos questions.
-                  </span>
-                </li>
-              </ol>
-            </div>
-
-            <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4 mb-6 text-left">
-              <p className="text-sm text-gray-700">
-                <strong>⚠️ Important :</strong> Si vous ne recevez pas vos accès dans les 12 heures, contactez-nous à{' '}
-                <a href="mailto:cotes.boostees@gmail.com" className="text-indigo-600 hover:underline font-semibold">
-                  cotes.boostees@gmail.com
-                </a>
-              </p>
-            </div>
-
-            {details.paymentId && (
-              <div className="bg-gray-50 rounded-lg p-4 mb-6">
-                <p className="text-xs text-gray-500">
-                  Référence de transaction : <span className="font-mono font-semibold">{details.paymentId}</span>
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
+      <Header />
+      
+      <main className="container mx-auto px-4 py-12">
+        <div className="max-w-3xl mx-auto">
+          
+          {status === 'success' ? (
+            // PAGE DE SUCCÈS
+            <div className="bg-white rounded-2xl shadow-2xl p-8 md:p-12">
+              <div className="text-center mb-8">
+                <div className="inline-block p-4 bg-green-100 rounded-full mb-4">
+                  <svg className="w-16 h-16 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                </div>
+                <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
+                  🎉 Paiement réussi !
+                </h1>
+                <p className="text-xl text-gray-600">
+                  Merci pour votre confiance
                 </p>
               </div>
-            )}
 
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button
-                onClick={() => router.push('/')}
-                className="bg-indigo-600 text-white px-8 py-3 rounded-lg hover:bg-indigo-700 transition font-semibold"
-              >
-                Retour à l'accueil
-              </button>
-              <button
-                onClick={() => router.push('/stats')}
-                className="bg-white border-2 border-indigo-600 text-indigo-600 px-8 py-3 rounded-lg hover:bg-indigo-50 transition font-semibold"
-              >
-                Voir nos statistiques
-              </button>
+              <div className="bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl p-6 mb-8">
+                <h2 className="text-xl font-bold text-gray-800 mb-4">✅ Prochaines étapes :</h2>
+                <div className="space-y-3 text-gray-700">
+                  <p className="flex items-start">
+                    <span className="text-green-600 font-bold mr-2">1.</span>
+                    <span>Vous allez recevoir un email de confirmation de PayPal</span>
+                  </p>
+                  <p className="flex items-start">
+                    <span className="text-green-600 font-bold mr-2">2.</span>
+                    <span>Sous <strong>12 heures maximum</strong>, nous vous enverrons par email les liens d'accès à notre groupe Telegram privé CB 2026</span>
+                  </p>
+                  <p className="flex items-start">
+                    <span className="text-green-600 font-bold mr-2">3.</span>
+                    <span>Vous recevrez toutes nos cotes boostées en temps réel directement sur Telegram</span>
+                  </p>
+                </div>
+              </div>
+
+              <div className="bg-blue-50 rounded-xl p-6 mb-8">
+                <h3 className="font-bold text-gray-800 mb-2">📧 Vérifiez vos emails :</h3>
+                <p className="text-gray-700">
+                  Si vous ne recevez pas nos accès sous 12h, vérifiez vos spams ou contactez-nous à : 
+                  <a href="mailto:contact@cotes-boostees.com" className="text-indigo-600 font-semibold ml-1 hover:underline">
+                    contact@cotes-boostees.com
+                  </a>
+                </p>
+              </div>
+
+              <div className="flex justify-center">
+                <Link href="/" className="inline-block bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-8 py-3 rounded-lg font-semibold hover:from-indigo-700 hover:to-purple-700 transition-all duration-300 text-center">
+                  Retour à l'accueil
+                </Link>
+              </div>
             </div>
-          </div>
-        ) : (
-          // PAIEMENT ANNULÉ OU ÉCHOUÉ
-          <div className="bg-white rounded-xl shadow-2xl p-8 text-center">
-            <div className="w-20 h-20 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-6">
-              <svg className="w-12 h-12 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path>
-              </svg>
+          ) : (
+            // PAGE D'ÉCHEC
+            <div className="bg-white rounded-2xl shadow-2xl p-8 md:p-12">
+              <div className="text-center mb-8">
+                <div className="inline-block p-4 bg-red-100 rounded-full mb-4">
+                  <svg className="w-16 h-16 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </div>
+                <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
+                  ❌ Paiement non abouti
+                </h1>
+                <p className="text-xl text-gray-600">
+                  Le paiement n'a pas pu être finalisé
+                </p>
+              </div>
+
+              <div className="bg-red-50 rounded-xl p-6 mb-8">
+                <h2 className="text-xl font-bold text-gray-800 mb-4">Que s'est-il passé ?</h2>
+                <p className="text-gray-700 mb-4">
+                  Votre paiement a été annulé ou n'a pas pu être traité par PayPal.
+                </p>
+                <p className="text-gray-700">
+                  Cela peut arriver pour plusieurs raisons :
+                </p>
+                <ul className="list-disc list-inside text-gray-700 mt-2 space-y-1">
+                  <li>Vous avez annulé le paiement</li>
+                  <li>Problème avec votre moyen de paiement</li>
+                  <li>Erreur de connexion</li>
+                </ul>
+              </div>
+
+              <div className="bg-blue-50 rounded-xl p-6 mb-8">
+                <h3 className="font-bold text-gray-800 mb-2">💡 Besoin d'aide ?</h3>
+                <p className="text-gray-700">
+                  N'hésitez pas à nous contacter si vous rencontrez des difficultés : 
+                  <a href="mailto:contact@cotes-boostees.com" className="text-indigo-600 font-semibold ml-1 hover:underline">
+                    contact@cotes-boostees.com
+                  </a>
+                </p>
+              </div>
+
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <Link href="/abonnement" className="inline-block bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-8 py-3 rounded-lg font-semibold hover:from-indigo-700 hover:to-purple-700 transition-all duration-300 text-center">
+                  Réessayer le paiement
+                </Link>
+                <Link href="/" className="inline-block bg-white text-indigo-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-50 border-2 border-indigo-600 transition-all duration-300 text-center">
+                  Retour à l'accueil
+                </Link>
+              </div>
             </div>
+          )}
 
-            <h1 className="text-4xl font-bold text-gray-900 mb-4">
-              Paiement annulé
-            </h1>
-            
-            <p className="text-xl text-gray-700 mb-8">
-              Votre paiement n'a pas été finalisé.
-            </p>
-
-            <div className="bg-blue-50 border-l-4 border-blue-400 p-6 mb-8 text-left">
-              <h3 className="font-bold text-blue-900 mb-2">Que s'est-il passé ?</h3>
-              <p className="text-gray-700 text-sm mb-3">
-                Le paiement a été annulé ou n'a pas pu être complété. Cela peut arriver si :
-              </p>
-              <ul className="list-disc pl-5 space-y-1 text-gray-700 text-sm">
-                <li>Vous avez annulé la transaction sur PayPal</li>
-                <li>Le paiement a été refusé par votre banque</li>
-                <li>Un problème technique s'est produit</li>
-              </ul>
-            </div>
-
-            <div className="bg-gray-50 rounded-lg p-6 mb-8 text-left">
-              <h3 className="font-bold text-gray-900 mb-3">💡 Vous souhaitez réessayer ?</h3>
-              <p className="text-gray-700 text-sm mb-4">
-                Aucun problème ! Vos informations ont été sauvegardées. Vous pouvez retourner sur la page 
-                d'abonnement et refaire le paiement.
-              </p>
-            </div>
-
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button
-                onClick={() => router.push('/abonnement')}
-                className="bg-indigo-600 text-white px-8 py-3 rounded-lg hover:bg-indigo-700 transition font-semibold"
-              >
-                Réessayer le paiement
-              </button>
-              <button
-                onClick={() => router.push('/')}
-                className="bg-white border-2 border-gray-300 text-gray-700 px-8 py-3 rounded-lg hover:bg-gray-50 transition font-semibold"
-              >
-                Retour à l'accueil
-              </button>
-            </div>
-
-            <p className="text-sm text-gray-500 mt-6">
-              Besoin d'aide ? Contactez-nous à{' '}
-              <a href="mailto:cotes.boostees@gmail.com" className="text-indigo-600 hover:underline font-semibold">
-                cotes.boostees@gmail.com
-              </a>
-            </p>
-          </div>
-        )}
-      </div>
+        </div>
+      </main>
 
       <Footer />
     </div>
