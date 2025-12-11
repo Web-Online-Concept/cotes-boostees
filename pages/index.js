@@ -30,7 +30,7 @@ export default function HomePage() {
         <link rel="canonical" href="https://www.cotes-boostees.com" />
       </Head>
 
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex flex-col">
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex flex-col pb-20 lg:pb-0">
         <Header currentPage="home" />
 
         {/* Video Background Fullscreen (hauteur écran - header) */}
