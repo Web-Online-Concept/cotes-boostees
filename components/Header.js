@@ -75,42 +75,26 @@ export default function Header({ currentPage }) {
       <header className="fixed top-0 left-0 right-0 bg-gradient-to-r from-indigo-600 via-purple-600 to-indigo-700 shadow-2xl z-50">
         <div className="max-w-7xl mx-auto px-4 py-2">
           
-          {/* VERSION MOBILE */}
-          <div className="lg:hidden flex items-center">
-            {/* Bouton Menu Hamburger à gauche */}
-            <button
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 rounded-lg bg-white/10 hover:bg-white/20 transition flex-shrink-0"
-              aria-label="Toggle menu"
-            >
-              {mobileMenuOpen ? (
-                <X className="w-6 h-6 text-white" />
-              ) : (
-                <Menu className="w-6 h-6 text-white" />
-              )}
-            </button>
-
-            {/* Logo + Titre CENTRÉS entre burger et bord droit */}
-            <div className="flex-1 flex items-center justify-center gap-2">
-              <Link href="/">
-                <img 
-                  src="/images/logo_cb.png" 
-                  alt="Cotes Boostées - Logo site de sélection cotes boostées EV+ ARJEL" 
-                  className="cursor-pointer hover:scale-105 transition-transform duration-300"
-                  style={{ 
-                    width: '100px', 
-                    height: '50px'
-                  }}
-                />
-              </Link>
-              <div className="text-center">
-                <h1 className="text-base font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-white via-yellow-200 to-white tracking-wide drop-shadow-2xl leading-tight">
-                  Cotes-Boostées.com
-                </h1>
-                <p className="text-white text-xs font-semibold tracking-wide drop-shadow-lg leading-tight">
-                  Gagnez avec les meilleures CB ARJEL
-                </p>
-              </div>
+          {/* VERSION MOBILE - Logo + Titre centrés */}
+          <div className="lg:hidden flex items-center justify-center gap-2 py-1">
+            <Link href="/">
+              <img 
+                src="/images/logo_cb.png" 
+                alt="Cotes Boostées - Logo site de sélection cotes boostées EV+ ARJEL" 
+                className="cursor-pointer hover:scale-105 transition-transform duration-300"
+                style={{ 
+                  width: '100px', 
+                  height: '50px'
+                }}
+              />
+            </Link>
+            <div className="text-center">
+              <h1 className="text-lg font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-white via-yellow-200 to-white tracking-wide drop-shadow-2xl leading-tight">
+                Cotes-Boostées.com
+              </h1>
+              <p className="text-white text-xs font-semibold tracking-wide drop-shadow-lg leading-tight">
+                Gagnez avec les meilleures CB ARJEL
+              </p>
             </div>
           </div>
 
@@ -192,88 +176,6 @@ export default function Header({ currentPage }) {
           </div>
         </div>
       </header>
-
-      {/* Menu Mobile (overlay) */}
-      {mobileMenuOpen && (
-        <>
-          {/* Overlay sombre */}
-          <div 
-            className="lg:hidden fixed inset-0 bg-black/50 z-40"
-            style={{ top: '66px' }}
-            onClick={() => setMobileMenuOpen(false)}
-          />
-          
-          {/* Menu slide depuis la gauche */}
-          <div className="lg:hidden fixed top-[66px] left-0 w-64 h-[calc(100vh-66px)] bg-gradient-to-b from-indigo-600 to-purple-700 shadow-2xl z-50 overflow-y-auto">
-            <nav className="flex flex-col p-4 space-y-2">
-              {navItems.map((item) => {
-                const isActive = currentPage === item.key;
-                
-                if (item.isAnchor) {
-                  return (
-                    <button
-                      key={item.key}
-                      onClick={(e) => handleSmoothScroll(e, 'fonctionnement')}
-                      className={`
-                        w-full text-left px-4 py-3 rounded-lg font-semibold
-                        transition-all duration-200
-                        ${isActive 
-                          ? 'bg-white text-indigo-700 shadow-lg' 
-                          : 'bg-white/10 text-white hover:bg-white/20'
-                        }
-                      `}
-                    >
-                      <span className="flex items-center gap-3">
-                        <span className="text-xl">{item.emoji}</span>
-                        {item.name}
-                      </span>
-                    </button>
-                  );
-                }
-                
-                return (
-                  <Link key={item.key} href={item.path} onClick={handleNavClick}>
-                    <button
-                      className={`
-                        w-full text-left px-4 py-3 rounded-lg font-semibold
-                        transition-all duration-200
-                        ${isActive 
-                          ? 'bg-white text-indigo-700 shadow-lg' 
-                          : 'bg-white/10 text-white hover:bg-white/20'
-                        }
-                      `}
-                    >
-                      <span className="flex items-center gap-3">
-                        <span className="text-xl">{item.emoji}</span>
-                        {item.name}
-                      </span>
-                    </button>
-                  </Link>
-                );
-              })}
-
-              {/* Contact - UNIQUEMENT en mobile */}
-              <Link href="/contact" onClick={handleNavClick}>
-                <button
-                  className={`
-                    w-full text-left px-4 py-3 rounded-lg font-semibold
-                    transition-all duration-200
-                    ${currentPage === 'contact'
-                      ? 'bg-white text-indigo-700 shadow-lg' 
-                      : 'bg-white/10 text-white hover:bg-white/20'
-                    }
-                  `}
-                >
-                  <span className="flex items-center gap-3">
-                    <span className="text-xl">📧</span>
-                    Nous contacter
-                  </span>
-                </button>
-              </Link>
-            </nav>
-          </div>
-        </>
-      )}
       
       {/* Spacer pour compenser la hauteur du header fixe */}
       <div className="lg:hidden" style={{ height: '66px' }} />
