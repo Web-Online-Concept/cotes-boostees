@@ -1,4 +1,4 @@
-import pool from '../../lib/db';
+import { sql } from '@vercel/postgres';
 
 export default async function handler(req, res) {
   const { method } = req;
@@ -7,9 +7,7 @@ export default async function handler(req, res) {
     switch (method) {
       case 'GET':
         // Récupérer tous les abonnés
-        const { rows } = await pool.query(
-          'SELECT * FROM abonnes ORDER BY date_inscription DESC'
-        );
+        const { rows } = await sql`SELECT * FROM abonnes ORDER BY date_inscription DESC`;
         return res.status(200).json(rows);
 
       case 'POST':
@@ -20,10 +18,11 @@ export default async function handler(req, res) {
           return res.status(400).json({ message: 'Nom et email requis' });
         }
 
-        const insertResult = await pool.query(
-          'INSERT INTO abonnes (nom, email, statut_paiement, notes) VALUES ($1, $2, $3, $4) RETURNING *',
-          [nom, email, statut_paiement, notes]
-        );
+        const insertResult = await sql`
+          INSERT INTO abonnes (nom, email, statut_paiement, notes) 
+          VALUES (${nom}, ${email}, ${statut_paiement}, ${notes}) 
+          RETURNING *
+        `;
         
         return res.status(201).json(insertResult.rows[0]);
 
@@ -35,10 +34,12 @@ export default async function handler(req, res) {
           return res.status(400).json({ message: 'ID requis' });
         }
 
-        const updateResult = await pool.query(
-          'UPDATE abonnes SET nom = $1, email = $2, statut_paiement = $3, notes = $4 WHERE id = $5 RETURNING *',
-          [updatedNom, updatedEmail, updatedStatut, updatedNotes || '', id]
-        );
+        const updateResult = await sql`
+          UPDATE abonnes 
+          SET nom = ${updatedNom}, email = ${updatedEmail}, statut_paiement = ${updatedStatut}, notes = ${updatedNotes || ''} 
+          WHERE id = ${id} 
+          RETURNING *
+        `;
 
         if (updateResult.rows.length === 0) {
           return res.status(404).json({ message: 'Abonné non trouvé' });
@@ -54,10 +55,9 @@ export default async function handler(req, res) {
           return res.status(400).json({ message: 'ID requis' });
         }
 
-        const deleteResult = await pool.query(
-          'DELETE FROM abonnes WHERE id = $1 RETURNING *',
-          [deleteId]
-        );
+        const deleteResult = await sql`
+          DELETE FROM abonnes WHERE id = ${deleteId} RETURNING *
+        `;
 
         if (deleteResult.rows.length === 0) {
           return res.status(404).json({ message: 'Abonné non trouvé' });
@@ -73,7 +73,7 @@ export default async function handler(req, res) {
     console.error('Erreur API abonnes:', error);
     
     // Gestion des erreurs de contrainte unique (email en double)
-    if (error.code === '23505') {
+    if (error.message && error.message.includes('unique')) {
       return res.status(409).json({ message: 'Cet email est déjà enregistré' });
     }
     
