@@ -50,7 +50,7 @@ export default function BottomBar({ currentPage }) {
 
   const navItems = [
     { 
-      name: 'Tutos', 
+      name: 'Tutoriel', 
       path: '/#fonctionnement', 
       key: 'home', 
       emoji: '🎯',
@@ -72,7 +72,7 @@ export default function BottomBar({ currentPage }) {
       isAnchor: false
     },
     { 
-      name: 'Abos', 
+      name: 'Abos CB', 
       path: '/abonnement', 
       key: 'abonnement', 
       emoji: '🚀',
