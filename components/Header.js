@@ -263,7 +263,7 @@ export default function Header({ currentPage }) {
                 >
                   <span className="flex items-center gap-3">
                     <span className="text-xl">📧</span>
-                    Contact
+                    Nous Contacter
                   </span>
                 </button>
               </Link>
