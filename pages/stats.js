@@ -236,7 +236,9 @@ export default function StatsPage() {
           {/* Evolution Mensuelle */}
           <div className="mb-8">
             <h2 className="text-xl font-semibold text-gray-900 mb-4">Évolution Mensuelle</h2>
-            <div className="bg-white rounded-lg shadow overflow-hidden">
+            
+            {/* VERSION DESKTOP - Tableau */}
+            <div className="hidden lg:block bg-white rounded-lg shadow overflow-hidden">
               <div className="overflow-x-auto">
                 <table className="w-full">
                   <thead className="bg-indigo-50 border-b">
@@ -290,12 +292,81 @@ export default function StatsPage() {
                 </table>
               </div>
             </div>
+
+            {/* VERSION MOBILE - Cards */}
+            <div className="lg:hidden space-y-4">
+              {monthlyStats.length === 0 ? (
+                <div className="bg-white rounded-lg shadow-lg p-8 text-center text-gray-500">
+                  Aucune donnée disponible
+                </div>
+              ) : (
+                monthlyStats.map(stat => {
+                  const gainNet = stat.gainsTotal - stat.miseTotal;
+                  const roi = stat.miseTotal > 0 ? ((gainNet / stat.miseTotal) * 100) : 0;
+                  const taux = (stat.gagnes + stat.perdus) > 0 
+                    ? ((stat.gagnes / (stat.gagnes + stat.perdus)) * 100) 
+                    : 0;
+                  
+                  return (
+                    <div key={stat.month} className="bg-white rounded-lg shadow-lg p-4">
+                      {/* Header */}
+                      <div className="flex items-center justify-between mb-3 pb-3 border-b border-gray-200">
+                        <span className="text-lg font-bold text-indigo-600">{stat.month}</span>
+                        <span className="text-sm text-gray-600">Total : {stat.total}</span>
+                      </div>
+
+                      {/* Stats */}
+                      <div className="grid grid-cols-3 gap-2 mb-3">
+                        <div className="text-center">
+                          <div className="text-xs text-gray-600">Gagnés</div>
+                          <div className="text-lg font-bold text-green-600">{stat.gagnes}</div>
+                        </div>
+                        <div className="text-center">
+                          <div className="text-xs text-gray-600">Perdus</div>
+                          <div className="text-lg font-bold text-red-600">{stat.perdus}</div>
+                        </div>
+                        <div className="text-center">
+                          <div className="text-xs text-gray-600">Rembours.</div>
+                          <div className="text-lg font-bold text-blue-600">{stat.rembourses}</div>
+                        </div>
+                      </div>
+
+                      {/* Infos */}
+                      <div className="space-y-2 text-sm">
+                        <div className="flex justify-between">
+                          <span className="text-gray-600">Taux de réussite :</span>
+                          <span className="font-semibold text-indigo-600">{taux.toFixed(1)}%</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-gray-600">Mise totale :</span>
+                          <span className="font-semibold text-gray-900">{stat.miseTotal.toFixed(2)} €</span>
+                        </div>
+                        <div className="flex justify-between pt-2 border-t border-gray-200">
+                          <span className="text-gray-600 font-medium">Gain Net :</span>
+                          <span className={`text-lg font-bold ${gainNet >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+                            {gainNet >= 0 ? '+' : ''}{gainNet.toFixed(2)} €
+                          </span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-gray-600 font-medium">ROI :</span>
+                          <span className={`text-lg font-bold ${roi >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+                            {roi >= 0 ? '+' : ''}{roi.toFixed(2)}%
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })
+              )}
+            </div>
           </div>
 
           {/* Bilan par Bookmaker */}
           <div className="mb-8">
             <h2 className="text-xl font-semibold text-gray-900 mb-4">Bilan par Bookmaker</h2>
-            <div className="bg-white rounded-lg shadow overflow-hidden">
+            
+            {/* VERSION DESKTOP - Tableau */}
+            <div className="hidden lg:block bg-white rounded-lg shadow overflow-hidden">
               <div className="overflow-x-auto">
                 <table className="w-full">
                   <thead className="bg-indigo-50 border-b">
@@ -349,12 +420,81 @@ export default function StatsPage() {
                 </table>
               </div>
             </div>
+
+            {/* VERSION MOBILE - Cards */}
+            <div className="lg:hidden space-y-4">
+              {bookmakerStats.length === 0 ? (
+                <div className="bg-white rounded-lg shadow-lg p-8 text-center text-gray-500">
+                  Aucune donnée disponible
+                </div>
+              ) : (
+                bookmakerStats.map(stat => {
+                  const gainNet = stat.gainsTotal - stat.miseTotal;
+                  const roi = stat.miseTotal > 0 ? ((gainNet / stat.miseTotal) * 100) : 0;
+                  const taux = (stat.gagnes + stat.perdus) > 0 
+                    ? ((stat.gagnes / (stat.gagnes + stat.perdus)) * 100) 
+                    : 0;
+                  
+                  return (
+                    <div key={stat.bookmaker} className="bg-white rounded-lg shadow-lg p-4">
+                      {/* Header */}
+                      <div className="flex items-center justify-between mb-3 pb-3 border-b border-gray-200">
+                        <span className="text-lg font-bold text-indigo-600">{stat.bookmaker}</span>
+                        <span className="text-sm text-gray-600">Total : {stat.total}</span>
+                      </div>
+
+                      {/* Stats */}
+                      <div className="grid grid-cols-3 gap-2 mb-3">
+                        <div className="text-center">
+                          <div className="text-xs text-gray-600">Gagnés</div>
+                          <div className="text-lg font-bold text-green-600">{stat.gagnes}</div>
+                        </div>
+                        <div className="text-center">
+                          <div className="text-xs text-gray-600">Perdus</div>
+                          <div className="text-lg font-bold text-red-600">{stat.perdus}</div>
+                        </div>
+                        <div className="text-center">
+                          <div className="text-xs text-gray-600">Rembours.</div>
+                          <div className="text-lg font-bold text-blue-600">{stat.rembourses}</div>
+                        </div>
+                      </div>
+
+                      {/* Infos */}
+                      <div className="space-y-2 text-sm">
+                        <div className="flex justify-between">
+                          <span className="text-gray-600">Taux de réussite :</span>
+                          <span className="font-semibold text-indigo-600">{taux.toFixed(1)}%</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-gray-600">Mise totale :</span>
+                          <span className="font-semibold text-gray-900">{stat.miseTotal.toFixed(2)} €</span>
+                        </div>
+                        <div className="flex justify-between pt-2 border-t border-gray-200">
+                          <span className="text-gray-600 font-medium">Gain Net :</span>
+                          <span className={`text-lg font-bold ${gainNet >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+                            {gainNet >= 0 ? '+' : ''}{gainNet.toFixed(2)} €
+                          </span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-gray-600 font-medium">ROI :</span>
+                          <span className={`text-lg font-bold ${roi >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+                            {roi >= 0 ? '+' : ''}{roi.toFixed(2)}%
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })
+              )}
+            </div>
           </div>
 
           {/* Evolution Mensuelle par Bookmaker */}
           <div className="mb-8">
             <h2 className="text-xl font-semibold text-gray-900 mb-4">Évolution Mensuelle par Bookmaker</h2>
-            <div className="bg-white rounded-lg shadow overflow-hidden">
+            
+            {/* VERSION DESKTOP - Tableau */}
+            <div className="hidden lg:block bg-white rounded-lg shadow overflow-hidden">
               <div className="overflow-x-auto">
                 <table className="w-full">
                   <thead className="bg-indigo-50 border-b">
@@ -409,6 +549,76 @@ export default function StatsPage() {
                   </tbody>
                 </table>
               </div>
+            </div>
+
+            {/* VERSION MOBILE - Cards */}
+            <div className="lg:hidden space-y-4">
+              {monthlyBookmakerStats.length === 0 ? (
+                <div className="bg-white rounded-lg shadow-lg p-8 text-center text-gray-500">
+                  Aucune donnée disponible
+                </div>
+              ) : (
+                monthlyBookmakerStats.map(stat => {
+                  const gainNet = stat.gainsTotal - stat.miseTotal;
+                  const roi = stat.miseTotal > 0 ? ((gainNet / stat.miseTotal) * 100) : 0;
+                  const taux = (stat.gagnes + stat.perdus) > 0 
+                    ? ((stat.gagnes / (stat.gagnes + stat.perdus)) * 100) 
+                    : 0;
+                  
+                  return (
+                    <div key={`${stat.month}_${stat.bookmaker}`} className="bg-white rounded-lg shadow-lg p-4">
+                      {/* Header */}
+                      <div className="flex items-center justify-between mb-3 pb-3 border-b border-gray-200">
+                        <div>
+                          <div className="text-lg font-bold text-indigo-600">{stat.month}</div>
+                          <div className="text-sm text-gray-600">{stat.bookmaker}</div>
+                        </div>
+                        <span className="text-sm text-gray-600">Total : {stat.total}</span>
+                      </div>
+
+                      {/* Stats */}
+                      <div className="grid grid-cols-3 gap-2 mb-3">
+                        <div className="text-center">
+                          <div className="text-xs text-gray-600">Gagnés</div>
+                          <div className="text-lg font-bold text-green-600">{stat.gagnes}</div>
+                        </div>
+                        <div className="text-center">
+                          <div className="text-xs text-gray-600">Perdus</div>
+                          <div className="text-lg font-bold text-red-600">{stat.perdus}</div>
+                        </div>
+                        <div className="text-center">
+                          <div className="text-xs text-gray-600">Rembours.</div>
+                          <div className="text-lg font-bold text-blue-600">{stat.rembourses}</div>
+                        </div>
+                      </div>
+
+                      {/* Infos */}
+                      <div className="space-y-2 text-sm">
+                        <div className="flex justify-between">
+                          <span className="text-gray-600">Taux de réussite :</span>
+                          <span className="font-semibold text-indigo-600">{taux.toFixed(1)}%</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-gray-600">Mise totale :</span>
+                          <span className="font-semibold text-gray-900">{stat.miseTotal.toFixed(2)} €</span>
+                        </div>
+                        <div className="flex justify-between pt-2 border-t border-gray-200">
+                          <span className="text-gray-600 font-medium">Gain Net :</span>
+                          <span className={`text-lg font-bold ${gainNet >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+                            {gainNet >= 0 ? '+' : ''}{gainNet.toFixed(2)} €
+                          </span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-gray-600 font-medium">ROI :</span>
+                          <span className={`text-lg font-bold ${roi >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+                            {roi >= 0 ? '+' : ''}{roi.toFixed(2)}%
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })
+              )}
             </div>
           </div>
         </div>
