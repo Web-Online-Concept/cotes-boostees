@@ -75,19 +75,19 @@ export default function AbonnementPage() {
   return (
     <>
       <Head>
-        <title>Abonnement Telegram CB 2026 | 100€ Accès Annuel Cotes Boostées</title>
-        <meta name="description" content="Abonnez-vous pour 100€ et accédez à notre canal et groupe Telegram privés CB 2026. Recevez quotidiennement les meilleures cotes boostées EV+ sélectionnées par nos experts." />
+        <title>Abonnement Telegram CB 2026 | Accès Annuel Cotes Boostées</title>
+        <meta name="description" content="Abonnez-vous et accédez à notre canal et groupe Telegram privés CB 2026. Recevez quotidiennement les meilleures cotes boostées EV+ sélectionnées par nos experts." />
         <meta name="keywords" content="abonnement cotes boostées, telegram paris sportifs, canal privé CB, groupe telegram paris, abonnement 2026" />
         
         {/* Open Graph */}
         <meta property="og:title" content="Abonnement Telegram CB 2026 | Accès Annuel" />
-        <meta property="og:description" content="100€ pour un an d'accès à nos sélections quotidiennes de cotes boostées EV+." />
+        <meta property="og:description" content="Abonnement annuel pour accéder à nos sélections quotidiennes de cotes boostées EV+." />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://www.cotes-boostees.com/abonnement" />
         
         {/* Twitter Card */}
         <meta name="twitter:card" content="summary" />
-        <meta name="twitter:title" content="Abonnement CB 2026 | 100€/an" />
+        <meta name="twitter:title" content="Abonnement CB 2026 | Accès Annuel" />
         <meta name="twitter:description" content="Accédez à nos sélections quotidiennes de cotes boostées." />
         
         <link rel="canonical" href="https://www.cotes-boostees.com/abonnement" />
@@ -221,7 +221,7 @@ export default function AbonnementPage() {
                   <div>
                     <h3 className="font-bold text-gray-900 mb-1">Effectuez le paiement sécurisé</h3>
                     <p className="text-sm text-gray-700">
-                      Procédez au paiement de 100€ via PayPal en toute sécurité.
+                      Procédez au paiement demandé via PayPal en toute sécurité.
                     </p>
                   </div>
                 </div>
@@ -312,7 +312,7 @@ export default function AbonnementPage() {
               <div className="mt-6 bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded">
                 <p className="text-sm text-gray-700">
                   <strong>⚠️ Important :</strong> Notre approche est basée sur l'analyse mathématique et la sélection 
-                  rigoureuse. Nous ne publions QUE les cotes à valeur positive. Pas de volume inutile, que de la qualité !
+                  rigoureuse. Nous ne publons QUE les cotes à valeur positive. Pas de volume inutile, que de la qualité !
                 </p>
               </div>
             </div>
