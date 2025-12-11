@@ -248,6 +248,25 @@ export default function Header({ currentPage }) {
                   </Link>
                 );
               })}
+
+              {/* Contact - UNIQUEMENT en mobile */}
+              <Link href="/contact" onClick={handleNavClick}>
+                <button
+                  className={`
+                    w-full text-left px-4 py-3 rounded-lg font-semibold
+                    transition-all duration-200
+                    ${currentPage === 'contact'
+                      ? 'bg-white text-indigo-700 shadow-lg' 
+                      : 'bg-white/10 text-white hover:bg-white/20'
+                    }
+                  `}
+                >
+                  <span className="flex items-center gap-3">
+                    <span className="text-xl">📧</span>
+                    Contact
+                  </span>
+                </button>
+              </Link>
             </nav>
           </div>
         </>
