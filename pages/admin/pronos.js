@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { Plus, Edit2, Trash2, LogOut } from 'lucide-react';
 import { useRouter } from 'next/router';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
+import Header from '../../components/Header';
+import Footer from '../../components/Footer';
 
 export default function AdminPage() {
   const [pronos, setPronos] = useState([]);
