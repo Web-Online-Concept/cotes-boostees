@@ -111,7 +111,7 @@ export default function AbonnementPage() {
             <div className="bg-gradient-to-r from-green-500 to-emerald-600 rounded-xl p-6 mb-8 text-white text-center">
               <div className="text-5xl font-bold mb-2">100 €</div>
               <div className="text-xl font-semibold">Abonnement annuel 2026</div>
-              <p className="text-sm mt-2 opacity-90">Accès jusqu'au 31 décembre 2026</p>
+              <p className="text-sm mt-2 opacity-90">Accès du 1er Janvier au 31 décembre 2026</p>
             </div>
 
             {/* Formulaire ou Bouton PayPal */}
@@ -193,6 +193,92 @@ export default function AbonnementPage() {
                 </button>
               </div>
             )}
+
+            {/* NOUVEAU - Bloc explicatif des tarifs dégressifs */}
+            <div className="bg-gradient-to-br from-purple-50 to-pink-50 border-2 border-purple-300 rounded-lg p-6 mt-8">
+              <h2 className="text-2xl font-bold text-purple-900 mb-4 flex items-center gap-2">
+                <span className="text-3xl">💰</span>
+                Tarifs dégressifs 2026
+              </h2>
+              
+              <p className="text-gray-700 mb-4 leading-relaxed">
+                L'abonnement CB 2026 donne accès à toutes nos sélections <strong>du 1er janvier au 31 décembre 2026</strong>, 
+                quelle que soit votre date de souscription. Le tarif est calculé au prorata : <strong>10€ par mois restant</strong>.
+              </p>
+
+              <div className="bg-white rounded-lg p-4 shadow-md">
+                <h3 className="font-bold text-gray-900 mb-3 text-center">Tarifs par mois de souscription :</h3>
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                  <div className="text-center p-2 bg-gray-50 rounded">
+                    <div className="font-semibold text-indigo-600">Janvier</div>
+                    <div className="text-lg font-bold">120 €</div>
+                    <div className="text-xs text-gray-500">12 mois</div>
+                  </div>
+                  <div className="text-center p-2 bg-gray-50 rounded">
+                    <div className="font-semibold text-indigo-600">Février</div>
+                    <div className="text-lg font-bold">110 €</div>
+                    <div className="text-xs text-gray-500">11 mois</div>
+                  </div>
+                  <div className="text-center p-2 bg-gray-50 rounded">
+                    <div className="font-semibold text-indigo-600">Mars</div>
+                    <div className="text-lg font-bold">100 €</div>
+                    <div className="text-xs text-gray-500">10 mois</div>
+                  </div>
+                  <div className="text-center p-2 bg-gray-50 rounded">
+                    <div className="font-semibold text-indigo-600">Avril</div>
+                    <div className="text-lg font-bold">90 €</div>
+                    <div className="text-xs text-gray-500">9 mois</div>
+                  </div>
+                  <div className="text-center p-2 bg-gray-50 rounded">
+                    <div className="font-semibold text-indigo-600">Mai</div>
+                    <div className="text-lg font-bold">80 €</div>
+                    <div className="text-xs text-gray-500">8 mois</div>
+                  </div>
+                  <div className="text-center p-2 bg-gray-50 rounded">
+                    <div className="font-semibold text-indigo-600">Juin</div>
+                    <div className="text-lg font-bold">70 €</div>
+                    <div className="text-xs text-gray-500">7 mois</div>
+                  </div>
+                  <div className="text-center p-2 bg-gray-50 rounded">
+                    <div className="font-semibold text-indigo-600">Juillet</div>
+                    <div className="text-lg font-bold">60 €</div>
+                    <div className="text-xs text-gray-500">6 mois</div>
+                  </div>
+                  <div className="text-center p-2 bg-gray-50 rounded">
+                    <div className="font-semibold text-indigo-600">Août</div>
+                    <div className="text-lg font-bold">50 €</div>
+                    <div className="text-xs text-gray-500">5 mois</div>
+                  </div>
+                  <div className="text-center p-2 bg-gray-50 rounded">
+                    <div className="font-semibold text-indigo-600">Septembre</div>
+                    <div className="text-lg font-bold">40 €</div>
+                    <div className="text-xs text-gray-500">4 mois</div>
+                  </div>
+                  <div className="text-center p-2 bg-gray-50 rounded">
+                    <div className="font-semibold text-indigo-600">Octobre</div>
+                    <div className="text-lg font-bold">30 €</div>
+                    <div className="text-xs text-gray-500">3 mois</div>
+                  </div>
+                  <div className="text-center p-2 bg-gray-50 rounded">
+                    <div className="font-semibold text-indigo-600">Novembre</div>
+                    <div className="text-lg font-bold">20 €</div>
+                    <div className="text-xs text-gray-500">2 mois</div>
+                  </div>
+                  <div className="text-center p-2 bg-gray-50 rounded">
+                    <div className="font-semibold text-indigo-600">Décembre</div>
+                    <div className="text-lg font-bold">10 €</div>
+                    <div className="text-xs text-gray-500">1 mois</div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="mt-4 bg-purple-100 border-l-4 border-purple-500 p-4 rounded">
+                <p className="text-sm text-gray-700">
+                  <strong>💡 Exemple :</strong> Si vous vous abonnez en mars, vous payez 100€ et bénéficiez de toutes les CB 
+                  de mars à décembre 2026 (10 mois complets).
+                </p>
+              </div>
+            </div>
 
             {/* Comment ça marche */}
             <div className="bg-blue-50 border-2 border-blue-200 rounded-lg p-6 mt-8">
@@ -312,7 +398,7 @@ export default function AbonnementPage() {
               <div className="mt-6 bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded">
                 <p className="text-sm text-gray-700">
                   <strong>⚠️ Important :</strong> Notre approche est basée sur l'analyse mathématique et la sélection 
-                  rigoureuse. Nous ne publons QUE les cotes à valeur positive. Pas de volume inutile, que de la qualité !
+                  rigoureuse. Nous ne publions QUE les cotes à valeur positive. Pas de volume inutile, que de la qualité !
                 </p>
               </div>
             </div>
