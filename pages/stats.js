@@ -216,19 +216,19 @@ export default function StatsPage() {
             </div>
           </div>
 
-          {/* Bilan global */}
+           {/* Bilan global */}
           <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
             <h2 className="text-xl font-semibold text-gray-900 mb-4">Bilan Global</h2>
             <div className="grid md:grid-cols-3 gap-6">
-              <div>
+              <div className="text-center">
                 <div className="text-sm text-gray-600 mb-1">Mise Totale</div>
                 <div className="text-2xl font-bold text-gray-900">{miseTotal.toFixed(2)} €</div>
               </div>
-              <div>
+              <div className="text-center">
                 <div className="text-sm text-gray-600 mb-1">Gains Totaux</div>
                 <div className="text-2xl font-bold text-indigo-600">{gainsTotal.toFixed(2)} €</div>
               </div>
-              <div>
+              <div className="text-center">
                 <div className="text-sm text-gray-600 mb-1">Gain Net</div>
                 <div className={`text-2xl font-bold ${gainNet >= 0 ? 'text-green-600' : 'text-red-600'}`}>
                   {gainNet >= 0 ? '+' : ''}{gainNet.toFixed(2)} €
