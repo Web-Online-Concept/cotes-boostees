@@ -59,6 +59,10 @@ export default function Footer() {
               >
                 Admin
               </button>
+              <span>•</span>
+              <Link href="/admin/abonnes" className="hover:text-white transition">
+                Gestion
+              </Link>
             </div>
           </div>
         </div>
