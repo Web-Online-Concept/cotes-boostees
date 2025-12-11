@@ -10,6 +10,10 @@ export default function Footer() {
           
           {/* Liens légaux */}
           <div className="flex items-center justify-center gap-4 text-xs text-white/60">
+		    <Link href="/contact" className="hover:text-yellow-300 transition">
+			  Nous contacter
+			</Link>
+			<span>•</span>
             <Link href="/cgv" className="hover:text-white transition">
               CGV
             </Link>
