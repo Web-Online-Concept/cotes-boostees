@@ -210,9 +210,9 @@ export default function AdminAbonnesPage() {
       <Header currentPage="admin" />
 
       <div className="max-w-7xl mx-auto px-4 py-8 flex-1">
-        <div className="mb-6">
+        <div className="mb-6 text-center">
           <h2 className="text-2xl font-bold text-gray-900 mb-4">Gestion des Abonnés</h2>
-          <div className="flex gap-2">
+          <div className="flex justify-center gap-2">
             <button
               onClick={toggleForm}
               className="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 flex items-center gap-2 transition"
