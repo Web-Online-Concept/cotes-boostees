@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import Head from 'next/head';
 import { Search, X } from 'lucide-react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
@@ -63,178 +64,199 @@ export default function ResultatsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex flex-col">
-      <Header currentPage="resultats" />
+    <>
+      <Head>
+        <title>Résultats Cotes Boostées 2026 | Historique Complet Paris Sportifs</title>
+        <meta name="description" content="Consultez l'historique complet de nos cotes boostées 2026 : résultats détaillés, filtres par bookmaker et statut. Transparence totale sur toutes nos CB." />
+        <meta name="keywords" content="résultats cotes boostées, historique paris sportifs, résultats bookmakers, CB 2026" />
+        
+        {/* Open Graph */}
+        <meta property="og:title" content="Résultats CB 2026 | Historique Complet" />
+        <meta property="og:description" content="Historique complet et détaillé de toutes nos cotes boostées avec filtres." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://www.cotes-boostees.com/resultats" />
+        
+        {/* Twitter Card */}
+        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:title" content="Résultats CB 2026 | Historique" />
+        <meta name="twitter:description" content="Consultez tous nos résultats en détail." />
+        
+        <link rel="canonical" href="https://www.cotes-boostees.com/resultats" />
+      </Head>
 
-      <div className="max-w-7xl mx-auto px-4 py-8 flex-1">
-        <h2 className="text-3xl font-bold text-gray-900 mb-6 text-center">Résultats CB 2026</h2>
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex flex-col">
+        <Header currentPage="resultats" />
 
-        {/* Filtres */}
-        <div className="bg-white rounded-lg shadow-lg p-6 mb-6">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-            <div className="relative">
-              <Search className="absolute left-3 top-3 w-5 h-5 text-gray-400" />
-              <input
-                type="text"
-                placeholder="Rechercher par N° CB..."
-                value={searchTerm}
+        <div className="max-w-7xl mx-auto px-4 py-8 flex-1">
+          <h1 className="text-3xl font-bold text-gray-900 mb-6 text-center">Résultats CB 2026</h1>
+
+          {/* Filtres */}
+          <div className="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+              <div className="relative">
+                <Search className="absolute left-3 top-3 w-5 h-5 text-gray-400" />
+                <input
+                  type="text"
+                  placeholder="Rechercher par N° CB..."
+                  value={searchTerm}
+                  onChange={(e) => {
+                    setSearchTerm(e.target.value);
+                    setCurrentPage(1);
+                  }}
+                  className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+                />
+              </div>
+              <select
+                value={filterBookmaker}
                 onChange={(e) => {
-                  setSearchTerm(e.target.value);
+                  setFilterBookmaker(e.target.value);
                   setCurrentPage(1);
                 }}
-                className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none"
-              />
+                className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+              >
+                <option value="">Tous les bookmakers</option>
+                {bookmakers.map(bk => (
+                  <option key={bk} value={bk}>{bk}</option>
+                ))}
+              </select>
+              <select
+                value={filterStatut}
+                onChange={(e) => {
+                  setFilterStatut(e.target.value);
+                  setCurrentPage(1);
+                }}
+                className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+              >
+                <option value="">Tous les résultats</option>
+                {statuts.map(st => (
+                  <option key={st} value={st}>{st}</option>
+                ))}
+              </select>
+              <button
+                onClick={resetFilters}
+                className="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-300 transition flex items-center justify-center gap-2"
+              >
+                <X className="w-4 h-4" />
+                Réinitialiser
+              </button>
             </div>
-            <select
-              value={filterBookmaker}
-              onChange={(e) => {
-                setFilterBookmaker(e.target.value);
-                setCurrentPage(1);
-              }}
-              className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none"
-            >
-              <option value="">Tous les bookmakers</option>
-              {bookmakers.map(bk => (
-                <option key={bk} value={bk}>{bk}</option>
-              ))}
-            </select>
-            <select
-              value={filterStatut}
-              onChange={(e) => {
-                setFilterStatut(e.target.value);
-                setCurrentPage(1);
-              }}
-              className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none"
-            >
-              <option value="">Tous les résultats</option>
-              {statuts.map(st => (
-                <option key={st} value={st}>{st}</option>
-              ))}
-            </select>
-            <button
-              onClick={resetFilters}
-              className="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-300 transition flex items-center justify-center gap-2"
-            >
-              <X className="w-4 h-4" />
-              Réinitialiser
-            </button>
           </div>
-        </div>
 
-        {/* Tableau des résultats */}
-        <div className="bg-white rounded-lg shadow-lg overflow-hidden">
-          <div className="overflow-x-auto">
-            <table className="w-full">
-              <thead className="bg-indigo-50 border-b">
-                <tr>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-600 uppercase">N° CB</th>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-600 uppercase">Date</th>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-600 uppercase">Bookmaker</th>
-                  <th className="px-4 py-3 text-right text-xs font-medium text-gray-600 uppercase">Mise</th>
-                  <th className="px-4 py-3 text-right text-xs font-medium text-gray-600 uppercase">Cote</th>
-                  <th className="px-4 py-3 text-center text-xs font-medium text-gray-600 uppercase">Résultat</th>
-                  <th className="px-4 py-3 text-right text-xs font-medium text-gray-600 uppercase">Gain</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-gray-200">
-                {paginatedPronos.length === 0 ? (
+          {/* Tableau des résultats */}
+          <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+            <div className="overflow-x-auto">
+              <table className="w-full">
+                <thead className="bg-indigo-50 border-b">
                   <tr>
-                    <td colSpan="7" className="px-4 py-8 text-center text-gray-500">
-                      Aucun résultat ne correspond à vos critères.
-                    </td>
+                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-600 uppercase">N° CB</th>
+                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-600 uppercase">Date</th>
+                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-600 uppercase">Bookmaker</th>
+                    <th className="px-4 py-3 text-right text-xs font-medium text-gray-600 uppercase">Mise</th>
+                    <th className="px-4 py-3 text-right text-xs font-medium text-gray-600 uppercase">Cote</th>
+                    <th className="px-4 py-3 text-center text-xs font-medium text-gray-600 uppercase">Résultat</th>
+                    <th className="px-4 py-3 text-right text-xs font-medium text-gray-600 uppercase">Gain</th>
                   </tr>
-                ) : (
-                  paginatedPronos.map(prono => {
-                    let gain = 0;
-                    let gainDisplay = '';
-                    
-                    if (prono.statut === 'Gagne') {
-                      gain = (parseFloat(prono.mise) * parseFloat(prono.cote)) - parseFloat(prono.mise);
-                      gainDisplay = `+${gain.toFixed(2)} €`;
-                    } else if (prono.statut === 'Perdu') {
-                      gain = -parseFloat(prono.mise);
-                      gainDisplay = `${gain.toFixed(2)} €`;
-                    } else if (prono.statut === 'Rembourse') {
-                      gain = 0;
-                      gainDisplay = '0.00 €';
-                    }
+                </thead>
+                <tbody className="divide-y divide-gray-200">
+                  {paginatedPronos.length === 0 ? (
+                    <tr>
+                      <td colSpan="7" className="px-4 py-8 text-center text-gray-500">
+                        Aucun résultat ne correspond à vos critères.
+                      </td>
+                    </tr>
+                  ) : (
+                    paginatedPronos.map(prono => {
+                      let gain = 0;
+                      let gainDisplay = '';
+                      
+                      if (prono.statut === 'Gagne') {
+                        gain = (parseFloat(prono.mise) * parseFloat(prono.cote)) - parseFloat(prono.mise);
+                        gainDisplay = `+${gain.toFixed(2)} €`;
+                      } else if (prono.statut === 'Perdu') {
+                        gain = -parseFloat(prono.mise);
+                        gainDisplay = `${gain.toFixed(2)} €`;
+                      } else if (prono.statut === 'Rembourse') {
+                        gain = 0;
+                        gainDisplay = '0.00 €';
+                      }
 
-                    return (
-                      <tr key={prono.id} className="hover:bg-gray-50">
-                        <td className="px-4 py-3 text-sm font-semibold text-indigo-600">{prono.cb_number}</td>
-                        <td className="px-4 py-3 text-sm text-gray-900">
-                          {new Date(prono.date).toLocaleDateString('fr-FR')}
-                        </td>
-                        <td className="px-4 py-3 text-sm text-gray-600">{prono.bookmaker}</td>
-                        <td className="px-4 py-3 text-sm text-gray-900 text-right">{parseFloat(prono.mise).toFixed(2)} €</td>
-                        <td className="px-4 py-3 text-sm text-gray-900 text-right">{parseFloat(prono.cote).toFixed(2)}</td>
-                        <td className="px-4 py-3 text-center">
-                          <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
-                            prono.statut === 'Gagne' ? 'bg-green-100 text-green-800' :
-                            prono.statut === 'Perdu' ? 'bg-red-100 text-red-800' :
-                            'bg-blue-100 text-blue-800'
+                      return (
+                        <tr key={prono.id} className="hover:bg-gray-50">
+                          <td className="px-4 py-3 text-sm font-semibold text-indigo-600">{prono.cb_number}</td>
+                          <td className="px-4 py-3 text-sm text-gray-900">
+                            {new Date(prono.date).toLocaleDateString('fr-FR')}
+                          </td>
+                          <td className="px-4 py-3 text-sm text-gray-600">{prono.bookmaker}</td>
+                          <td className="px-4 py-3 text-sm text-gray-900 text-right">{parseFloat(prono.mise).toFixed(2)} €</td>
+                          <td className="px-4 py-3 text-sm text-gray-900 text-right">{parseFloat(prono.cote).toFixed(2)}</td>
+                          <td className="px-4 py-3 text-center">
+                            <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
+                              prono.statut === 'Gagne' ? 'bg-green-100 text-green-800' :
+                              prono.statut === 'Perdu' ? 'bg-red-100 text-red-800' :
+                              'bg-blue-100 text-blue-800'
+                            }`}>
+                              {prono.statut}
+                            </span>
+                          </td>
+                          <td className={`px-4 py-3 text-sm text-right font-semibold ${
+                            gain > 0 ? 'text-green-600' :
+                            gain < 0 ? 'text-red-600' :
+                            'text-gray-600'
                           }`}>
-                            {prono.statut}
-                          </span>
-                        </td>
-                        <td className={`px-4 py-3 text-sm text-right font-semibold ${
-                          gain > 0 ? 'text-green-600' :
-                          gain < 0 ? 'text-red-600' :
-                          'text-gray-600'
-                        }`}>
-                          {gainDisplay}
-                        </td>
-                      </tr>
-                    );
-                  })
-                )}
-              </tbody>
-            </table>
-          </div>
-
-          {/* Pagination */}
-          {totalPages > 1 && (
-            <div className="bg-gray-50 px-4 py-3 flex items-center justify-between border-t">
-              <div className="text-sm text-gray-700">
-                Affichage de {startIndex + 1} à {Math.min(startIndex + itemsPerPage, sortedPronos.length)} sur {sortedPronos.length} résultats
-              </div>
-              <div className="flex gap-2">
-                <button
-                  onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
-                  disabled={currentPage === 1}
-                  className="px-3 py-1 bg-white border border-gray-300 rounded hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  Précédent
-                </button>
-                <div className="flex items-center gap-2">
-                  {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
-                    <button
-                      key={page}
-                      onClick={() => setCurrentPage(page)}
-                      className={`px-3 py-1 rounded ${
-                        currentPage === page
-                          ? 'bg-indigo-600 text-white'
-                          : 'bg-white border border-gray-300 hover:bg-gray-50'
-                      }`}
-                    >
-                      {page}
-                    </button>
-                  ))}
-                </div>
-                <button
-                  onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
-                  disabled={currentPage === totalPages}
-                  className="px-3 py-1 bg-white border border-gray-300 rounded hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  Suivant
-                </button>
-              </div>
+                            {gainDisplay}
+                          </td>
+                        </tr>
+                      );
+                    })
+                  )}
+                </tbody>
+              </table>
             </div>
-          )}
-        </div>
-      </div>
 
-      <Footer />
-    </div>
+            {/* Pagination */}
+            {totalPages > 1 && (
+              <div className="bg-gray-50 px-4 py-3 flex items-center justify-between border-t">
+                <div className="text-sm text-gray-700">
+                  Affichage de {startIndex + 1} à {Math.min(startIndex + itemsPerPage, sortedPronos.length)} sur {sortedPronos.length} résultats
+                </div>
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+                    disabled={currentPage === 1}
+                    className="px-3 py-1 bg-white border border-gray-300 rounded hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    Précédent
+                  </button>
+                  <div className="flex items-center gap-2">
+                    {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
+                      <button
+                        key={page}
+                        onClick={() => setCurrentPage(page)}
+                        className={`px-3 py-1 rounded ${
+                          currentPage === page
+                            ? 'bg-indigo-600 text-white'
+                            : 'bg-white border border-gray-300 hover:bg-gray-50'
+                        }`}
+                      >
+                        {page}
+                      </button>
+                    ))}
+                  </div>
+                  <button
+                    onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
+                    disabled={currentPage === totalPages}
+                    className="px-3 py-1 bg-white border border-gray-300 rounded hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    Suivant
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+
+        <Footer />
+      </div>
+    </>
   );
 }

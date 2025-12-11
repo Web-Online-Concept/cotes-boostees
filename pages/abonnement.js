@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
+import Head from 'next/head';
 import Script from 'next/script';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
@@ -73,6 +74,25 @@ export default function AbonnementPage() {
 
   return (
     <>
+      <Head>
+        <title>Abonnement Telegram CB 2026 | 100€ Accès Annuel Cotes Boostées</title>
+        <meta name="description" content="Abonnez-vous pour 100€ et accédez à notre canal et groupe Telegram privés CB 2026. Recevez quotidiennement les meilleures cotes boostées EV+ sélectionnées par nos experts." />
+        <meta name="keywords" content="abonnement cotes boostées, telegram paris sportifs, canal privé CB, groupe telegram paris, abonnement 2026" />
+        
+        {/* Open Graph */}
+        <meta property="og:title" content="Abonnement Telegram CB 2026 | Accès Annuel" />
+        <meta property="og:description" content="100€ pour un an d'accès à nos sélections quotidiennes de cotes boostées EV+." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://www.cotes-boostees.com/abonnement" />
+        
+        {/* Twitter Card */}
+        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:title" content="Abonnement CB 2026 | 100€/an" />
+        <meta name="twitter:description" content="Accédez à nos sélections quotidiennes de cotes boostées." />
+        
+        <link rel="canonical" href="https://www.cotes-boostees.com/abonnement" />
+      </Head>
+
       <Script
         src="https://www.paypal.com/sdk/js?client-id=BAAyGY891j1-xPHRbB7F4fWvVNwMca1Jdbuf2jVxLB5KC2a-7GjyT2LYLeMs0Grb174sluulT9xH9fd9VM&components=hosted-buttons&disable-funding=venmo&currency=EUR"
         onLoad={() => setPaypalLoaded(true)}
@@ -160,7 +180,7 @@ export default function AbonnementPage() {
                   </div>
                 </div>
 
-                {/* Bouton PayPal - CORRECTION ICI */}
+                {/* Bouton PayPal */}
                 <div className="flex justify-center py-4">
                   <div id="paypal-container-YJXASTHAJTYYE" style={{ minWidth: '400px', maxWidth: '500px', width: '100%' }} />
                 </div>

@@ -1,0 +1,19 @@
+# Robots.txt pour cotes-boostees.com
+
+User-agent: *
+Allow: /
+
+# Pages importantes
+Allow: /stats
+Allow: /resultats
+Allow: /abonnement
+Allow: /cgv
+Allow: /mentions-legales
+Allow: /politique-confidentialite
+
+# Bloquer les pages admin
+Disallow: /admin/
+Disallow: /api/
+
+# Sitemap
+Sitemap: https://www.cotes-boostees.com/sitemap.xml
