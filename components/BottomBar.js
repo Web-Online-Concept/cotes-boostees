@@ -72,7 +72,7 @@ export default function BottomBar({ currentPage }) {
       isAnchor: false
     },
     { 
-      name: 'Abos CB', 
+      name: "S'Abonner", 
       path: '/abonnement', 
       key: 'abonnement', 
       emoji: '🚀',
