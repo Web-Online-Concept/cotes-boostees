@@ -197,7 +197,7 @@ export default function StatsPage() {
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
               <div className="bg-white rounded-lg shadow p-6 text-center">
                 <div className="text-3xl font-bold text-indigo-600">{totalPronos}</div>
-                <div className="text-sm text-gray-600 mt-1">Total Pronos</div>
+                <div className="text-sm text-gray-600 mt-1">CB</div>
               </div>
               <div className="bg-white rounded-lg shadow p-6 text-center">
                 <div className="text-3xl font-bold text-green-600">{pronosGagnes}</div>
