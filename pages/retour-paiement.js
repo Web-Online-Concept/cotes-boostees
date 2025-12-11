@@ -26,10 +26,10 @@ export default function RetourPaiement() {
 
   if (!status) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
+      <div className="min-h-screen bg-white">
         <Header />
         <main className="container mx-auto px-4 py-12">
-          <div className="max-w-2xl mx-auto text-center text-white">
+          <div className="max-w-2xl mx-auto text-center">
             <p className="text-xl">Chargement...</p>
           </div>
         </main>
@@ -39,7 +39,7 @@ export default function RetourPaiement() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
+    <div className="min-h-screen bg-white">
       <Header />
       
       <main className="container mx-auto px-4 py-12">
@@ -47,7 +47,7 @@ export default function RetourPaiement() {
           
           {status === 'success' ? (
             // PAGE DE SUCCÈS
-            <div className="bg-white rounded-2xl shadow-2xl p-8 md:p-12">
+            <div className="bg-white rounded-2xl shadow-2xl p-8 md:p-12 border border-gray-200">
               <div className="text-center mb-8">
                 <div className="inline-block p-4 bg-green-100 rounded-full mb-4">
                   <svg className="w-16 h-16 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -98,7 +98,7 @@ export default function RetourPaiement() {
             </div>
           ) : (
             // PAGE D'ÉCHEC
-            <div className="bg-white rounded-2xl shadow-2xl p-8 md:p-12">
+            <div className="bg-white rounded-2xl shadow-2xl p-8 md:p-12 border border-gray-200">
               <div className="text-center mb-8">
                 <div className="inline-block p-4 bg-red-100 rounded-full mb-4">
                   <svg className="w-16 h-16 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
