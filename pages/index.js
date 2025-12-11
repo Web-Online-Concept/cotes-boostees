@@ -60,6 +60,27 @@ export default function HomePage() {
             </div>
           </div>
 
+          {/* Galerie d'exemples de CB */}
+          <div className="bg-white rounded-xl shadow-lg p-8 transform transition hover:shadow-2xl">
+            <h3 className="text-2xl font-bold text-gray-900 mb-2 text-center">Exemples de nos Cotes Boostées</h3>
+            <p className="text-center text-gray-600 mb-6">Découvrez le format de nos notifications quotidiennes</p>
+            
+            <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+              {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((num) => (
+                <div 
+                  key={num}
+                  className="relative overflow-hidden rounded-lg shadow-md hover:shadow-xl transform transition hover:scale-105 cursor-pointer"
+                >
+                  <img
+                    src={`/images/cb_accueil_${num.toString().padStart(2, '0')}.png`}
+                    alt={`Exemple Cote Boostée ${num}`}
+                    className="w-full h-auto object-cover"
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+
           {/* Avantages en cards */}
           <div className="grid md:grid-cols-3 gap-6">
             <div className="bg-white rounded-xl shadow-lg p-6 border-t-4 border-indigo-600 transform transition hover:scale-105 hover:shadow-2xl cursor-pointer">
