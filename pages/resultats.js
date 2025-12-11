@@ -3,6 +3,7 @@ import Head from 'next/head';
 import { Search, X } from 'lucide-react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import BottomBar from '../components/BottomBar';
 
 export default function ResultatsPage() {
   const [pronos, setPronos] = useState([]);
@@ -84,7 +85,7 @@ export default function ResultatsPage() {
         <link rel="canonical" href="https://www.cotes-boostees.com/resultats" />
       </Head>
 
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex flex-col">
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex flex-col pb-20 lg:pb-0">
         <Header currentPage="resultats" />
 
         <div className="max-w-7xl mx-auto px-4 py-8 flex-1">
@@ -256,6 +257,7 @@ export default function ResultatsPage() {
         </div>
 
         <Footer />
+        <BottomBar currentPage="resultats" />
       </div>
     </>
   );

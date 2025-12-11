@@ -1,6 +1,7 @@
 import Head from 'next/head';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import BottomBar from '../components/BottomBar';
 
 export default function PolitiqueConfidentialitePage() {
   return (
@@ -13,7 +14,7 @@ export default function PolitiqueConfidentialitePage() {
         <link rel="canonical" href="https://www.cotes-boostees.com/politique-confidentialite" />
       </Head>
 
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex flex-col">
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex flex-col pb-20 lg:pb-0">
         <Header currentPage="confidentialite" />
 
         <div className="max-w-4xl mx-auto px-4 py-8 flex-1">
@@ -152,7 +153,7 @@ export default function PolitiqueConfidentialitePage() {
                 </li>
               </ul>
               <p className="mt-4">
-                Pour exercer ces droits, contactez-nous à{' '}
+                Pour exercer ces droits, contactez-nous à {' '}
                 <a href="mailto:cotes.boostees@gmail.com" className="text-indigo-600 hover:underline">
                   cotes.boostees@gmail.com
                 </a>{' '}
@@ -180,7 +181,7 @@ export default function PolitiqueConfidentialitePage() {
 
               <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-4">12 – Contact</h2>
               <p>
-                Pour toute question, contactez-nous à{' '}
+                Pour toute question, contactez-nous à {' '}
                 <a href="mailto:cotes.boostees@gmail.com" className="text-indigo-600 hover:underline">
                   cotes.boostees@gmail.com
                 </a>{' '}
@@ -191,6 +192,7 @@ export default function PolitiqueConfidentialitePage() {
         </div>
 
         <Footer />
+        <BottomBar currentPage="" />
       </div>
     </>
   );

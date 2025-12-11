@@ -1,6 +1,7 @@
 import Head from 'next/head';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import BottomBar from '../components/BottomBar';
 
 export default function MentionsLegalesPage() {
   return (
@@ -13,7 +14,7 @@ export default function MentionsLegalesPage() {
         <link rel="canonical" href="https://www.cotes-boostees.com/mentions-legales" />
       </Head>
 
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex flex-col">
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex flex-col pb-20 lg:pb-0">
         <Header currentPage="mentions" />
 
         <div className="max-w-4xl mx-auto px-4 py-8 flex-1">
@@ -114,6 +115,7 @@ export default function MentionsLegalesPage() {
         </div>
 
         <Footer />
+        <BottomBar currentPage="" />
       </div>
     </>
   );

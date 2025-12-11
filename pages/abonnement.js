@@ -4,6 +4,7 @@ import Head from 'next/head';
 import Script from 'next/script';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import BottomBar from '../components/BottomBar';
 
 export default function AbonnementPage() {
   const [nom, setNom] = useState('');
@@ -98,7 +99,7 @@ export default function AbonnementPage() {
         onLoad={() => setPaypalLoaded(true)}
       />
 
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex flex-col">
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex flex-col pb-20 lg:pb-0">
         <Header currentPage="abonnement" />
 
         <div className="max-w-4xl mx-auto px-4 py-8 flex-1">
@@ -418,6 +419,7 @@ export default function AbonnementPage() {
         </div>
 
         <Footer />
+        <BottomBar currentPage="abonnement" />
       </div>
     </>
   );

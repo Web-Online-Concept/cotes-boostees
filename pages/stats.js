@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import Head from 'next/head';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import BottomBar from '../components/BottomBar';
 
 export default function StatsPage() {
   const [pronos, setPronos] = useState([]);
@@ -167,77 +168,72 @@ export default function StatsPage() {
     <>
       <Head>
         <title>Statistiques CB 2026 | ROI et Performances Cotes Boostées en Temps Réel</title>
-        <meta name="description" content="Consultez nos statistiques complètes : ROI, taux de réussite, performances par bookmaker et évolution mensuelle. Transparence totale sur nos cotes boostées EV+." />
-        <meta name="keywords" content="statistiques paris sportifs, ROI cotes boostées, performances bookmakers, taux de réussite, transparence paris" />
+        <meta name="description" content="Consultez nos statistiques complètes CB 2026 : ROI, taux de réussite, évolution mensuelle, performances par bookmaker. Transparence totale en temps réel." />
+        <meta name="keywords" content="statistiques cotes boostées, ROI paris sportifs, performances bookmakers, stats CB 2026" />
         
         {/* Open Graph */}
-        <meta property="og:title" content="Statistiques CB 2026 | Performances en Temps Réel" />
-        <meta property="og:description" content="ROI, taux de réussite et performances détaillées de nos cotes boostées. Transparence totale." />
+        <meta property="og:title" content="Statistiques CB 2026 | ROI et Performances" />
+        <meta property="og:description" content="ROI, taux de réussite et évolution mensuelle de nos cotes boostées." />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://www.cotes-boostees.com/stats" />
         
         {/* Twitter Card */}
         <meta name="twitter:card" content="summary" />
-        <meta name="twitter:title" content="Statistiques CB 2026 | Performances Réelles" />
-        <meta name="twitter:description" content="Consultez nos statistiques complètes en temps réel." />
+        <meta name="twitter:title" content="Statistiques CB 2026" />
+        <meta name="twitter:description" content="Performances complètes de nos cotes boostées." />
         
         <link rel="canonical" href="https://www.cotes-boostees.com/stats" />
       </Head>
 
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex flex-col">
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex flex-col pb-20 lg:pb-0">
         <Header currentPage="stats" />
 
         <div className="max-w-7xl mx-auto px-4 py-8 flex-1">
           <h1 className="text-3xl font-bold text-gray-900 mb-6 text-center">Statistiques CB 2026</h1>
 
-          {/* Statistiques globales */}
-          <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-8">
-            <div className="bg-white rounded-lg shadow p-4 text-center">
-              <div className="text-2xl font-bold text-indigo-600">{totalPronos}</div>
-              <div className="text-sm text-gray-600">Total CB</div>
-            </div>
-            <div className="bg-white rounded-lg shadow p-4 text-center">
-              <div className="text-2xl font-bold text-green-600">{pronosGagnes}</div>
-              <div className="text-sm text-gray-600">Gagnés</div>
-            </div>
-            <div className="bg-white rounded-lg shadow p-4 text-center">
-              <div className="text-2xl font-bold text-red-600">{pronosPerdus}</div>
-              <div className="text-sm text-gray-600">Perdus</div>
-            </div>
-            <div className="bg-white rounded-lg shadow p-4 text-center">
-              <div className="text-2xl font-bold text-gray-600">{tauxReussite.toFixed(1)}%</div>
-              <div className="text-sm text-gray-600">Taux réussite</div>
-            </div>
-            <div className="bg-white rounded-lg shadow p-4 text-center">
-              <div className={`text-2xl font-bold ${roi >= 0 ? 'text-green-600' : 'text-red-600'}`}>
-                {roi >= 0 ? '+' : ''}{roi.toFixed(2)}%
-              </div>
-              <div className="text-sm text-gray-600">ROI</div>
-            </div>
-          </div>
-
-           {/* Bilan global */}
-          <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
+          {/* Bilan Global */}
+          <div className="mb-8">
             <h2 className="text-xl font-semibold text-gray-900 mb-4">Bilan Global</h2>
-            <div className="grid md:grid-cols-3 gap-6">
-              <div className="text-center">
-                <div className="text-sm text-gray-600 mb-1">Mise Totale</div>
-                <div className="text-2xl font-bold text-gray-900">{miseTotal.toFixed(2)} €</div>
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+              <div className="bg-white rounded-lg shadow p-6 text-center">
+                <div className="text-3xl font-bold text-indigo-600">{totalPronos}</div>
+                <div className="text-sm text-gray-600 mt-1">Total Pronos</div>
               </div>
-              <div className="text-center">
-                <div className="text-sm text-gray-600 mb-1">Gains Totaux</div>
-                <div className="text-2xl font-bold text-indigo-600">{gainsTotal.toFixed(2)} €</div>
+              <div className="bg-white rounded-lg shadow p-6 text-center">
+                <div className="text-3xl font-bold text-green-600">{pronosGagnes}</div>
+                <div className="text-sm text-gray-600 mt-1">Gagnés</div>
               </div>
-              <div className="text-center">
-                <div className="text-sm text-gray-600 mb-1">Gain Net</div>
-                <div className={`text-2xl font-bold ${gainNet >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+              <div className="bg-white rounded-lg shadow p-6 text-center">
+                <div className="text-3xl font-bold text-red-600">{pronosPerdus}</div>
+                <div className="text-sm text-gray-600 mt-1">Perdus</div>
+              </div>
+              <div className="bg-white rounded-lg shadow p-6 text-center">
+                <div className="text-3xl font-bold text-blue-600">{pronosRembourses}</div>
+                <div className="text-sm text-gray-600 mt-1">Remboursés</div>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
+              <div className="bg-white rounded-lg shadow p-6 text-center">
+                <div className="text-sm text-gray-600 mb-1">Taux de Réussite</div>
+                <div className="text-3xl font-bold text-indigo-600">{tauxReussite.toFixed(1)}%</div>
+              </div>
+              <div className="bg-white rounded-lg shadow p-6 text-center">
+                <div className="text-sm text-gray-600 mb-1">Gain Net Total</div>
+                <div className={`text-3xl font-bold ${gainNet >= 0 ? 'text-green-600' : 'text-red-600'}`}>
                   {gainNet >= 0 ? '+' : ''}{gainNet.toFixed(2)} €
+                </div>
+              </div>
+              <div className="bg-white rounded-lg shadow p-6 text-center">
+                <div className="text-sm text-gray-600 mb-1">ROI Global</div>
+                <div className={`text-3xl font-bold ${roi >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+                  {roi >= 0 ? '+' : ''}{roi.toFixed(2)}%
                 </div>
               </div>
             </div>
           </div>
 
-          {/* Evolution mensuelle */}
+          {/* Evolution Mensuelle */}
           <div className="mb-8">
             <h2 className="text-xl font-semibold text-gray-900 mb-4">Évolution Mensuelle</h2>
             <div className="bg-white rounded-lg shadow overflow-hidden">
@@ -418,6 +414,7 @@ export default function StatsPage() {
         </div>
 
         <Footer />
+        <BottomBar currentPage="stats" />
       </div>
     </>
   );

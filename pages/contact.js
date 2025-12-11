@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import Head from 'next/head';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import BottomBar from '../components/BottomBar';
 
 export default function ContactPage() {
   const router = useRouter();
@@ -91,7 +92,7 @@ export default function ContactPage() {
         <link rel="canonical" href="https://www.cotes-boostees.com/contact" />
       </Head>
 
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex flex-col">
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex flex-col pb-20 lg:pb-0">
         <Header currentPage="contact" />
 
         <div className="max-w-3xl mx-auto px-4 py-8 flex-1">
@@ -228,6 +229,7 @@ export default function ContactPage() {
         </div>
 
         <Footer />
+        <BottomBar currentPage="contact" />
       </div>
     </>
   );

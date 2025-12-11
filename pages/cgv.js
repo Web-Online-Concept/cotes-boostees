@@ -1,6 +1,7 @@
 import Head from 'next/head';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import BottomBar from '../components/BottomBar';
 
 export default function CGVPage() {
   return (
@@ -13,7 +14,7 @@ export default function CGVPage() {
         <link rel="canonical" href="https://www.cotes-boostees.com/cgv" />
       </Head>
 
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex flex-col">
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex flex-col pb-20 lg:pb-0">
         <Header currentPage="cgv" />
 
         <div className="max-w-4xl mx-auto px-4 py-8 flex-1">
@@ -128,7 +129,7 @@ export default function CGVPage() {
                 été pleinement exécuté avant la fin de ce délai avec son accord exprès.
               </p>
               <p className="mt-4">
-                Pour exercer ce droit, l'Abonné doit notifier sa décision par e-mail à{' '}
+                Pour exercer ce droit, l'Abonné doit notifier sa décision par e-mail à {' '}
                 <a href="mailto:cotes.boostees@gmail.com" className="text-indigo-600 hover:underline">
                   cotes.boostees@gmail.com
                 </a>{' '}
@@ -163,7 +164,7 @@ export default function CGVPage() {
               <p>
                 Les données collectées (nom, e-mail, etc.) sont utilisées uniquement pour la gestion de l'abonnement et ne sont 
                 pas transmises à des tiers, sauf obligation légale. L'Abonné dispose d'un droit d'accès, de rectification et de 
-                suppression de ses données, exerçable à{' '}
+                suppression de ses données, exerçable à {' '}
                 <a href="mailto:cotes.boostees@gmail.com" className="text-indigo-600 hover:underline">
                   cotes.boostees@gmail.com
                 </a>
@@ -195,6 +196,7 @@ export default function CGVPage() {
         </div>
 
         <Footer />
+        <BottomBar currentPage="" />
       </div>
     </>
   );
