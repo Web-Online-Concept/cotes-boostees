@@ -209,7 +209,7 @@ export default function StatsPage() {
               </div>
               <div className="bg-white rounded-lg shadow p-6 text-center">
                 <div className="text-3xl font-bold text-blue-600">{pronosRembourses}</div>
-                <div className="text-sm text-gray-600 mt-1">Remboursés</div>
+                <div className="text-sm text-gray-600 mt-1">Annulés</div>
               </div>
             </div>
 
