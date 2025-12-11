@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import Head from 'next/head';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 
@@ -163,236 +164,261 @@ export default function StatsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex flex-col">
-      <Header currentPage="stats" />
+    <>
+      <Head>
+        <title>Statistiques CB 2026 | ROI et Performances Cotes Boostées en Temps Réel</title>
+        <meta name="description" content="Consultez nos statistiques complètes : ROI, taux de réussite, performances par bookmaker et évolution mensuelle. Transparence totale sur nos cotes boostées EV+." />
+        <meta name="keywords" content="statistiques paris sportifs, ROI cotes boostées, performances bookmakers, taux de réussite, transparence paris" />
+        
+        {/* Open Graph */}
+        <meta property="og:title" content="Statistiques CB 2026 | Performances en Temps Réel" />
+        <meta property="og:description" content="ROI, taux de réussite et performances détaillées de nos cotes boostées. Transparence totale." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://www.cotes-boostees.com/stats" />
+        
+        {/* Twitter Card */}
+        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:title" content="Statistiques CB 2026 | Performances Réelles" />
+        <meta name="twitter:description" content="Consultez nos statistiques complètes en temps réel." />
+        
+        <link rel="canonical" href="https://www.cotes-boostees.com/stats" />
+      </Head>
 
-      <div className="max-w-7xl mx-auto px-4 py-8 flex-1">
-        <h2 className="text-3xl font-bold text-gray-900 mb-6 text-center">Statistiques CB 2026</h2>
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex flex-col">
+        <Header currentPage="stats" />
 
-        {/* Bilan Global */}
-        <div className="mb-8">
-          <h3 className="text-xl font-semibold text-gray-900 mb-4">Bilan Global</h3>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <div className="bg-white rounded-lg shadow p-4">
-              <div className="text-sm text-gray-600 mb-1 text-center">Total CB</div>
-              <div className="text-2xl font-bold text-indigo-600 text-center">{totalPronos}</div>
+        <div className="max-w-7xl mx-auto px-4 py-8 flex-1">
+          <h1 className="text-3xl font-bold text-gray-900 mb-6 text-center">Statistiques CB 2026</h1>
+
+          {/* Statistiques globales */}
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-8">
+            <div className="bg-white rounded-lg shadow p-4 text-center">
+              <div className="text-2xl font-bold text-indigo-600">{totalPronos}</div>
+              <div className="text-sm text-gray-600">Total CB</div>
             </div>
-            <div className="bg-white rounded-lg shadow p-4">
-              <div className="text-sm text-gray-600 mb-1 text-center">Gagnés</div>
-              <div className="text-2xl font-bold text-green-600 text-center">{pronosGagnes}</div>
+            <div className="bg-white rounded-lg shadow p-4 text-center">
+              <div className="text-2xl font-bold text-green-600">{pronosGagnes}</div>
+              <div className="text-sm text-gray-600">Gagnés</div>
             </div>
-            <div className="bg-white rounded-lg shadow p-4">
-              <div className="text-sm text-gray-600 mb-1 text-center">Perdus</div>
-              <div className="text-2xl font-bold text-red-600 text-center">{pronosPerdus}</div>
+            <div className="bg-white rounded-lg shadow p-4 text-center">
+              <div className="text-2xl font-bold text-red-600">{pronosPerdus}</div>
+              <div className="text-sm text-gray-600">Perdus</div>
             </div>
-            <div className="bg-white rounded-lg shadow p-4">
-              <div className="text-sm text-gray-600 mb-1 text-center">Remboursés</div>
-              <div className="text-2xl font-bold text-blue-600 text-center">{pronosRembourses}</div>
+            <div className="bg-white rounded-lg shadow p-4 text-center">
+              <div className="text-2xl font-bold text-gray-600">{tauxReussite.toFixed(1)}%</div>
+              <div className="text-sm text-gray-600">Taux réussite</div>
             </div>
-            <div className="bg-white rounded-lg shadow p-4">
-              <div className="text-sm text-gray-600 mb-1 text-center">Taux de Réussite</div>
-              <div className="text-2xl font-bold text-indigo-600 text-center">{tauxReussite.toFixed(2)}%</div>
-            </div>
-            <div className="bg-white rounded-lg shadow p-4">
-              <div className="text-sm text-gray-600 mb-1 text-center">Mise Totale</div>
-              <div className="text-2xl font-bold text-gray-900 text-center">{miseTotal.toFixed(2)} €</div>
-            </div>
-            <div className="bg-white rounded-lg shadow p-4">
-              <div className="text-sm text-gray-600 mb-1 text-center">Gain Net</div>
-              <div className={`text-2xl font-bold text-center ${gainNet >= 0 ? 'text-green-600' : 'text-red-600'}`}>
-                {gainNet >= 0 ? '+' : ''}{gainNet.toFixed(2)} €
-              </div>
-            </div>
-            <div className="bg-white rounded-lg shadow p-4">
-              <div className="text-sm text-gray-600 mb-1 text-center">ROI</div>
-              <div className={`text-2xl font-bold text-center ${roi >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+            <div className="bg-white rounded-lg shadow p-4 text-center">
+              <div className={`text-2xl font-bold ${roi >= 0 ? 'text-green-600' : 'text-red-600'}`}>
                 {roi >= 0 ? '+' : ''}{roi.toFixed(2)}%
               </div>
+              <div className="text-sm text-gray-600">ROI</div>
+            </div>
+          </div>
+
+          {/* Bilan global */}
+          <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
+            <h2 className="text-xl font-semibold text-gray-900 mb-4">Bilan Global</h2>
+            <div className="grid md:grid-cols-3 gap-6">
+              <div>
+                <div className="text-sm text-gray-600 mb-1">Mise Totale</div>
+                <div className="text-2xl font-bold text-gray-900">{miseTotal.toFixed(2)} €</div>
+              </div>
+              <div>
+                <div className="text-sm text-gray-600 mb-1">Gains Totaux</div>
+                <div className="text-2xl font-bold text-indigo-600">{gainsTotal.toFixed(2)} €</div>
+              </div>
+              <div>
+                <div className="text-sm text-gray-600 mb-1">Gain Net</div>
+                <div className={`text-2xl font-bold ${gainNet >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+                  {gainNet >= 0 ? '+' : ''}{gainNet.toFixed(2)} €
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Evolution mensuelle */}
+          <div className="mb-8">
+            <h2 className="text-xl font-semibold text-gray-900 mb-4">Évolution Mensuelle</h2>
+            <div className="bg-white rounded-lg shadow overflow-hidden">
+              <div className="overflow-x-auto">
+                <table className="w-full">
+                  <thead className="bg-indigo-50 border-b">
+                    <tr>
+                      <th className="px-4 py-3 text-left text-xs font-medium text-gray-600 uppercase">Mois</th>
+                      <th className="px-4 py-3 text-center text-xs font-medium text-gray-600 uppercase">Total</th>
+                      <th className="px-4 py-3 text-center text-xs font-medium text-gray-600 uppercase">Gagnés</th>
+                      <th className="px-4 py-3 text-center text-xs font-medium text-gray-600 uppercase">Perdus</th>
+                      <th className="px-4 py-3 text-center text-xs font-medium text-gray-600 uppercase">Remboursés</th>
+                      <th className="px-4 py-3 text-center text-xs font-medium text-gray-600 uppercase">Taux</th>
+                      <th className="px-4 py-3 text-right text-xs font-medium text-gray-600 uppercase">Mise</th>
+                      <th className="px-4 py-3 text-right text-xs font-medium text-gray-600 uppercase">Gain Net</th>
+                      <th className="px-4 py-3 text-right text-xs font-medium text-gray-600 uppercase">ROI</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-gray-200">
+                    {monthlyStats.length === 0 ? (
+                      <tr>
+                        <td colSpan="9" className="px-4 py-8 text-center text-gray-500">
+                          Aucune donnée disponible
+                        </td>
+                      </tr>
+                    ) : (
+                      monthlyStats.map(stat => {
+                        const gainNet = stat.gainsTotal - stat.miseTotal;
+                        const roi = stat.miseTotal > 0 ? ((gainNet / stat.miseTotal) * 100) : 0;
+                        const taux = (stat.gagnes + stat.perdus) > 0 
+                          ? ((stat.gagnes / (stat.gagnes + stat.perdus)) * 100) 
+                          : 0;
+                        
+                        return (
+                          <tr key={stat.month} className="hover:bg-gray-50">
+                            <td className="px-4 py-3 text-sm font-medium text-gray-900">{stat.month}</td>
+                            <td className="px-4 py-3 text-sm text-center text-gray-900">{stat.total}</td>
+                            <td className="px-4 py-3 text-sm text-center text-green-600">{stat.gagnes}</td>
+                            <td className="px-4 py-3 text-sm text-center text-red-600">{stat.perdus}</td>
+                            <td className="px-4 py-3 text-sm text-center text-blue-600">{stat.rembourses}</td>
+                            <td className="px-4 py-3 text-sm text-center text-gray-900">{taux.toFixed(1)}%</td>
+                            <td className="px-4 py-3 text-sm text-right text-gray-900">{stat.miseTotal.toFixed(2)} €</td>
+                            <td className={`px-4 py-3 text-sm text-right font-semibold ${gainNet >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+                              {gainNet >= 0 ? '+' : ''}{gainNet.toFixed(2)} €
+                            </td>
+                            <td className={`px-4 py-3 text-sm text-right font-semibold ${roi >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+                              {roi >= 0 ? '+' : ''}{roi.toFixed(2)}%
+                            </td>
+                          </tr>
+                        );
+                      })
+                    )}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          {/* Bilan par Bookmaker */}
+          <div className="mb-8">
+            <h2 className="text-xl font-semibold text-gray-900 mb-4">Bilan par Bookmaker</h2>
+            <div className="bg-white rounded-lg shadow overflow-hidden">
+              <div className="overflow-x-auto">
+                <table className="w-full">
+                  <thead className="bg-indigo-50 border-b">
+                    <tr>
+                      <th className="px-4 py-3 text-left text-xs font-medium text-gray-600 uppercase">Bookmaker</th>
+                      <th className="px-4 py-3 text-center text-xs font-medium text-gray-600 uppercase">Total</th>
+                      <th className="px-4 py-3 text-center text-xs font-medium text-gray-600 uppercase">Gagnés</th>
+                      <th className="px-4 py-3 text-center text-xs font-medium text-gray-600 uppercase">Perdus</th>
+                      <th className="px-4 py-3 text-center text-xs font-medium text-gray-600 uppercase">Remboursés</th>
+                      <th className="px-4 py-3 text-center text-xs font-medium text-gray-600 uppercase">Taux</th>
+                      <th className="px-4 py-3 text-right text-xs font-medium text-gray-600 uppercase">Mise</th>
+                      <th className="px-4 py-3 text-right text-xs font-medium text-gray-600 uppercase">Gain Net</th>
+                      <th className="px-4 py-3 text-right text-xs font-medium text-gray-600 uppercase">ROI</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-gray-200">
+                    {bookmakerStats.length === 0 ? (
+                      <tr>
+                        <td colSpan="9" className="px-4 py-8 text-center text-gray-500">
+                          Aucune donnée disponible
+                        </td>
+                      </tr>
+                    ) : (
+                      bookmakerStats.map(stat => {
+                        const gainNet = stat.gainsTotal - stat.miseTotal;
+                        const roi = stat.miseTotal > 0 ? ((gainNet / stat.miseTotal) * 100) : 0;
+                        const taux = (stat.gagnes + stat.perdus) > 0 
+                          ? ((stat.gagnes / (stat.gagnes + stat.perdus)) * 100) 
+                          : 0;
+                        
+                        return (
+                          <tr key={stat.bookmaker} className="hover:bg-gray-50">
+                            <td className="px-4 py-3 text-sm font-medium text-gray-900">{stat.bookmaker}</td>
+                            <td className="px-4 py-3 text-sm text-center text-gray-900">{stat.total}</td>
+                            <td className="px-4 py-3 text-sm text-center text-green-600">{stat.gagnes}</td>
+                            <td className="px-4 py-3 text-sm text-center text-red-600">{stat.perdus}</td>
+                            <td className="px-4 py-3 text-sm text-center text-blue-600">{stat.rembourses}</td>
+                            <td className="px-4 py-3 text-sm text-center text-gray-900">{taux.toFixed(1)}%</td>
+                            <td className="px-4 py-3 text-sm text-right text-gray-900">{stat.miseTotal.toFixed(2)} €</td>
+                            <td className={`px-4 py-3 text-sm text-right font-semibold ${gainNet >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+                              {gainNet >= 0 ? '+' : ''}{gainNet.toFixed(2)} €
+                            </td>
+                            <td className={`px-4 py-3 text-sm text-right font-semibold ${roi >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+                              {roi >= 0 ? '+' : ''}{roi.toFixed(2)}%
+                            </td>
+                          </tr>
+                        );
+                      })
+                    )}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          {/* Evolution Mensuelle par Bookmaker */}
+          <div className="mb-8">
+            <h2 className="text-xl font-semibold text-gray-900 mb-4">Évolution Mensuelle par Bookmaker</h2>
+            <div className="bg-white rounded-lg shadow overflow-hidden">
+              <div className="overflow-x-auto">
+                <table className="w-full">
+                  <thead className="bg-indigo-50 border-b">
+                    <tr>
+                      <th className="px-4 py-3 text-left text-xs font-medium text-gray-600 uppercase">Mois</th>
+                      <th className="px-4 py-3 text-left text-xs font-medium text-gray-600 uppercase">Bookmaker</th>
+                      <th className="px-4 py-3 text-center text-xs font-medium text-gray-600 uppercase">Total</th>
+                      <th className="px-4 py-3 text-center text-xs font-medium text-gray-600 uppercase">Gagnés</th>
+                      <th className="px-4 py-3 text-center text-xs font-medium text-gray-600 uppercase">Perdus</th>
+                      <th className="px-4 py-3 text-center text-xs font-medium text-gray-600 uppercase">Remboursés</th>
+                      <th className="px-4 py-3 text-center text-xs font-medium text-gray-600 uppercase">Taux</th>
+                      <th className="px-4 py-3 text-right text-xs font-medium text-gray-600 uppercase">Mise</th>
+                      <th className="px-4 py-3 text-right text-xs font-medium text-gray-600 uppercase">Gain Net</th>
+                      <th className="px-4 py-3 text-right text-xs font-medium text-gray-600 uppercase">ROI</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-gray-200">
+                    {monthlyBookmakerStats.length === 0 ? (
+                      <tr>
+                        <td colSpan="10" className="px-4 py-8 text-center text-gray-500">
+                          Aucune donnée disponible
+                        </td>
+                      </tr>
+                    ) : (
+                      monthlyBookmakerStats.map(stat => {
+                        const gainNet = stat.gainsTotal - stat.miseTotal;
+                        const roi = stat.miseTotal > 0 ? ((gainNet / stat.miseTotal) * 100) : 0;
+                        const taux = (stat.gagnes + stat.perdus) > 0 
+                          ? ((stat.gagnes / (stat.gagnes + stat.perdus)) * 100) 
+                          : 0;
+                        
+                        return (
+                          <tr key={`${stat.month}_${stat.bookmaker}`} className="hover:bg-gray-50">
+                            <td className="px-4 py-3 text-sm text-gray-900">{stat.month}</td>
+                            <td className="px-4 py-3 text-sm font-medium text-gray-900">{stat.bookmaker}</td>
+                            <td className="px-4 py-3 text-sm text-center text-gray-900">{stat.total}</td>
+                            <td className="px-4 py-3 text-sm text-center text-green-600">{stat.gagnes}</td>
+                            <td className="px-4 py-3 text-sm text-center text-red-600">{stat.perdus}</td>
+                            <td className="px-4 py-3 text-sm text-center text-blue-600">{stat.rembourses}</td>
+                            <td className="px-4 py-3 text-sm text-center text-gray-900">{taux.toFixed(1)}%</td>
+                            <td className="px-4 py-3 text-sm text-right text-gray-900">{stat.miseTotal.toFixed(2)} €</td>
+                            <td className={`px-4 py-3 text-sm text-right font-semibold ${gainNet >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+                              {gainNet >= 0 ? '+' : ''}{gainNet.toFixed(2)} €
+                            </td>
+                            <td className={`px-4 py-3 text-sm text-right font-semibold ${roi >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+                              {roi >= 0 ? '+' : ''}{roi.toFixed(2)}%
+                            </td>
+                          </tr>
+                        );
+                      })
+                    )}
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
         </div>
 
-        {/* Evolution Mensuelle */}
-        <div className="mb-8">
-          <h3 className="text-xl font-semibold text-gray-900 mb-4">Évolution Mensuelle</h3>
-          <div className="bg-white rounded-lg shadow overflow-hidden">
-            <div className="overflow-x-auto">
-              <table className="w-full">
-                <thead className="bg-indigo-50 border-b">
-                  <tr>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-600 uppercase">Mois</th>
-                    <th className="px-4 py-3 text-center text-xs font-medium text-gray-600 uppercase">Total</th>
-                    <th className="px-4 py-3 text-center text-xs font-medium text-gray-600 uppercase">Gagnés</th>
-                    <th className="px-4 py-3 text-center text-xs font-medium text-gray-600 uppercase">Perdus</th>
-                    <th className="px-4 py-3 text-center text-xs font-medium text-gray-600 uppercase">Remboursés</th>
-                    <th className="px-4 py-3 text-center text-xs font-medium text-gray-600 uppercase">Taux</th>
-                    <th className="px-4 py-3 text-right text-xs font-medium text-gray-600 uppercase">Mise</th>
-                    <th className="px-4 py-3 text-right text-xs font-medium text-gray-600 uppercase">Gain Net</th>
-                    <th className="px-4 py-3 text-right text-xs font-medium text-gray-600 uppercase">ROI</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-gray-200">
-                  {monthlyStats.length === 0 ? (
-                    <tr>
-                      <td colSpan="9" className="px-4 py-8 text-center text-gray-500">
-                        Aucune donnée disponible
-                      </td>
-                    </tr>
-                  ) : (
-                    monthlyStats.map(stat => {
-                      const gainNet = stat.gainsTotal - stat.miseTotal;
-                      const roi = stat.miseTotal > 0 ? ((gainNet / stat.miseTotal) * 100) : 0;
-                      const taux = (stat.gagnes + stat.perdus) > 0 
-                        ? ((stat.gagnes / (stat.gagnes + stat.perdus)) * 100) 
-                        : 0;
-                      
-                      return (
-                        <tr key={stat.month} className="hover:bg-gray-50">
-                          <td className="px-4 py-3 text-sm font-medium text-gray-900">{stat.month}</td>
-                          <td className="px-4 py-3 text-sm text-center text-gray-900">{stat.total}</td>
-                          <td className="px-4 py-3 text-sm text-center text-green-600">{stat.gagnes}</td>
-                          <td className="px-4 py-3 text-sm text-center text-red-600">{stat.perdus}</td>
-                          <td className="px-4 py-3 text-sm text-center text-blue-600">{stat.rembourses}</td>
-                          <td className="px-4 py-3 text-sm text-center text-gray-900">{taux.toFixed(1)}%</td>
-                          <td className="px-4 py-3 text-sm text-right text-gray-900">{stat.miseTotal.toFixed(2)} €</td>
-                          <td className={`px-4 py-3 text-sm text-right font-semibold ${gainNet >= 0 ? 'text-green-600' : 'text-red-600'}`}>
-                            {gainNet >= 0 ? '+' : ''}{gainNet.toFixed(2)} €
-                          </td>
-                          <td className={`px-4 py-3 text-sm text-right font-semibold ${roi >= 0 ? 'text-green-600' : 'text-red-600'}`}>
-                            {roi >= 0 ? '+' : ''}{roi.toFixed(2)}%
-                          </td>
-                        </tr>
-                      );
-                    })
-                  )}
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-
-        {/* Bilan par Bookmaker */}
-        <div className="mb-8">
-          <h3 className="text-xl font-semibold text-gray-900 mb-4">Bilan par Bookmaker</h3>
-          <div className="bg-white rounded-lg shadow overflow-hidden">
-            <div className="overflow-x-auto">
-              <table className="w-full">
-                <thead className="bg-indigo-50 border-b">
-                  <tr>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-600 uppercase">Bookmaker</th>
-                    <th className="px-4 py-3 text-center text-xs font-medium text-gray-600 uppercase">Total</th>
-                    <th className="px-4 py-3 text-center text-xs font-medium text-gray-600 uppercase">Gagnés</th>
-                    <th className="px-4 py-3 text-center text-xs font-medium text-gray-600 uppercase">Perdus</th>
-                    <th className="px-4 py-3 text-center text-xs font-medium text-gray-600 uppercase">Remboursés</th>
-                    <th className="px-4 py-3 text-center text-xs font-medium text-gray-600 uppercase">Taux</th>
-                    <th className="px-4 py-3 text-right text-xs font-medium text-gray-600 uppercase">Mise</th>
-                    <th className="px-4 py-3 text-right text-xs font-medium text-gray-600 uppercase">Gain Net</th>
-                    <th className="px-4 py-3 text-right text-xs font-medium text-gray-600 uppercase">ROI</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-gray-200">
-                  {bookmakerStats.length === 0 ? (
-                    <tr>
-                      <td colSpan="9" className="px-4 py-8 text-center text-gray-500">
-                        Aucune donnée disponible
-                      </td>
-                    </tr>
-                  ) : (
-                    bookmakerStats.map(stat => {
-                      const gainNet = stat.gainsTotal - stat.miseTotal;
-                      const roi = stat.miseTotal > 0 ? ((gainNet / stat.miseTotal) * 100) : 0;
-                      const taux = (stat.gagnes + stat.perdus) > 0 
-                        ? ((stat.gagnes / (stat.gagnes + stat.perdus)) * 100) 
-                        : 0;
-                      
-                      return (
-                        <tr key={stat.bookmaker} className="hover:bg-gray-50">
-                          <td className="px-4 py-3 text-sm font-medium text-gray-900">{stat.bookmaker}</td>
-                          <td className="px-4 py-3 text-sm text-center text-gray-900">{stat.total}</td>
-                          <td className="px-4 py-3 text-sm text-center text-green-600">{stat.gagnes}</td>
-                          <td className="px-4 py-3 text-sm text-center text-red-600">{stat.perdus}</td>
-                          <td className="px-4 py-3 text-sm text-center text-blue-600">{stat.rembourses}</td>
-                          <td className="px-4 py-3 text-sm text-center text-gray-900">{taux.toFixed(1)}%</td>
-                          <td className="px-4 py-3 text-sm text-right text-gray-900">{stat.miseTotal.toFixed(2)} €</td>
-                          <td className={`px-4 py-3 text-sm text-right font-semibold ${gainNet >= 0 ? 'text-green-600' : 'text-red-600'}`}>
-                            {gainNet >= 0 ? '+' : ''}{gainNet.toFixed(2)} €
-                          </td>
-                          <td className={`px-4 py-3 text-sm text-right font-semibold ${roi >= 0 ? 'text-green-600' : 'text-red-600'}`}>
-                            {roi >= 0 ? '+' : ''}{roi.toFixed(2)}%
-                          </td>
-                        </tr>
-                      );
-                    })
-                  )}
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-
-        {/* Evolution Mensuelle par Bookmaker */}
-        <div className="mb-8">
-          <h3 className="text-xl font-semibold text-gray-900 mb-4">Évolution Mensuelle par Bookmaker</h3>
-          <div className="bg-white rounded-lg shadow overflow-hidden">
-            <div className="overflow-x-auto">
-              <table className="w-full">
-                <thead className="bg-indigo-50 border-b">
-                  <tr>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-600 uppercase">Mois</th>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-600 uppercase">Bookmaker</th>
-                    <th className="px-4 py-3 text-center text-xs font-medium text-gray-600 uppercase">Total</th>
-                    <th className="px-4 py-3 text-center text-xs font-medium text-gray-600 uppercase">Gagnés</th>
-                    <th className="px-4 py-3 text-center text-xs font-medium text-gray-600 uppercase">Perdus</th>
-                    <th className="px-4 py-3 text-center text-xs font-medium text-gray-600 uppercase">Remboursés</th>
-                    <th className="px-4 py-3 text-center text-xs font-medium text-gray-600 uppercase">Taux</th>
-                    <th className="px-4 py-3 text-right text-xs font-medium text-gray-600 uppercase">Mise</th>
-                    <th className="px-4 py-3 text-right text-xs font-medium text-gray-600 uppercase">Gain Net</th>
-                    <th className="px-4 py-3 text-right text-xs font-medium text-gray-600 uppercase">ROI</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-gray-200">
-                  {monthlyBookmakerStats.length === 0 ? (
-                    <tr>
-                      <td colSpan="10" className="px-4 py-8 text-center text-gray-500">
-                        Aucune donnée disponible
-                      </td>
-                    </tr>
-                  ) : (
-                    monthlyBookmakerStats.map(stat => {
-                      const gainNet = stat.gainsTotal - stat.miseTotal;
-                      const roi = stat.miseTotal > 0 ? ((gainNet / stat.miseTotal) * 100) : 0;
-                      const taux = (stat.gagnes + stat.perdus) > 0 
-                        ? ((stat.gagnes / (stat.gagnes + stat.perdus)) * 100) 
-                        : 0;
-                      
-                      return (
-                        <tr key={`${stat.month}_${stat.bookmaker}`} className="hover:bg-gray-50">
-                          <td className="px-4 py-3 text-sm text-gray-900">{stat.month}</td>
-                          <td className="px-4 py-3 text-sm font-medium text-gray-900">{stat.bookmaker}</td>
-                          <td className="px-4 py-3 text-sm text-center text-gray-900">{stat.total}</td>
-                          <td className="px-4 py-3 text-sm text-center text-green-600">{stat.gagnes}</td>
-                          <td className="px-4 py-3 text-sm text-center text-red-600">{stat.perdus}</td>
-                          <td className="px-4 py-3 text-sm text-center text-blue-600">{stat.rembourses}</td>
-                          <td className="px-4 py-3 text-sm text-center text-gray-900">{taux.toFixed(1)}%</td>
-                          <td className="px-4 py-3 text-sm text-right text-gray-900">{stat.miseTotal.toFixed(2)} €</td>
-                          <td className={`px-4 py-3 text-sm text-right font-semibold ${gainNet >= 0 ? 'text-green-600' : 'text-red-600'}`}>
-                            {gainNet >= 0 ? '+' : ''}{gainNet.toFixed(2)} €
-                          </td>
-                          <td className={`px-4 py-3 text-sm text-right font-semibold ${roi >= 0 ? 'text-green-600' : 'text-red-600'}`}>
-                            {roi >= 0 ? '+' : ''}{roi.toFixed(2)}%
-                          </td>
-                        </tr>
-                      );
-                    })
-                  )}
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
+        <Footer />
       </div>
-
-      <Footer />
-    </div>
+    </>
   );
 }
