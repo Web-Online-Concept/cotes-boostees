@@ -108,24 +108,30 @@ export default function HomePage() {
             {/* Avantages en cards */}
             <div className="grid md:grid-cols-3 gap-6">
               <div className="bg-white rounded-xl shadow-lg p-6 border-t-4 border-indigo-600 transform transition hover:scale-105 hover:shadow-2xl cursor-pointer">
-                <div className="text-4xl mb-4">🎯</div>
-                <h3 className="text-xl font-bold text-gray-900 mb-3">Sélection Expert</h3>
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="text-4xl">🎯</div>
+                  <h3 className="text-xl font-bold text-gray-900">Sélection Expert</h3>
+                </div>
                 <p className="text-gray-700">
                   Ne perdez plus de temps à analyser toutes les cotes boostées. Nous faisons le tri pour vous et ne gardons que les meilleures.
                 </p>
               </div>
 
               <div className="bg-white rounded-xl shadow-lg p-6 border-t-4 border-green-600 transform transition hover:scale-105 hover:shadow-2xl cursor-pointer">
-                <div className="text-4xl mb-4">📈</div>
-                <h3 className="text-xl font-bold text-gray-900 mb-3">Transparence Absolue</h3>
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="text-4xl">📈</div>
+                  <h3 className="text-xl font-bold text-gray-900">Transparence Absolue</h3>
+                </div>
                 <p className="text-gray-700">
                   Tous nos résultats sont publics. ROI, taux de réussite, évolution mensuelle : suivez nos performances en temps réel.
                 </p>
               </div>
 
               <div className="bg-white rounded-xl shadow-lg p-6 border-t-4 border-blue-600 transform transition hover:scale-105 hover:shadow-2xl cursor-pointer">
-                <div className="text-4xl mb-4">💎</div>
-                <h3 className="text-xl font-bold text-gray-900 mb-3">Que de la Valeur</h3>
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="text-4xl">💎</div>
+                  <h3 className="text-xl font-bold text-gray-900">Que de la Valeur</h3>
+                </div>
                 <p className="text-gray-700">
                   Zéro perte de temps avec des cotes sans intérêt. Chaque notification = une vraie opportunité de gain.
                 </p>
@@ -160,16 +166,13 @@ export default function HomePage() {
                 Notre objectif ? <strong>Sélectionner UNIQUEMENT les cotes à valeur positive (EV+)</strong> pour maximiser vos profits 💰.
               </p>
               
-              <h2 className="text-2xl font-bold text-gray-900 mb-4">Notre méthode sélective :</h2>
-              
-              {/* Sélection / Écart côte à côte */}
-              <div className="grid md:grid-cols-2 gap-6 mb-6">
+              <div className="grid md:grid-cols-2 gap-6">
                 <div className="bg-green-50 border-l-4 border-green-600 p-6 rounded-lg transform transition hover:translate-x-2">
                   <h3 className="text-xl font-bold text-green-900 mb-3">✅ Ce que nous SÉLECTIONNONS :</h3>
                   <ul className="space-y-2 text-gray-700">
-                    <li>• UNIQUEMENT les cotes boostées à valeur positive (EV+)</li>
-                    <li>• Les vraies opportunités rentables sur le long terme</li>
-                    <li>• Les cotes où l'avantage mathématique est en votre faveur</li>
+                    <li>• Les cotes boostées avec une vraie valeur mathématique (EV+)</li>
+                    <li>• Les promotions qui offrent un avantage réel aux parieurs</li>
+                    <li>• Les opportunités rentables sur le long terme</li>
                   </ul>
                 </div>
 
@@ -302,7 +305,7 @@ export default function HomePage() {
         </div>
 
         <Footer />
-		<BottomBar currentPage="home" />
+        <BottomBar currentPage="home" />
       </div>
     </>
   );
