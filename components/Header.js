@@ -63,7 +63,7 @@ export default function Header({ currentPage }) {
   }
 
   return (
-    <header className="bg-gradient-to-r from-indigo-600 via-purple-600 to-indigo-700 shadow-2xl">
+    <header className="bg-gradient-to-r from-indigo-600 via-purple-600 to-indigo-700 shadow-2xl sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 py-2">
         <div className="flex items-center justify-between">
           {/* Logo + Titre à gauche */}
