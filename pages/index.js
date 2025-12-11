@@ -60,20 +60,20 @@ export default function HomePage() {
             </div>
           </div>
 
-          {/* Galerie d'exemples de CB */}
+          {/* Bookmakers les plus utilisés */}
           <div className="bg-white rounded-xl shadow-lg p-8 transform transition hover:shadow-2xl">
-            <h3 className="text-2xl font-bold text-gray-900 mb-2 text-center">Exemples de Cotes Boostées</h3>
-            <p className="text-center text-gray-600 mb-6">Découvrez divers exemples de CB postées sur notre canal</p>
+            <h3 className="text-2xl font-bold text-gray-900 mb-2 text-center">Les Bookmakers les plus utilisés</h3>
+            <p className="text-center text-gray-600 mb-6">Nous surveillons l'ensemble des CB proposés par tous les books Arjel, mais avec ces 5 bookmakers, vous couvrirez 90% des CB que nous jouons</p>
             
             <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
-              {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((num) => (
+              {[1, 2, 3, 4, 5].map((num) => (
                 <div 
                   key={num}
                   className="relative overflow-hidden rounded-lg shadow-md hover:shadow-xl transform transition hover:scale-105 cursor-pointer"
                 >
                   <img
-                    src={`/images/cb_accueil_${num.toString().padStart(2, '0')}.png`}
-                    alt={`Exemple Cote Boostée ${num}`}
+                    src={`/images/books_accueil_${num.toString().padStart(2, '0')}.png`}
+                    alt={`Bookmaker ${num}`}
                     className="w-full h-auto object-cover"
                   />
                 </div>
@@ -105,6 +105,27 @@ export default function HomePage() {
               <p className="text-gray-700">
                 Zéro perte de temps avec des cotes sans intérêt. Chaque notification = une vraie opportunité de gain.
               </p>
+            </div>
+          </div>
+
+          {/* Galerie d'exemples de CB */}
+          <div className="bg-white rounded-xl shadow-lg p-8 transform transition hover:shadow-2xl">
+            <h3 className="text-2xl font-bold text-gray-900 mb-2 text-center">Exemples de nos Cotes Boostées</h3>
+            <p className="text-center text-gray-600 mb-6">Découvrez le format de nos notifications quotidiennes</p>
+            
+            <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+              {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((num) => (
+                <div 
+                  key={num}
+                  className="relative overflow-hidden rounded-lg shadow-md hover:shadow-xl transform transition hover:scale-105 cursor-pointer"
+                >
+                  <img
+                    src={`/images/cb_accueil_${num.toString().padStart(2, '0')}.png`}
+                    alt={`Exemple Cote Boostée ${num}`}
+                    className="w-full h-auto object-cover"
+                  />
+                </div>
+              ))}
             </div>
           </div>
 
