@@ -34,7 +34,7 @@ export default async function handler(req, res) {
       subject: `[Contact Site] ${objet}`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-          <h2 style="color: #4F46E5;">Nouveau message de contact</h2>
+          <h2 style="color: #4F46E5;">Nouveau message de contact du site www.cotes-boostees.com</h2>
           
           <div style="background-color: #f3f4f6; padding: 20px; border-radius: 8px; margin: 20px 0;">
             <p><strong>Nom :</strong> ${nom}</p>
