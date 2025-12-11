@@ -13,13 +13,16 @@ export default function AbonnementPage() {
   const [paypalLoaded, setPaypalLoaded] = useState(false);
   const router = useRouter();
 
+  // Charger le bouton PayPal après soumission
   useEffect(() => {
     if (isSubmitted && paypalLoaded && window.paypal) {
+      // Nettoyer l'ancien bouton
       const container = document.getElementById('paypal-container-YJXASTHAJTYYE');
       if (container) {
         container.innerHTML = '';
       }
       
+      // Rendre le nouveau bouton
       window.paypal.HostedButtons({
         hostedButtonId: "YJXASTHAJTYYE"
       }).render("#paypal-container-YJXASTHAJTYYE");
@@ -37,6 +40,7 @@ export default function AbonnementPage() {
       return;
     }
 
+    // Validation email
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
       setError('Veuillez entrer une adresse email valide');
@@ -83,12 +87,14 @@ export default function AbonnementPage() {
               Abonnement Telegram CB 2026
             </h1>
 
+            {/* Prix */}
             <div className="bg-gradient-to-r from-green-500 to-emerald-600 rounded-xl p-6 mb-8 text-white text-center">
               <div className="text-5xl font-bold mb-2">100 €</div>
               <div className="text-xl font-semibold">Abonnement annuel 2026</div>
               <p className="text-sm mt-2 opacity-90">Accès jusqu'au 31 décembre 2026</p>
             </div>
 
+            {/* Formulaire ou Bouton PayPal */}
             {!isSubmitted ? (
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div>
@@ -154,8 +160,9 @@ export default function AbonnementPage() {
                   </div>
                 </div>
 
-                <div className="text-center">
-                  <div id="paypal-container-YJXASTHAJTYYE" className="flex justify-center" />
+                {/* Bouton PayPal - CORRECTION ICI */}
+                <div className="flex justify-center py-4">
+                  <div id="paypal-container-YJXASTHAJTYYE" style={{ minWidth: '400px', maxWidth: '500px', width: '100%' }} />
                 </div>
 
                 <button
@@ -290,6 +297,7 @@ export default function AbonnementPage() {
               </div>
             </div>
 
+            {/* Informations légales */}
             <div className="mt-8 pt-6 border-t border-gray-200">
               <p className="text-xs text-gray-500 text-center">
                 En procédant au paiement, vous acceptez nos{' '}
