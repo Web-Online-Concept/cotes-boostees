@@ -96,7 +96,7 @@ export default function HomePage() {
                   >
                     <img
                       src={`/images/books_accueil_${num.toString().padStart(2, '0')}.png`}
-                      alt={`Bookmaker ARJEL ${num}`}
+                      alt={`Logo bookmaker ARJEL français - Partenaire cotes boostées numéro ${num}`}
                       className="w-full h-auto object-cover"
                     />
                   </div>
@@ -144,7 +144,7 @@ export default function HomePage() {
                   >
                     <img
                       src={`/images/cb_accueil_${num.toString().padStart(2, '0')}.png`}
-                      alt={`Exemple notification cote boostée ${num}`}
+                      alt={`Exemple notification Telegram cote boostée EV+ - Capture ${num}`}
                       className="w-full h-auto object-cover"
                     />
                   </div>

@@ -71,7 +71,7 @@ export default function Header({ currentPage }) {
             <Link href="/">
               <img 
                 src="/images/logo_cb.png" 
-                alt="Cotes Boostées Logo" 
+                alt="Cotes Boostées - Logo site de sélection cotes boostées EV+ ARJEL" 
                 className="cursor-pointer hover:scale-105 transition-transform duration-300"
                 style={{ width: '200px', height: '100px' }}
               />
