@@ -8,7 +8,7 @@ export default function BottomBar({ currentPage }) {
     const element = document.getElementById(targetId);
     if (!element) return;
 
-    const headerHeight = 66; // Hauteur du header mobile
+    const headerHeight = 66;
     const targetPosition = element.getBoundingClientRect().top + window.pageYOffset - headerHeight;
     const startPosition = window.pageYOffset;
     const distance = targetPosition - startPosition;
@@ -92,8 +92,8 @@ export default function BottomBar({ currentPage }) {
                 key={item.key}
                 onClick={item.onClick}
                 className={`
-                  flex flex-col items-center justify-center gap-1 px-3 py-2 rounded-lg
-                  transition-all duration-200 flex-1 mx-1
+                  flex flex-col items-center justify-center gap-1 px-2 py-2 rounded-lg
+                  transition-all duration-200 w-20
                   ${isActive 
                     ? 'bg-white text-indigo-700 shadow-lg' 
                     : 'text-white hover:bg-white/10'
@@ -110,8 +110,8 @@ export default function BottomBar({ currentPage }) {
             <Link key={item.key} href={item.path}>
               <button
                 className={`
-                  flex flex-col items-center justify-center gap-1 px-3 py-2 rounded-lg
-                  transition-all duration-200 flex-1 mx-1
+                  flex flex-col items-center justify-center gap-1 px-2 py-2 rounded-lg
+                  transition-all duration-200 w-20
                   ${isActive 
                     ? 'bg-white text-indigo-700 shadow-lg' 
                     : 'text-white hover:bg-white/10'
