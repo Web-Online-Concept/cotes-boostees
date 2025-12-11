@@ -11,7 +11,10 @@ export default function Header({ currentPage }) {
     const element = document.getElementById(targetId);
     if (!element) return;
 
-    const targetPosition = element.getBoundingClientRect().top + window.pageYOffset;
+    // Déterminer la hauteur du header selon la taille d'écran
+    const headerHeight = window.innerWidth < 1024 ? 66 : 110; // lg breakpoint = 1024px
+    
+    const targetPosition = element.getBoundingClientRect().top + window.pageYOffset - headerHeight;
     const startPosition = window.pageYOffset;
     const distance = targetPosition - startPosition;
     const duration = 1500;
@@ -263,7 +266,7 @@ export default function Header({ currentPage }) {
                 >
                   <span className="flex items-center gap-3">
                     <span className="text-xl">📧</span>
-                    Nous Contacter
+                    Nous contacter
                   </span>
                 </button>
               </Link>
