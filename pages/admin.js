@@ -205,8 +205,8 @@ export default function AdminPage() {
       <Header currentPage="admin" />
 
       <div className="max-w-7xl mx-auto px-4 py-8 flex-1">
-        <div className="flex justify-between items-center mb-6">
-          <h2 className="text-2xl font-bold text-gray-900">Gestion des Pronos</h2>
+        <div className="mb-6">
+          <h2 className="text-2xl font-bold text-gray-900 mb-4">Gestion des Pronos</h2>
           <div className="flex gap-2">
             <button
               onClick={toggleForm}
