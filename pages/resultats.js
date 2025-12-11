@@ -143,8 +143,8 @@ export default function ResultatsPage() {
             </div>
           </div>
 
-          {/* Tableau des résultats */}
-          <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+          {/* VERSION DESKTOP - Tableau (inchangé) */}
+          <div className="hidden lg:block bg-white rounded-lg shadow-lg overflow-hidden">
             <div className="overflow-x-auto">
               <table className="w-full">
                 <thead className="bg-indigo-50 border-b">
@@ -214,7 +214,7 @@ export default function ResultatsPage() {
               </table>
             </div>
 
-            {/* Pagination */}
+            {/* Pagination Desktop */}
             {totalPages > 1 && (
               <div className="bg-gray-50 px-4 py-3 flex items-center justify-between border-t">
                 <div className="text-sm text-gray-700">
@@ -249,6 +249,104 @@ export default function ResultatsPage() {
                     className="px-3 py-1 bg-white border border-gray-300 rounded hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     Suivant
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* VERSION MOBILE - Cards */}
+          <div className="lg:hidden space-y-4">
+            {paginatedPronos.length === 0 ? (
+              <div className="bg-white rounded-lg shadow-lg p-8 text-center text-gray-500">
+                Aucun résultat ne correspond à vos critères.
+              </div>
+            ) : (
+              paginatedPronos.map(prono => {
+                let gain = 0;
+                let gainDisplay = '';
+                
+                if (prono.statut === 'Gagne') {
+                  gain = (parseFloat(prono.mise) * parseFloat(prono.cote)) - parseFloat(prono.mise);
+                  gainDisplay = `+${gain.toFixed(2)} €`;
+                } else if (prono.statut === 'Perdu') {
+                  gain = -parseFloat(prono.mise);
+                  gainDisplay = `${gain.toFixed(2)} €`;
+                } else if (prono.statut === 'Rembourse') {
+                  gain = 0;
+                  gainDisplay = '0.00 €';
+                }
+
+                return (
+                  <div key={prono.id} className="bg-white rounded-lg shadow-lg p-4">
+                    {/* Header de la carte */}
+                    <div className="flex items-center justify-between mb-3 pb-3 border-b border-gray-200">
+                      <span className="text-lg font-bold text-indigo-600">{prono.cb_number}</span>
+                      <span className={`inline-flex px-3 py-1 text-xs font-semibold rounded-full ${
+                        prono.statut === 'Gagne' ? 'bg-green-100 text-green-800' :
+                        prono.statut === 'Perdu' ? 'bg-red-100 text-red-800' :
+                        'bg-blue-100 text-blue-800'
+                      }`}>
+                        {prono.statut}
+                      </span>
+                    </div>
+
+                    {/* Contenu de la carte */}
+                    <div className="space-y-2 text-sm">
+                      <div className="flex justify-between">
+                        <span className="text-gray-600">Date :</span>
+                        <span className="font-semibold text-gray-900">
+                          {new Date(prono.date).toLocaleDateString('fr-FR')}
+                        </span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-600">Bookmaker :</span>
+                        <span className="font-semibold text-gray-900">{prono.bookmaker}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-600">Mise :</span>
+                        <span className="font-semibold text-gray-900">{parseFloat(prono.mise).toFixed(2)} €</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-600">Cote :</span>
+                        <span className="font-semibold text-gray-900">{parseFloat(prono.cote).toFixed(2)}</span>
+                      </div>
+                      <div className="flex justify-between items-center pt-2 border-t border-gray-200">
+                        <span className="text-gray-600 font-medium">Gain :</span>
+                        <span className={`text-lg font-bold ${
+                          gain > 0 ? 'text-green-600' :
+                          gain < 0 ? 'text-red-600' :
+                          'text-gray-600'
+                        }`}>
+                          {gainDisplay}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })
+            )}
+
+            {/* Pagination Mobile */}
+            {totalPages > 1 && (
+              <div className="bg-white rounded-lg shadow-lg p-4">
+                <div className="text-sm text-gray-700 text-center mb-3">
+                  Page {currentPage} sur {totalPages}
+                </div>
+                <div className="flex gap-2 justify-center">
+                  <button
+                    onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+                    disabled={currentPage === 1}
+                    className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    ← Préc.
+                  </button>
+                  <button
+                    onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
+                    disabled={currentPage === totalPages}
+                    className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    Suiv. →
                   </button>
                 </div>
               </div>
