@@ -140,8 +140,8 @@ export default function HomePage() {
 
             {/* Galerie d'exemples de CB */}
             <div className="bg-white rounded-xl shadow-lg p-8 transform transition hover:shadow-2xl">
-              <h2 className="text-2xl font-bold text-gray-900 mb-2 text-center">Exemples de nos Cotes Boostées</h2>
-              <p className="text-center text-gray-600 mb-6">Découvrez le format de nos notifications quotidiennes</p>
+              <h2 className="text-2xl font-bold text-gray-900 mb-2 text-center">Exemples de Cotes Boostées</h2>
+              <p className="text-center text-gray-600 mb-6">Découvrez divers exemples de CB sélectionnées</p>
               
               <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
                 {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((num) => (
