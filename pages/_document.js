@@ -4,9 +4,10 @@ export default function Document() {
   return (
     <Html lang="fr">
       <Head>
-        {/* Favicon */}
-        <link rel="icon" type="image/png" href="/favicon.png" />
-        <link rel="apple-touch-icon" href="/favicon.png" />
+        {/* Favicons - Modern approach */}
+        <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+        <link rel="icon" href="/favicon.ico" sizes="any" />
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
         
         {/* Meta de base */}
         <meta charSet="UTF-8" />
