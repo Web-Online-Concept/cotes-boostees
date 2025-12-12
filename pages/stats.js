@@ -341,12 +341,14 @@ export default function StatsPage() {
 
                     {/* Labels de l'axe Y */}
                     <text x="45" y="55" textAnchor="end" fontSize="12" fill="#6b7280">
-                      {maxGain > 0 ? `+${maxGain.toFixed(0)}€` : '0€'}
+                      {maxGain > 0 ? `+${maxGain.toFixed(0)}€` : ''}
                     </text>
                     <text x="45" y="255" textAnchor="end" fontSize="12" fill="#6b7280">0€</text>
-                    <text x="45" y="155" textAnchor="end" fontSize="12" fill="#6b7280">
-                      {minGain < 0 ? `${minGain.toFixed(0)}€` : '0€'}
-                    </text>
+                    {minGain < 0 && (
+                      <text x="45" y="155" textAnchor="end" fontSize="12" fill="#6b7280">
+                        {minGain.toFixed(0)}€
+                      </text>
+                    )}
 
                     {/* Labels de l'axe X (début à 0 et dernier) */}
                     <text x="50" y="270" textAnchor="start" fontSize="11" fill="#6b7280">
