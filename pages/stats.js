@@ -82,6 +82,41 @@ export default function StatsPage() {
 
   const monthlyStats = Object.values(pronosByMonth).sort((a, b) => b.month.localeCompare(a.month));
 
+  // Données pour le graphique d'évolution cumulée
+  const sortedPronosByDate = [...pronos].sort((a, b) => new Date(a.date) - new Date(b.date));
+  const cumulativeData = sortedPronosByDate.reduce((acc, prono, index) => {
+    const previousGain = index > 0 ? acc[index - 1].gainCumule : 0;
+    const previousROI = index > 0 ? acc[index - 1].roiCumule : 0;
+    const previousMise = index > 0 ? acc[index - 1].miseCumulee : 0;
+
+    let gainProno = 0;
+    if (prono.statut === 'Gagne') {
+      gainProno = (parseFloat(prono.mise) * parseFloat(prono.cote)) - parseFloat(prono.mise);
+    } else if (prono.statut === 'Perdu') {
+      gainProno = -parseFloat(prono.mise);
+    }
+
+    const miseCumulee = previousMise + parseFloat(prono.mise);
+    const gainCumule = previousGain + gainProno;
+    const roiCumule = miseCumulee > 0 ? (gainCumule / miseCumulee) * 100 : 0;
+
+    acc.push({
+      cbNumber: prono.cb_number,
+      date: new Date(prono.date).toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit' }),
+      gainCumule: parseFloat(gainCumule.toFixed(2)),
+      roiCumule: parseFloat(roiCumule.toFixed(2)),
+      miseCumulee: parseFloat(miseCumulee.toFixed(2))
+    });
+
+    return acc;
+  }, []);
+
+  // Calcul des extremums pour l'échelle du graphique
+  const maxGain = Math.max(...cumulativeData.map(d => d.gainCumule), 0);
+  const minGain = Math.min(...cumulativeData.map(d => d.gainCumule), 0);
+  const maxROI = Math.max(...cumulativeData.map(d => d.roiCumule), 0);
+  const minROI = Math.min(...cumulativeData.map(d => d.roiCumule), 0);
+
   // Bilan par bookmaker
   const pronosByBookmaker = pronos.reduce((acc, p) => {
     if (!acc[p.bookmaker]) {
@@ -194,44 +229,184 @@ export default function StatsPage() {
           {/* Bilan Global */}
           <div className="mb-8">
             <h2 className="text-xl font-semibold text-gray-900 mb-4">Bilan Global</h2>
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-              <div className="bg-white rounded-lg shadow p-6 text-center">
-                <div className="text-3xl font-bold text-indigo-600">{totalPronos}</div>
-                <div className="text-sm text-gray-600 mt-1">CB</div>
+            
+            {/* Première ligne - 4 cartes */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-4">
+              <div className="bg-white rounded-lg shadow p-3 md:p-6 text-center">
+                <div className="text-2xl md:text-3xl font-bold text-indigo-600">{totalPronos}</div>
+                <div className="text-xs md:text-sm text-gray-600 mt-1">CB</div>
               </div>
-              <div className="bg-white rounded-lg shadow p-6 text-center">
-                <div className="text-3xl font-bold text-green-600">{pronosGagnes}</div>
-                <div className="text-sm text-gray-600 mt-1">Gagnés</div>
+              <div className="bg-white rounded-lg shadow p-3 md:p-6 text-center">
+                <div className="text-2xl md:text-3xl font-bold text-green-600">{pronosGagnes}</div>
+                <div className="text-xs md:text-sm text-gray-600 mt-1">Gagnés</div>
               </div>
-              <div className="bg-white rounded-lg shadow p-6 text-center">
-                <div className="text-3xl font-bold text-red-600">{pronosPerdus}</div>
-                <div className="text-sm text-gray-600 mt-1">Perdus</div>
+              <div className="bg-white rounded-lg shadow p-3 md:p-6 text-center">
+                <div className="text-2xl md:text-3xl font-bold text-red-600">{pronosPerdus}</div>
+                <div className="text-xs md:text-sm text-gray-600 mt-1">Perdus</div>
               </div>
-              <div className="bg-white rounded-lg shadow p-6 text-center">
-                <div className="text-3xl font-bold text-blue-600">{pronosRembourses}</div>
-                <div className="text-sm text-gray-600 mt-1">Annulés</div>
+              <div className="bg-white rounded-lg shadow p-3 md:p-6 text-center">
+                <div className="text-2xl md:text-3xl font-bold text-blue-600">{pronosRembourses}</div>
+                <div className="text-xs md:text-sm text-gray-600 mt-1">Annulés</div>
               </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
-              <div className="bg-white rounded-lg shadow p-6 text-center">
-                <div className="text-sm text-gray-600 mb-1">Taux de Réussite</div>
-                <div className="text-3xl font-bold text-indigo-600">{tauxReussite.toFixed(1)}%</div>
+            {/* Deuxième ligne - 3 cartes */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-2 md:gap-4 mt-2 md:mt-4">
+              <div className="bg-white rounded-lg shadow p-3 md:p-6 text-center">
+                <div className="text-xs md:text-sm text-gray-600 mb-1">Taux de Réussite</div>
+                <div className="text-2xl md:text-3xl font-bold text-indigo-600">{tauxReussite.toFixed(1)}%</div>
               </div>
-              <div className="bg-white rounded-lg shadow p-6 text-center">
-                <div className="text-sm text-gray-600 mb-1">Gain Net Total</div>
-                <div className={`text-3xl font-bold ${gainNet >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+              <div className="bg-white rounded-lg shadow p-3 md:p-6 text-center">
+                <div className="text-xs md:text-sm text-gray-600 mb-1">Gain Net Total</div>
+                <div className={`text-2xl md:text-3xl font-bold ${gainNet >= 0 ? 'text-green-600' : 'text-red-600'}`}>
                   {gainNet >= 0 ? '+' : ''}{gainNet.toFixed(2)} €
                 </div>
               </div>
-              <div className="bg-white rounded-lg shadow p-6 text-center">
-                <div className="text-sm text-gray-600 mb-1">ROI Global</div>
-                <div className={`text-3xl font-bold ${roi >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+              <div className="bg-white rounded-lg shadow p-3 md:p-6 text-center">
+                <div className="text-xs md:text-sm text-gray-600 mb-1">ROI Global</div>
+                <div className={`text-2xl md:text-3xl font-bold ${roi >= 0 ? 'text-green-600' : 'text-red-600'}`}>
                   {roi >= 0 ? '+' : ''}{roi.toFixed(2)}%
                 </div>
               </div>
             </div>
           </div>
+
+          {/* Graphique d'évolution */}
+          {cumulativeData.length > 0 && (
+            <div className="mb-8">
+              <h2 className="text-xl font-semibold text-gray-900 mb-4">Évolution du Gain Net Cumulé</h2>
+              <div className="bg-white rounded-lg shadow-lg p-4 md:p-6">
+                <div className="relative" style={{ height: '300px' }}>
+                  <svg className="w-full h-full" viewBox="0 0 800 300" preserveAspectRatio="none">
+                    {/* Grille horizontale */}
+                    {[0, 25, 50, 75, 100].map((percent) => (
+                      <g key={percent}>
+                        <line
+                          x1="50"
+                          y1={250 - (percent * 2)}
+                          x2="780"
+                          y2={250 - (percent * 2)}
+                          stroke="#e5e7eb"
+                          strokeWidth="1"
+                        />
+                      </g>
+                    ))}
+
+                    {/* Axe des X et Y */}
+                    <line x1="50" y1="250" x2="780" y2="250" stroke="#6b7280" strokeWidth="2" />
+                    <line x1="50" y1="50" x2="50" y2="250" stroke="#6b7280" strokeWidth="2" />
+
+                    {/* Ligne de zéro */}
+                    <line
+                      x1="50"
+                      y1="150"
+                      x2="780"
+                      y2="150"
+                      stroke="#ef4444"
+                      strokeWidth="1"
+                      strokeDasharray="5,5"
+                    />
+
+                    {/* Courbe du gain net */}
+                    {cumulativeData.length > 1 && (
+                      <polyline
+                        fill="none"
+                        stroke="#10b981"
+                        strokeWidth="3"
+                        points={cumulativeData.map((d, i) => {
+                          const x = 50 + (i / (cumulativeData.length - 1)) * 730;
+                          const range = Math.max(Math.abs(maxGain), Math.abs(minGain), 10);
+                          const y = 150 - (d.gainCumule / range) * 100;
+                          return `${x},${Math.max(50, Math.min(250, y))}`;
+                        }).join(' ')}
+                      />
+                    )}
+
+                    {/* Points sur la courbe */}
+                    {cumulativeData.map((d, i) => {
+                      const x = 50 + (i / Math.max(cumulativeData.length - 1, 1)) * 730;
+                      const range = Math.max(Math.abs(maxGain), Math.abs(minGain), 10);
+                      const y = 150 - (d.gainCumule / range) * 100;
+                      const adjustedY = Math.max(50, Math.min(250, y));
+                      
+                      return (
+                        <g key={i}>
+                          <circle
+                            cx={x}
+                            cy={adjustedY}
+                            r="4"
+                            fill={d.gainCumule >= 0 ? '#10b981' : '#ef4444'}
+                          />
+                          {/* Tooltip au survol */}
+                          <title>
+                            {d.cbNumber} ({d.date}){'\n'}
+                            Gain cumulé: {d.gainCumule >= 0 ? '+' : ''}{d.gainCumule}€{'\n'}
+                            ROI: {d.roiCumule >= 0 ? '+' : ''}{d.roiCumule.toFixed(2)}%
+                          </title>
+                        </g>
+                      );
+                    })}
+
+                    {/* Labels de l'axe Y */}
+                    <text x="45" y="55" textAnchor="end" fontSize="12" fill="#6b7280">
+                      {maxGain > 0 ? `+${maxGain.toFixed(0)}€` : '0€'}
+                    </text>
+                    <text x="45" y="155" textAnchor="end" fontSize="12" fill="#6b7280">0€</text>
+                    <text x="45" y="255" textAnchor="end" fontSize="12" fill="#6b7280">
+                      {minGain < 0 ? `${minGain.toFixed(0)}€` : '0€'}
+                    </text>
+
+                    {/* Labels de l'axe X (premier et dernier) */}
+                    {cumulativeData.length > 0 && (
+                      <>
+                        <text x="50" y="270" textAnchor="start" fontSize="11" fill="#6b7280">
+                          {cumulativeData[0].cbNumber}
+                        </text>
+                        <text x="780" y="270" textAnchor="end" fontSize="11" fill="#6b7280">
+                          {cumulativeData[cumulativeData.length - 1].cbNumber}
+                        </text>
+                      </>
+                    )}
+                  </svg>
+                </div>
+
+                {/* Légende */}
+                <div className="mt-4 flex items-center justify-center gap-4 text-sm">
+                  <div className="flex items-center gap-2">
+                    <div className="w-4 h-4 bg-green-500 rounded"></div>
+                    <span className="text-gray-600">Gain positif</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <div className="w-4 h-4 bg-red-500 rounded"></div>
+                    <span className="text-gray-600">Gain négatif</span>
+                  </div>
+                </div>
+
+                {/* Stats du dernier point */}
+                {cumulativeData.length > 0 && (
+                  <div className="mt-4 pt-4 border-t border-gray-200 text-center">
+                    <div className="text-sm text-gray-600">Dernière CB : {cumulativeData[cumulativeData.length - 1].cbNumber}</div>
+                    <div className="flex items-center justify-center gap-6 mt-2">
+                      <div>
+                        <span className="text-xs text-gray-600">Gain cumulé : </span>
+                        <span className={`font-bold ${cumulativeData[cumulativeData.length - 1].gainCumule >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+                          {cumulativeData[cumulativeData.length - 1].gainCumule >= 0 ? '+' : ''}
+                          {cumulativeData[cumulativeData.length - 1].gainCumule}€
+                        </span>
+                      </div>
+                      <div>
+                        <span className="text-xs text-gray-600">ROI : </span>
+                        <span className={`font-bold ${cumulativeData[cumulativeData.length - 1].roiCumule >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+                          {cumulativeData[cumulativeData.length - 1].roiCumule >= 0 ? '+' : ''}
+                          {cumulativeData[cumulativeData.length - 1].roiCumule.toFixed(2)}%
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
 
           {/* Evolution Mensuelle */}
           <div className="mb-8">
