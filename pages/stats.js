@@ -361,18 +361,6 @@ export default function StatsPage() {
                     )}
                   </svg>
                 </div>
-
-                {/* Légende */}
-                <div className="mt-4 flex items-center justify-center gap-4 text-sm">
-                  <div className="flex items-center gap-2">
-                    <div className="w-4 h-4 bg-green-500 rounded"></div>
-                    <span className="text-gray-600">Gain positif</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <div className="w-4 h-4 bg-red-500 rounded"></div>
-                    <span className="text-gray-600">Gain négatif</span>
-                  </div>
-                </div>
               </div>
             </div>
           )}
