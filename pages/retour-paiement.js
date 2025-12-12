@@ -86,8 +86,8 @@ export default function RetourPaiement() {
                 <h3 className="font-bold text-gray-800 mb-2">📧 Vérifiez vos emails :</h3>
                 <p className="text-gray-700">
                   Si vous ne recevez pas nos accès sous 12h, vérifiez vos spams ou contactez-nous à : 
-                  <a href="mailto:contact@cotes-boostees.com" className="text-indigo-600 font-semibold ml-1 hover:underline">
-                    contact@cotes-boostees.com
+                  <a href="mailto:cotes.boostees@gmail.com" className="text-indigo-600 font-semibold ml-1 hover:underline">
+                    cotes.boostees@gmail.com
                   </a>
                 </p>
               </div>
@@ -134,8 +134,8 @@ export default function RetourPaiement() {
                 <h3 className="font-bold text-gray-800 mb-2">💡 Besoin d'aide ?</h3>
                 <p className="text-gray-700">
                   N'hésitez pas à nous contacter si vous rencontrez des difficultés : 
-                  <a href="mailto:contact@cotes-boostees.com" className="text-indigo-600 font-semibold ml-1 hover:underline">
-                    contact@cotes-boostees.com
+                  <a href="mailto:cotes.boostees@gmail.com" className="text-indigo-600 font-semibold ml-1 hover:underline">
+                    cotes.boostees@gmail.com
                   </a>
                 </p>
               </div>
