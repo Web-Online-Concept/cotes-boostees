@@ -147,7 +147,11 @@ export default function StatsPage() {
     return acc;
   }, {});
 
-  const bookmakerStats = Object.values(pronosByBookmaker).sort((a, b) => b.total - a.total);
+  const bookmakerStats = Object.values(pronosByBookmaker).sort((a, b) => {
+    const gainNetA = a.gainsTotal - a.miseTotal;
+    const gainNetB = b.gainsTotal - b.miseTotal;
+    return gainNetB - gainNetA; // Du meilleur au moins bon
+  });
 
   // Evolution mensuelle par bookmaker
   const monthlyByBookmaker = pronos.reduce((acc, p) => {
