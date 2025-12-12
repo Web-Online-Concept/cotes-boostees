@@ -3,6 +3,7 @@ import { Plus, Edit2, Trash2, X, LogOut } from 'lucide-react';
 import { useRouter } from 'next/router';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
+import BottomBar from '../../components/BottomBar';
 
 export default function AdminAbonnesPage() {
   const [abonnes, setAbonnes] = useState([]);
@@ -206,23 +207,23 @@ export default function AdminAbonnesPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex flex-col">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex flex-col pb-20 lg:pb-0">
       <Header currentPage="admin" />
 
       <div className="max-w-7xl mx-auto px-4 py-8 flex-1">
-        <div className="mb-6 text-center">
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">Gestion des Abonnés</h2>
-          <div className="flex justify-center gap-2">
+        <div className="mb-6">
+          <h2 className="text-2xl font-bold text-gray-900 mb-4 text-center">Gestion des Abonnés</h2>
+          <div className="flex flex-col sm:flex-row justify-center gap-2">
             <button
               onClick={toggleForm}
-              className="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 flex items-center gap-2 transition"
+              className="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 flex items-center justify-center gap-2 transition"
             >
               <Plus className="w-4 h-4" />
               Ajouter un abonné
             </button>
             <button
               onClick={handleLogout}
-              className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 flex items-center gap-2 transition"
+              className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 flex items-center justify-center gap-2 transition"
             >
               <LogOut className="w-4 h-4" />
               Déconnexion
@@ -306,7 +307,7 @@ export default function AdminAbonnesPage() {
                   placeholder="Notes internes"
                 />
               </div>
-              <div className="col-span-1 md:col-span-2 flex gap-2">
+              <div className="col-span-1 md:col-span-2 flex flex-col sm:flex-row gap-2">
                 <button
                   onClick={handleSubmit}
                   className="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 transition"
@@ -326,12 +327,12 @@ export default function AdminAbonnesPage() {
 
         {/* Filtre */}
         <div className="bg-white rounded-lg shadow-lg p-4 mb-6">
-          <div className="flex items-center gap-4">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
             <label className="text-sm font-medium text-gray-700">Filtrer par statut :</label>
             <select
               value={filterStatut}
               onChange={(e) => setFilterStatut(e.target.value)}
-              className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+              className="w-full sm:w-auto px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none"
             >
               <option value="">Tous les statuts</option>
               <option value="valide">Validé</option>
@@ -351,7 +352,9 @@ export default function AdminAbonnesPage() {
         </div>
 
         {/* Liste des abonnés */}
-        <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+        
+        {/* VERSION DESKTOP - Tableau */}
+        <div className="hidden lg:block bg-white rounded-lg shadow-lg overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead className="bg-indigo-50 border-b">
@@ -409,9 +412,70 @@ export default function AdminAbonnesPage() {
             </table>
           </div>
         </div>
+
+        {/* VERSION MOBILE - Cards */}
+        <div className="lg:hidden space-y-4">
+          {filteredAbonnes.length === 0 ? (
+            <div className="bg-white rounded-lg shadow-lg p-8 text-center text-gray-500">
+              Aucun abonné enregistré.
+            </div>
+          ) : (
+            filteredAbonnes.map(abonne => (
+              <div key={abonne.id} className="bg-white rounded-lg shadow-lg p-4">
+                {/* Header */}
+                <div className="flex items-center justify-between mb-3 pb-3 border-b border-gray-200">
+                  <span className="text-lg font-bold text-gray-900">{abonne.nom}</span>
+                  <span className={`inline-flex px-3 py-1 text-xs font-semibold rounded-full ${getStatutBadgeClass(abonne.statut_paiement)}`}>
+                    {getStatutLabel(abonne.statut_paiement)}
+                  </span>
+                </div>
+
+                {/* Contenu */}
+                <div className="space-y-2 text-sm mb-4">
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">Email :</span>
+                    <span className="font-semibold text-gray-900 text-right break-all">{abonne.email}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">Date :</span>
+                    <span className="font-semibold text-gray-900">
+                      {new Date(abonne.date_inscription).toLocaleDateString('fr-FR')} à{' '}
+                      {new Date(abonne.date_inscription).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })}
+                    </span>
+                  </div>
+                  {abonne.notes && (
+                    <div className="pt-2 border-t border-gray-200">
+                      <span className="text-gray-600 block mb-1">Notes :</span>
+                      <span className="text-gray-900">{abonne.notes}</span>
+                    </div>
+                  )}
+                </div>
+
+                {/* Actions */}
+                <div className="flex gap-2 pt-3 border-t border-gray-200">
+                  <button
+                    onClick={() => handleEdit(abonne)}
+                    className="flex-1 bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 flex items-center justify-center gap-2 transition"
+                  >
+                    <Edit2 className="w-4 h-4" />
+                    Modifier
+                  </button>
+                  <button
+                    onClick={() => handleDelete(abonne.id)}
+                    className="flex-1 bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 flex items-center justify-center gap-2 transition"
+                  >
+                    <Trash2 className="w-4 h-4" />
+                    Supprimer
+                  </button>
+                </div>
+              </div>
+            ))
+          )}
+        </div>
       </div>
 
       <Footer />
+      <BottomBar currentPage="" />
     </div>
   );
 }

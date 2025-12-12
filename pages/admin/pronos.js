@@ -3,6 +3,7 @@ import { Plus, Edit2, Trash2, LogOut } from 'lucide-react';
 import { useRouter } from 'next/router';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
+import BottomBar from '../../components/BottomBar';
 
 export default function AdminPage() {
   const [pronos, setPronos] = useState([]);
@@ -201,23 +202,23 @@ export default function AdminPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex flex-col">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex flex-col pb-20 lg:pb-0">
       <Header currentPage="admin" />
 
       <div className="max-w-7xl mx-auto px-4 py-8 flex-1">
-        <div className="mb-6 text-center">
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">Gestion des Pronos</h2>
-          <div className="flex justify-center gap-2">
+        <div className="mb-6">
+          <h2 className="text-2xl font-bold text-gray-900 mb-4 text-center">Gestion des Pronos</h2>
+          <div className="flex flex-col sm:flex-row justify-center gap-2">
             <button
               onClick={toggleForm}
-              className="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 flex items-center gap-2 transition"
+              className="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 flex items-center justify-center gap-2 transition"
             >
               <Plus className="w-4 h-4" />
               Ajouter un prono
             </button>
             <button
               onClick={handleLogout}
-              className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 flex items-center gap-2 transition"
+              className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 flex items-center justify-center gap-2 transition"
             >
               <LogOut className="w-4 h-4" />
               Déconnexion
@@ -231,7 +232,7 @@ export default function AdminPage() {
             <h3 className="text-lg font-semibold mb-4">
               {editingId ? 'Modifier le prono' : 'Nouveau prono'}
             </h3>
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Numéro CB</label>
                 <input
@@ -294,7 +295,7 @@ export default function AdminPage() {
                   <option>Rembourse</option>
                 </select>
               </div>
-              <div className="col-span-2 md:col-span-3 flex gap-2">
+              <div className="col-span-1 md:col-span-2 lg:col-span-3 flex flex-col sm:flex-row gap-2">
                 <button
                   onClick={handleSubmit}
                   className="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 transition"
@@ -313,7 +314,9 @@ export default function AdminPage() {
         )}
 
         {/* Liste des pronos */}
-        <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+        
+        {/* VERSION DESKTOP - Tableau */}
+        <div className="hidden lg:block bg-white rounded-lg shadow-lg overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead className="bg-indigo-50 border-b">
@@ -375,9 +378,76 @@ export default function AdminPage() {
             </table>
           </div>
         </div>
+
+        {/* VERSION MOBILE - Cards */}
+        <div className="lg:hidden space-y-4">
+          {pronos.length === 0 ? (
+            <div className="bg-white rounded-lg shadow-lg p-8 text-center text-gray-500">
+              Aucun prono enregistré. Cliquez sur "Ajouter un prono" pour commencer.
+            </div>
+          ) : (
+            pronos.sort((a, b) => new Date(b.date) - new Date(a.date)).map(prono => (
+              <div key={prono.id} className="bg-white rounded-lg shadow-lg p-4">
+                {/* Header */}
+                <div className="flex items-center justify-between mb-3 pb-3 border-b border-gray-200">
+                  <span className="text-lg font-bold text-indigo-600">{prono.cb_number}</span>
+                  <span className={`inline-flex px-3 py-1 text-xs font-semibold rounded-full ${
+                    prono.statut === 'Gagne' ? 'bg-green-100 text-green-800' :
+                    prono.statut === 'Perdu' ? 'bg-red-100 text-red-800' :
+                    prono.statut === 'Rembourse' ? 'bg-blue-100 text-blue-800' :
+                    'bg-yellow-100 text-yellow-800'
+                  }`}>
+                    {prono.statut}
+                  </span>
+                </div>
+
+                {/* Contenu */}
+                <div className="space-y-2 text-sm mb-4">
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">Date :</span>
+                    <span className="font-semibold text-gray-900">
+                      {new Date(prono.date).toLocaleDateString('fr-FR')}
+                    </span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">Bookmaker :</span>
+                    <span className="font-semibold text-gray-900">{prono.bookmaker}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">Mise :</span>
+                    <span className="font-semibold text-gray-900">{parseFloat(prono.mise).toFixed(2)} €</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">Cote :</span>
+                    <span className="font-semibold text-gray-900">{parseFloat(prono.cote).toFixed(2)}</span>
+                  </div>
+                </div>
+
+                {/* Actions */}
+                <div className="flex gap-2 pt-3 border-t border-gray-200">
+                  <button
+                    onClick={() => handleEdit(prono)}
+                    className="flex-1 bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 flex items-center justify-center gap-2 transition"
+                  >
+                    <Edit2 className="w-4 h-4" />
+                    Modifier
+                  </button>
+                  <button
+                    onClick={() => handleDelete(prono.id)}
+                    className="flex-1 bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 flex items-center justify-center gap-2 transition"
+                  >
+                    <Trash2 className="w-4 h-4" />
+                    Supprimer
+                  </button>
+                </div>
+              </div>
+            ))
+          )}
+        </div>
       </div>
 
       <Footer />
+      <BottomBar currentPage="" />
     </div>
   );
 }

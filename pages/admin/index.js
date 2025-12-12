@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import { Lock, TrendingUp, Users, LogOut } from 'lucide-react';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
+import BottomBar from '../../components/BottomBar';
 
 export default function AdminDashboard() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -98,7 +99,7 @@ export default function AdminDashboard() {
   // PAGE DE CONNEXION (si pas authentifié)
   if (!isAuthenticated) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex flex-col">
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex flex-col pb-20 lg:pb-0">
         <Header />
         
         <div className="flex-1 flex items-center justify-center px-4 py-12">
@@ -143,13 +144,14 @@ export default function AdminDashboard() {
         </div>
         
         <Footer />
+        <BottomBar currentPage="" />
       </div>
     );
   }
 
   // DASHBOARD (si authentifié)
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex flex-col">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex flex-col pb-20 lg:pb-0">
       <Header />
       
       <div className="flex-1 max-w-7xl mx-auto px-4 py-12 w-full">
@@ -250,6 +252,7 @@ export default function AdminDashboard() {
       </div>
       
       <Footer />
+      <BottomBar currentPage="" />
     </div>
   );
 }
