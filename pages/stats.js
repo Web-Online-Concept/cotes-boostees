@@ -83,8 +83,8 @@ export default function StatsPage() {
   const monthlyStats = Object.values(pronosByMonth).sort((a, b) => b.month.localeCompare(a.month));
 
   // Données pour le graphique d'évolution cumulée
-  const sortedPronosByDate = [...pronos].sort((a, b) => new Date(a.date) - new Date(b.date));
-  const cumulativeData = sortedPronosByDate.reduce((acc, prono, index) => {
+  const sortedPronosByCB = [...pronos].sort((a, b) => a.cb_number.localeCompare(b.cb_number));
+  const cumulativeData = sortedPronosByCB.reduce((acc, prono, index) => {
     const previousGain = index > 0 ? acc[index - 1].gainCumule : 0;
     const previousROI = index > 0 ? acc[index - 1].roiCumule : 0;
     const previousMise = index > 0 ? acc[index - 1].miseCumulee : 0;
