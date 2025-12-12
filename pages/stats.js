@@ -251,7 +251,7 @@ export default function StatsPage() {
             </div>
 
             {/* Deuxième ligne - 3 cartes */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-2 md:gap-4 mt-2 md:mt-4">
+            <div className="grid grid-cols-3 md:grid-cols-3 gap-2 md:gap-4 mt-2 md:mt-4">
               <div className="bg-white rounded-lg shadow p-3 md:p-6 text-center">
                 <div className="text-xs md:text-sm text-gray-600 mb-1">Taux de Réussite</div>
                 <div className="text-2xl md:text-3xl font-bold text-indigo-600">{tauxReussite.toFixed(1)}%</div>
@@ -296,37 +296,29 @@ export default function StatsPage() {
                     <line x1="50" y1="250" x2="780" y2="250" stroke="#6b7280" strokeWidth="2" />
                     <line x1="50" y1="50" x2="50" y2="250" stroke="#6b7280" strokeWidth="2" />
 
-                    {/* Ligne de zéro */}
-                    <line
-                      x1="50"
-                      y1="150"
-                      x2="780"
-                      y2="150"
-                      stroke="#ef4444"
-                      strokeWidth="1"
-                      strokeDasharray="5,5"
-                    />
-
-                    {/* Courbe du gain net */}
+                    {/* Courbe du gain net (part de 0) */}
                     {cumulativeData.length > 1 && (
                       <polyline
                         fill="none"
                         stroke="#10b981"
                         strokeWidth="3"
-                        points={cumulativeData.map((d, i) => {
-                          const x = 50 + (i / (cumulativeData.length - 1)) * 730;
+                        points={`50,250 ${cumulativeData.map((d, i) => {
+                          const x = 50 + ((i + 1) / cumulativeData.length) * 730;
                           const range = Math.max(Math.abs(maxGain), Math.abs(minGain), 10);
-                          const y = 150 - (d.gainCumule / range) * 100;
+                          const y = 250 - ((d.gainCumule / range) * 200);
                           return `${x},${Math.max(50, Math.min(250, y))}`;
-                        }).join(' ')}
+                        }).join(' ')}`}
                       />
                     )}
 
+                    {/* Point de départ à 0 */}
+                    <circle cx="50" cy="250" r="4" fill="#6b7280" />
+
                     {/* Points sur la courbe */}
                     {cumulativeData.map((d, i) => {
-                      const x = 50 + (i / Math.max(cumulativeData.length - 1, 1)) * 730;
+                      const x = 50 + ((i + 1) / cumulativeData.length) * 730;
                       const range = Math.max(Math.abs(maxGain), Math.abs(minGain), 10);
-                      const y = 150 - (d.gainCumule / range) * 100;
+                      const y = 250 - ((d.gainCumule / range) * 200);
                       const adjustedY = Math.max(50, Math.min(250, y));
                       
                       return (
@@ -351,21 +343,19 @@ export default function StatsPage() {
                     <text x="45" y="55" textAnchor="end" fontSize="12" fill="#6b7280">
                       {maxGain > 0 ? `+${maxGain.toFixed(0)}€` : '0€'}
                     </text>
-                    <text x="45" y="155" textAnchor="end" fontSize="12" fill="#6b7280">0€</text>
-                    <text x="45" y="255" textAnchor="end" fontSize="12" fill="#6b7280">
+                    <text x="45" y="255" textAnchor="end" fontSize="12" fill="#6b7280">0€</text>
+                    <text x="45" y="155" textAnchor="end" fontSize="12" fill="#6b7280">
                       {minGain < 0 ? `${minGain.toFixed(0)}€` : '0€'}
                     </text>
 
-                    {/* Labels de l'axe X (premier et dernier) */}
+                    {/* Labels de l'axe X (début à 0 et dernier) */}
+                    <text x="50" y="270" textAnchor="start" fontSize="11" fill="#6b7280">
+                      0
+                    </text>
                     {cumulativeData.length > 0 && (
-                      <>
-                        <text x="50" y="270" textAnchor="start" fontSize="11" fill="#6b7280">
-                          {cumulativeData[0].cbNumber}
-                        </text>
-                        <text x="780" y="270" textAnchor="end" fontSize="11" fill="#6b7280">
-                          {cumulativeData[cumulativeData.length - 1].cbNumber}
-                        </text>
-                      </>
+                      <text x="780" y="270" textAnchor="end" fontSize="11" fill="#6b7280">
+                        {cumulativeData[cumulativeData.length - 1].cbNumber}
+                      </text>
                     )}
                   </svg>
                 </div>
@@ -381,29 +371,6 @@ export default function StatsPage() {
                     <span className="text-gray-600">Gain négatif</span>
                   </div>
                 </div>
-
-                {/* Stats du dernier point */}
-                {cumulativeData.length > 0 && (
-                  <div className="mt-4 pt-4 border-t border-gray-200 text-center">
-                    <div className="text-sm text-gray-600">Dernière CB : {cumulativeData[cumulativeData.length - 1].cbNumber}</div>
-                    <div className="flex items-center justify-center gap-6 mt-2">
-                      <div>
-                        <span className="text-xs text-gray-600">Gain cumulé : </span>
-                        <span className={`font-bold ${cumulativeData[cumulativeData.length - 1].gainCumule >= 0 ? 'text-green-600' : 'text-red-600'}`}>
-                          {cumulativeData[cumulativeData.length - 1].gainCumule >= 0 ? '+' : ''}
-                          {cumulativeData[cumulativeData.length - 1].gainCumule}€
-                        </span>
-                      </div>
-                      <div>
-                        <span className="text-xs text-gray-600">ROI : </span>
-                        <span className={`font-bold ${cumulativeData[cumulativeData.length - 1].roiCumule >= 0 ? 'text-green-600' : 'text-red-600'}`}>
-                          {cumulativeData[cumulativeData.length - 1].roiCumule >= 0 ? '+' : ''}
-                          {cumulativeData[cumulativeData.length - 1].roiCumule.toFixed(2)}%
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                )}
               </div>
             </div>
           )}
