@@ -209,7 +209,7 @@ export default function HomePage() {
                 </div>
               </div>
 
-              <div className="bg-indigo-50 border-l-4 border-indigo-600 p-6 rounded-lg transform transition hover:translate-x-2">
+              <div className="bg-indigo-50 border-l-4 border-indigo-600 p-6 rounded-lg transform transition hover:translate-x-2 mt-6">
                 <h3 className="text-xl font-bold text-indigo-900 mb-4">Notre processus d'analyse :</h3>
                 <ul className="space-y-3 text-gray-700">
                   <li className="flex items-start gap-3">
