@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import BottomBar from '../components/BottomBar';
 
 export default function RetourPaiement() {
   const router = useRouter();
@@ -26,7 +27,7 @@ export default function RetourPaiement() {
 
   if (!status) {
     return (
-      <div className="min-h-screen bg-white">
+      <div className="min-h-screen bg-white pb-20 lg:pb-0">
         <Header />
         <main className="container mx-auto px-4 py-12">
           <div className="max-w-2xl mx-auto text-center">
@@ -34,12 +35,13 @@ export default function RetourPaiement() {
           </div>
         </main>
         <Footer />
+        <BottomBar currentPage="" />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white pb-20 lg:pb-0">
       <Header />
       
       <main className="container mx-auto px-4 py-12">
@@ -153,6 +155,7 @@ export default function RetourPaiement() {
       </main>
 
       <Footer />
+      <BottomBar currentPage="" />
     </div>
   );
 }
