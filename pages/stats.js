@@ -85,25 +85,25 @@ export default function StatsPage() {
   // Données pour le graphique d'évolution cumulée
   const sortedPronosByCB = [...pronos].sort((a, b) => a.cb_number.localeCompare(b.cb_number));
   const cumulativeData = sortedPronosByCB.reduce((acc, prono, index) => {
-    const previousGain = index > 0 ? acc[index - 1].gainCumule : 0;
-    const previousROI = index > 0 ? acc[index - 1].roiCumule : 0;
+    const previousSolde = index > 0 ? acc[index - 1].soldeCumule : 0;
     const previousMise = index > 0 ? acc[index - 1].miseCumulee : 0;
 
-    let gainProno = 0;
+    let gainBrutProno = 0;
     if (prono.statut === 'Gagne') {
-      gainProno = (parseFloat(prono.mise) * parseFloat(prono.cote)) - parseFloat(prono.mise);
-    } else if (prono.statut === 'Perdu') {
-      gainProno = -parseFloat(prono.mise);
+      gainBrutProno = parseFloat(prono.mise) * parseFloat(prono.cote);
+    } else if (prono.statut === 'Rembourse') {
+      gainBrutProno = parseFloat(prono.mise);
     }
+    // Si Perdu, gainBrutProno = 0
 
     const miseCumulee = previousMise + parseFloat(prono.mise);
-    const gainCumule = previousGain + gainProno;
-    const roiCumule = miseCumulee > 0 ? (gainCumule / miseCumulee) * 100 : 0;
+    const soldeCumule = previousSolde + gainBrutProno - parseFloat(prono.mise);
+    const roiCumule = miseCumulee > 0 ? (soldeCumule / miseCumulee) * 100 : 0;
 
     acc.push({
       cbNumber: prono.cb_number,
       date: new Date(prono.date).toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit' }),
-      gainCumule: parseFloat(gainCumule.toFixed(2)),
+      soldeCumule: parseFloat(soldeCumule.toFixed(2)),
       roiCumule: parseFloat(roiCumule.toFixed(2)),
       miseCumulee: parseFloat(miseCumulee.toFixed(2))
     });
@@ -112,8 +112,8 @@ export default function StatsPage() {
   }, []);
 
   // Calcul des extremums pour l'échelle du graphique
-  const maxGain = Math.max(...cumulativeData.map(d => d.gainCumule), 0);
-  const minGain = Math.min(...cumulativeData.map(d => d.gainCumule), 0);
+  const maxGain = Math.max(...cumulativeData.map(d => d.soldeCumule), 0);
+  const minGain = Math.min(...cumulativeData.map(d => d.soldeCumule), 0);
   const maxROI = Math.max(...cumulativeData.map(d => d.roiCumule), 0);
   const minROI = Math.min(...cumulativeData.map(d => d.roiCumule), 0);
 
@@ -305,7 +305,7 @@ export default function StatsPage() {
                         points={`50,250 ${cumulativeData.map((d, i) => {
                           const x = 50 + ((i + 1) / cumulativeData.length) * 730;
                           const range = Math.max(Math.abs(maxGain), Math.abs(minGain), 10);
-                          const y = 250 - ((d.gainCumule / range) * 200);
+                          const y = 250 - ((d.soldeCumule / range) * 200);
                           return `${x},${Math.max(50, Math.min(250, y))}`;
                         }).join(' ')}`}
                       />
@@ -318,7 +318,7 @@ export default function StatsPage() {
                     {cumulativeData.map((d, i) => {
                       const x = 50 + ((i + 1) / cumulativeData.length) * 730;
                       const range = Math.max(Math.abs(maxGain), Math.abs(minGain), 10);
-                      const y = 250 - ((d.gainCumule / range) * 200);
+                      const y = 250 - ((d.soldeCumule / range) * 200);
                       const adjustedY = Math.max(50, Math.min(250, y));
                       
                       return (
@@ -327,12 +327,12 @@ export default function StatsPage() {
                             cx={x}
                             cy={adjustedY}
                             r="4"
-                            fill={d.gainCumule >= 0 ? '#10b981' : '#ef4444'}
+                            fill={d.soldeCumule >= 0 ? '#10b981' : '#ef4444'}
                           />
                           {/* Tooltip au survol */}
                           <title>
                             {d.cbNumber} ({d.date}){'\n'}
-                            Gain cumulé: {d.gainCumule >= 0 ? '+' : ''}{d.gainCumule}€{'\n'}
+                            Solde: {d.soldeCumule >= 0 ? '+' : ''}{d.soldeCumule}€{'\n'}
                             ROI: {d.roiCumule >= 0 ? '+' : ''}{d.roiCumule.toFixed(2)}%
                           </title>
                         </g>
