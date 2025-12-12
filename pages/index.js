@@ -62,7 +62,30 @@ export default function HomePage() {
 
             {/* NOUVEAU - Cadre explicatif Cotes Boostées */}
             <div className="bg-gradient-to-br from-amber-50 to-orange-50 border-2 border-amber-400 rounded-xl shadow-xl p-8 transform transition hover:shadow-2xl">
-              <div className="flex items-start gap-4">
+              {/* VERSION MOBILE : emoji + titre inline, texte en dessous */}
+              <div className="lg:hidden">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="text-4xl">💡</div>
+                  <h2 className="text-xl font-bold text-amber-900">C'est quoi une Cote Boostée ?</h2>
+                </div>
+                <p className="text-base text-gray-800 leading-relaxed mb-3">
+                  Une <strong>cote boostée</strong> (CB) est une promotion proposée par les bookmakers qui augmente temporairement la cote d'un pari sportif.
+                </p>
+                <p className="text-base text-gray-800 leading-relaxed mb-3">
+                  <strong>Exemple simple :</strong> Si la victoire du PSG est normalement cotée à <span className="text-indigo-700 font-bold">1.80</span>, 
+                  le bookmaker peut la booster à <span className="text-green-700 font-bold">2.50</span> pendant quelques heures. 
+                  Pour la même mise, vous gagnez plus ! 💰
+                </p>
+                <div className="bg-white rounded-lg p-4 mt-4 border-l-4 border-amber-500">
+                  <p className="text-gray-700 text-sm">
+                    ⚠️ <strong>Attention :</strong> Toutes les CB ne se valent pas ! Beaucoup sont des pièges marketing sans valeur réelle. 
+                    C'est pourquoi nous sélectionnons <strong>uniquement celles qui offrent un avantage mathématique</strong> (EV+).
+                  </p>
+                </div>
+              </div>
+
+              {/* VERSION DESKTOP : 2 colonnes (emoji | texte) */}
+              <div className="hidden lg:flex items-start gap-4">
                 <div className="text-5xl flex-shrink-0">💡</div>
                 <div>
                   <h2 className="text-2xl font-bold text-amber-900 mb-4">C'est quoi une Cote Boostée ?</h2>
