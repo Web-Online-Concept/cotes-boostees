@@ -350,7 +350,7 @@ export default function AdminPage() {
                 ) : (
                   pronos.sort((a, b) => {
                     if (sortBy === 'cb') {
-                      return a.cb_number.localeCompare(b.cb_number);
+                      return b.cb_number.localeCompare(a.cb_number); // Tri décroissant
                     } else {
                       return new Date(b.date) - new Date(a.date);
                     }
@@ -404,7 +404,7 @@ export default function AdminPage() {
           ) : (
             pronos.sort((a, b) => {
               if (sortBy === 'cb') {
-                return a.cb_number.localeCompare(b.cb_number);
+                return b.cb_number.localeCompare(a.cb_number); // Tri décroissant
               } else {
                 return new Date(b.date) - new Date(a.date);
               }
