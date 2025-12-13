@@ -11,6 +11,8 @@ export default function ResultatsPage() {
   const [searchTerm, setSearchTerm] = useState('');
   const [filterBookmaker, setFilterBookmaker] = useState('');
   const [filterStatut, setFilterStatut] = useState('');
+  const [filterDateDebut, setFilterDateDebut] = useState('');
+  const [filterDateFin, setFilterDateFin] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [sortBy, setSortBy] = useState('cb'); // 'cb' ou 'date'
   const itemsPerPage = 20;
@@ -37,7 +39,23 @@ export default function ResultatsPage() {
     const matchSearch = prono.cb_number.toLowerCase().includes(searchTerm.toLowerCase());
     const matchBookmaker = filterBookmaker === '' || prono.bookmaker === filterBookmaker;
     const matchStatut = filterStatut === '' || prono.statut === filterStatut;
-    return matchSearch && matchBookmaker && matchStatut;
+    
+    // Filtrage par période de dates
+    let matchDate = true;
+    if (filterDateDebut || filterDateFin) {
+      const pronoDate = new Date(prono.date);
+      if (filterDateDebut) {
+        const dateDebut = new Date(filterDateDebut);
+        matchDate = matchDate && pronoDate >= dateDebut;
+      }
+      if (filterDateFin) {
+        const dateFin = new Date(filterDateFin);
+        dateFin.setHours(23, 59, 59, 999); // Fin de journée
+        matchDate = matchDate && pronoDate <= dateFin;
+      }
+    }
+    
+    return matchSearch && matchBookmaker && matchStatut && matchDate;
   });
 
   const sortedPronos = [...filteredPronos].sort((a, b) => {
@@ -58,6 +76,8 @@ export default function ResultatsPage() {
     setSearchTerm('');
     setFilterBookmaker('');
     setFilterStatut('');
+    setFilterDateDebut('');
+    setFilterDateFin('');
     setSortBy('cb');
     setCurrentPage(1);
   };
@@ -99,7 +119,8 @@ export default function ResultatsPage() {
 
           {/* Filtres */}
           <div className="bg-white rounded-lg shadow-lg p-6 mb-6">
-            <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
+            {/* Ligne 1 : Filtres principaux */}
+            <div className="grid grid-cols-1 md:grid-cols-5 gap-4 mb-4">
               <div className="relative">
                 <Search className="absolute left-3 top-3 w-5 h-5 text-gray-400" />
                 <input
@@ -157,6 +178,34 @@ export default function ResultatsPage() {
                 <X className="w-4 h-4" />
                 Réinitialiser
               </button>
+            </div>
+
+            {/* Ligne 2 : Filtres de période */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Du (date de début)</label>
+                <input
+                  type="date"
+                  value={filterDateDebut}
+                  onChange={(e) => {
+                    setFilterDateDebut(e.target.value);
+                    setCurrentPage(1);
+                  }}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Au (date de fin)</label>
+                <input
+                  type="date"
+                  value={filterDateFin}
+                  onChange={(e) => {
+                    setFilterDateFin(e.target.value);
+                    setCurrentPage(1);
+                  }}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+                />
+              </div>
             </div>
           </div>
 
