@@ -293,6 +293,7 @@ export default function AdminPage() {
                   <option>Gagne</option>
                   <option>Perdu</option>
                   <option>Rembourse</option>
+                  <option>En Attente</option>
                 </select>
               </div>
               <div className="col-span-1 md:col-span-2 lg:col-span-3 flex flex-col sm:flex-row gap-2">
@@ -352,7 +353,7 @@ export default function AdminPage() {
                           prono.statut === 'Gagne' ? 'bg-green-100 text-green-800' :
                           prono.statut === 'Perdu' ? 'bg-red-100 text-red-800' :
                           prono.statut === 'Rembourse' ? 'bg-blue-100 text-blue-800' :
-                          'bg-yellow-100 text-yellow-800'
+                          'bg-orange-100 text-orange-800'
                         }`}>
                           {prono.statut}
                         </span>
@@ -395,7 +396,7 @@ export default function AdminPage() {
                     prono.statut === 'Gagne' ? 'bg-green-100 text-green-800' :
                     prono.statut === 'Perdu' ? 'bg-red-100 text-red-800' :
                     prono.statut === 'Rembourse' ? 'bg-blue-100 text-blue-800' :
-                    'bg-yellow-100 text-yellow-800'
+                    'bg-orange-100 text-orange-800'
                   }`}>
                     {prono.statut}
                   </span>
