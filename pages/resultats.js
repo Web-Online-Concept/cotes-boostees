@@ -61,6 +61,19 @@ export default function ResultatsPage() {
     return b.cb_number.localeCompare(a.cb_number); // CB-100 → CB-001 (toujours décroissant)
   });
 
+  // Calcul du Gain Net sur les pronos filtrés
+  const totalFiltered = filteredPronos.length;
+  const gainNetFiltered = filteredPronos.reduce((total, prono) => {
+    if (prono.statut === 'Gagne') {
+      return total + (parseFloat(prono.mise) * parseFloat(prono.cote)) - parseFloat(prono.mise);
+    } else if (prono.statut === 'Perdu') {
+      return total - parseFloat(prono.mise);
+    } else if (prono.statut === 'Rembourse') {
+      return total + 0;
+    }
+    return total; // "En Attente" n'impacte pas le gain
+  }, 0);
+
   const totalPages = Math.ceil(sortedPronos.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
   const paginatedPronos = sortedPronos.slice(startIndex, startIndex + itemsPerPage);
@@ -109,6 +122,22 @@ export default function ResultatsPage() {
         <div className="max-w-7xl mx-auto px-4 py-8 flex-1">
           <h1 className="text-3xl font-bold text-gray-900 mb-6 text-center">Résultats CB 2026</h1>
 
+          {/* Gain Net dynamique */}
+          <div className="bg-gradient-to-r from-indigo-500 to-purple-600 rounded-lg shadow-lg p-4 mb-4">
+            <div className="flex items-center justify-between text-white">
+              <div>
+                <div className="text-sm opacity-90">Résultats affichés</div>
+                <div className="text-2xl font-bold">{totalFiltered} CB</div>
+              </div>
+              <div className="text-right">
+                <div className="text-sm opacity-90">Gain Net</div>
+                <div className={`text-3xl font-bold ${gainNetFiltered >= 0 ? 'text-green-300' : 'text-red-300'}`}>
+                  {gainNetFiltered >= 0 ? '+' : ''}{gainNetFiltered.toFixed(2)} €
+                </div>
+              </div>
+            </div>
+          </div>
+
           {/* Filtres */}
           <div className="bg-white rounded-lg shadow-lg p-6 mb-6">
             {/* Ligne 1 : Filtres principaux */}
@@ -152,9 +181,10 @@ export default function ResultatsPage() {
                   <option key={st} value={st}>{st}</option>
                 ))}
               </select>
+              {/* Bouton Réinitialiser - Desktop uniquement */}
               <button
                 onClick={resetFilters}
-                className="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-300 transition flex items-center justify-center gap-2"
+                className="hidden md:flex bg-gray-200 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-300 transition items-center justify-center gap-2"
               >
                 <X className="w-4 h-4" />
                 Réinitialiser
@@ -187,6 +217,17 @@ export default function ResultatsPage() {
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none"
                 />
               </div>
+            </div>
+
+            {/* Bouton Réinitialiser - Mobile uniquement (en bas) */}
+            <div className="md:hidden mt-4">
+              <button
+                onClick={resetFilters}
+                className="w-full bg-gray-200 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-300 transition flex items-center justify-center gap-2"
+              >
+                <X className="w-4 h-4" />
+                Réinitialiser
+              </button>
             </div>
           </div>
 
