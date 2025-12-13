@@ -122,22 +122,6 @@ export default function ResultatsPage() {
         <div className="max-w-7xl mx-auto px-4 py-8 flex-1">
           <h1 className="text-3xl font-bold text-gray-900 mb-6 text-center">Résultats CB 2026</h1>
 
-          {/* Gain Net dynamique */}
-          <div className="bg-gradient-to-r from-indigo-500 to-purple-600 rounded-lg shadow-lg p-4 mb-4">
-            <div className="flex items-center justify-between text-white">
-              <div>
-                <div className="text-sm opacity-90">Résultats affichés</div>
-                <div className="text-2xl font-bold">{totalFiltered} CB</div>
-              </div>
-              <div className="text-right">
-                <div className="text-sm opacity-90">Gain Net</div>
-                <div className={`text-3xl font-bold ${gainNetFiltered >= 0 ? 'text-green-300' : 'text-red-300'}`}>
-                  {gainNetFiltered >= 0 ? '+' : ''}{gainNetFiltered.toFixed(2)} €
-                </div>
-              </div>
-            </div>
-          </div>
-
           {/* Filtres */}
           <div className="bg-white rounded-lg shadow-lg p-6 mb-6">
             {/* Ligne 1 : Filtres principaux */}
@@ -228,6 +212,22 @@ export default function ResultatsPage() {
                 <X className="w-4 h-4" />
                 Réinitialiser
               </button>
+            </div>
+          </div>
+
+          {/* Gain Net dynamique */}
+          <div className="bg-gradient-to-r from-indigo-500 to-purple-600 rounded-lg shadow-lg p-4 mb-6">
+            <div className="flex items-center justify-between text-white">
+              <div>
+                <div className="text-sm opacity-90">Résultats affichés</div>
+                <div className="text-2xl font-bold">{totalFiltered} CB</div>
+              </div>
+              <div className="text-right">
+                <div className="text-sm opacity-90">Gain Net</div>
+                <div className={`text-3xl font-bold ${gainNetFiltered >= 0 ? 'text-green-300' : 'text-red-300'}`}>
+                  {gainNetFiltered >= 0 ? '+' : ''}{gainNetFiltered.toFixed(2)} €
+                </div>
+              </div>
             </div>
           </div>
 
