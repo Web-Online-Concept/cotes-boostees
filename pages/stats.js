@@ -191,10 +191,12 @@ export default function StatsPage() {
     return acc;
   }, {});
 
-  const monthlyBookmakerStats = Object.values(monthlyByBookmaker).sort((a, b) => {
-    if (b.month !== a.month) return b.month.localeCompare(a.month);
-    return a.bookmaker.localeCompare(b.bookmaker);
-  });
+  const monthlyBookmakerStats = Object.values(monthlyByBookmaker)
+    .sort((a, b) => {
+      const dateCompare = b.month.localeCompare(a.month);
+      if (dateCompare !== 0) return dateCompare;
+      return a.bookmaker.localeCompare(b.bookmaker);
+    });
 
   if (loading) {
     return (
@@ -207,20 +209,20 @@ export default function StatsPage() {
   return (
     <>
       <Head>
-        <title>Statistiques Cotes Boostées 2026 | Analyses & ROI Paris Sportifs</title>
-        <meta name="description" content="Statistiques complètes de nos cotes boostées 2026 : ROI, taux de réussite, évolution mensuelle, bilan par bookmaker. Performance transparente et détaillée." />
-        <meta name="keywords" content="statistiques cotes boostées, ROI paris sportifs, stats bookmakers, analyse CB 2026" />
+        <title>Statistiques CB 2026 | ROI et Performances Cotes Boostées en Temps Réel</title>
+        <meta name="description" content="Consultez nos statistiques complètes CB 2026 : ROI, taux de réussite, évolution mensuelle, performances par bookmaker. Transparence totale en temps réel." />
+        <meta name="keywords" content="statistiques cotes boostées, ROI paris sportifs, performances bookmakers, stats CB 2026" />
         
         {/* Open Graph */}
-        <meta property="og:title" content="Statistiques CB 2026 | Performance & ROI" />
-        <meta property="og:description" content="Analyses détaillées et transparence totale sur nos performances." />
+        <meta property="og:title" content="Statistiques CB 2026 | ROI et Performances" />
+        <meta property="og:description" content="ROI, taux de réussite et évolution mensuelle de nos cotes boostées." />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://www.cotes-boostees.com/stats" />
         
         {/* Twitter Card */}
         <meta name="twitter:card" content="summary" />
-        <meta name="twitter:title" content="Statistiques CB 2026 | Performance" />
-        <meta name="twitter:description" content="Toutes nos statistiques en détail." />
+        <meta name="twitter:title" content="Statistiques CB 2026" />
+        <meta name="twitter:description" content="Performances complètes de nos cotes boostées." />
         
         <link rel="canonical" href="https://www.cotes-boostees.com/stats" />
       </Head>
@@ -231,131 +233,144 @@ export default function StatsPage() {
         <div className="max-w-7xl mx-auto px-4 py-8 flex-1">
           <h1 className="text-3xl font-bold text-gray-900 mb-6 text-center">Statistiques CB 2026</h1>
 
-          {/* Stats Globales */}
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-            <div className="bg-white rounded-lg shadow p-6">
-              <div className="text-sm text-gray-600 mb-1">Total CB</div>
-              <div className="text-2xl font-bold text-indigo-600">{totalPronos}</div>
-            </div>
-            <div className="bg-white rounded-lg shadow p-6">
-              <div className="text-sm text-gray-600 mb-1">Taux Réussite</div>
-              <div className="text-2xl font-bold text-indigo-600">{tauxReussite.toFixed(1)}%</div>
-            </div>
-            <div className="bg-white rounded-lg shadow p-6">
-              <div className="text-sm text-gray-600 mb-1">Gain Net</div>
-              <div className={`text-2xl font-bold ${gainNet >= 0 ? 'text-green-600' : 'text-red-600'}`}>
-                {gainNet >= 0 ? '+' : ''}{gainNet.toFixed(2)} €
+          {/* Bilan Global */}
+          <div className="mb-8">
+            <h2 className="text-xl font-semibold text-gray-900 mb-4">Bilan Global</h2>
+            
+            {/* Première ligne - 4 cartes */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-4">
+              <div className="bg-white rounded-lg shadow p-3 md:p-6 text-center">
+                <div className="text-2xl md:text-3xl font-bold text-indigo-600">{totalPronos}</div>
+                <div className="text-xs md:text-sm text-gray-600 mt-1">CB</div>
+              </div>
+              <div className="bg-white rounded-lg shadow p-3 md:p-6 text-center">
+                <div className="text-2xl md:text-3xl font-bold text-green-600">{pronosGagnes}</div>
+                <div className="text-xs md:text-sm text-gray-600 mt-1">Gagnés</div>
+              </div>
+              <div className="bg-white rounded-lg shadow p-3 md:p-6 text-center">
+                <div className="text-2xl md:text-3xl font-bold text-red-600">{pronosPerdus}</div>
+                <div className="text-xs md:text-sm text-gray-600 mt-1">Perdus</div>
+              </div>
+              <div className="bg-white rounded-lg shadow p-3 md:p-6 text-center">
+                <div className="text-2xl md:text-3xl font-bold text-blue-600">{pronosRembourses}</div>
+                <div className="text-xs md:text-sm text-gray-600 mt-1">Annulés</div>
               </div>
             </div>
-            <div className="bg-white rounded-lg shadow p-6">
-              <div className="text-sm text-gray-600 mb-1">ROI</div>
-              <div className={`text-2xl font-bold ${roi >= 0 ? 'text-green-600' : 'text-red-600'}`}>
-                {roi >= 0 ? '+' : ''}{roi.toFixed(2)}%
+
+            {/* Deuxième ligne - 3 cartes */}
+            <div className="grid grid-cols-3 md:grid-cols-3 gap-2 md:gap-4 mt-2 md:mt-4">
+              <div className="bg-white rounded-lg shadow p-3 md:p-6 text-center">
+                <div className="text-xs md:text-sm text-gray-600 mb-1">Taux de Réussite</div>
+                <div className="text-2xl md:text-3xl font-bold text-indigo-600">{tauxReussite.toFixed(1)}%</div>
+              </div>
+              <div className="bg-white rounded-lg shadow p-3 md:p-6 text-center">
+                <div className="text-xs md:text-sm text-gray-600 mb-1">Gain Net Total</div>
+                <div className={`text-2xl md:text-3xl font-bold ${gainNet >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+                  {gainNet >= 0 ? '+' : ''}{gainNet.toFixed(2)} €
+                </div>
+              </div>
+              <div className="bg-white rounded-lg shadow p-3 md:p-6 text-center">
+                <div className="text-xs md:text-sm text-gray-600 mb-1">ROI Global</div>
+                <div className={`text-2xl md:text-3xl font-bold ${roi >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+                  {roi >= 0 ? '+' : ''}{roi.toFixed(2)}%
+                </div>
               </div>
             </div>
           </div>
 
-          {/* Répartition Gagnés/Perdus/Remboursés */}
-          <div className="bg-white rounded-lg shadow p-6 mb-8">
-            <h2 className="text-xl font-semibold text-gray-900 mb-4">Répartition des Résultats</h2>
-            <div className="grid grid-cols-3 gap-4">
-              <div className="text-center">
-                <div className="text-3xl font-bold text-green-600">{pronosGagnes}</div>
-                <div className="text-sm text-gray-600">Gagnés</div>
-              </div>
-              <div className="text-center">
-                <div className="text-3xl font-bold text-red-600">{pronosPerdus}</div>
-                <div className="text-sm text-gray-600">Perdus</div>
-              </div>
-              <div className="text-center">
-                <div className="text-3xl font-bold text-blue-600">{pronosRembourses}</div>
-                <div className="text-sm text-gray-600">Remboursés</div>
-              </div>
-            </div>
-          </div>
+          {/* Graphique d'évolution */}
+          {cumulativeData.length > 0 && (
+            <div className="mb-8">
+              <h2 className="text-xl font-semibold text-gray-900 mb-4">Évolution du Gain Net Cumulé</h2>
+              <div className="bg-white rounded-lg shadow-lg p-4 md:p-6">
+                <div className="relative" style={{ height: '300px' }}>
+                  <svg className="w-full h-full" viewBox="0 0 800 300" preserveAspectRatio="none">
+                    {/* Grille horizontale */}
+                    {[0, 25, 50, 75, 100].map((percent) => (
+                      <g key={percent}>
+                        <line
+                          x1="50"
+                          y1={250 - (percent * 2)}
+                          x2="780"
+                          y2={250 - (percent * 2)}
+                          stroke="#e5e7eb"
+                          strokeWidth="1"
+                        />
+                      </g>
+                    ))}
 
-          {/* Graphique Evolution Cumulée */}
-          <div className="bg-white rounded-lg shadow p-6 mb-8">
-            <h2 className="text-xl font-semibold text-gray-900 mb-4">Évolution Cumulée</h2>
-            {cumulativeData.length === 0 ? (
-              <div className="py-8 text-center text-gray-500">Aucune donnée disponible</div>
-            ) : (
-              <div className="overflow-x-auto">
-                <div className="min-w-[600px] h-80 relative">
-                  <svg className="w-full h-full" viewBox="0 0 1000 400" preserveAspectRatio="none">
-                    {/* Axes */}
-                    <line x1="50" y1="350" x2="950" y2="350" stroke="#e5e7eb" strokeWidth="2" />
-                    <line x1="50" y1="50" x2="50" y2="350" stroke="#e5e7eb" strokeWidth="2" />
-                    
-                    {/* Ligne zéro */}
-                    <line x1="50" y1="200" x2="950" y2="200" stroke="#9ca3af" strokeWidth="1" strokeDasharray="5,5" />
-                    
-                    {/* Courbe des gains */}
-                    {cumulativeData.map((point, i) => {
-                      if (i === 0) return null;
-                      const prevPoint = cumulativeData[i - 1];
-                      
-                      const x1 = 50 + ((i - 1) / (cumulativeData.length - 1)) * 900;
-                      const x2 = 50 + (i / (cumulativeData.length - 1)) * 900;
-                      
-                      const range = Math.max(Math.abs(maxGain), Math.abs(minGain)) || 1;
-                      const y1 = 200 - (prevPoint.soldeCumule / range) * 150;
-                      const y2 = 200 - (point.soldeCumule / range) * 150;
-                      
-                      const color = point.soldeCumule >= 0 ? '#10b981' : '#ef4444';
-                      
-                      return (
-                        <line 
-                          key={i}
-                          x1={x1} 
-                          y1={y1} 
-                          x2={x2} 
-                          y2={y2} 
-                          stroke={color}
-                          strokeWidth="2"
-                        />
-                      );
-                    })}
-                    
-                    {/* Points */}
-                    {cumulativeData.map((point, i) => {
-                      const x = 50 + (i / (cumulativeData.length - 1)) * 900;
-                      const range = Math.max(Math.abs(maxGain), Math.abs(minGain)) || 1;
-                      const y = 200 - (point.soldeCumule / range) * 150;
-                      const color = point.soldeCumule >= 0 ? '#10b981' : '#ef4444';
+                    {/* Axe des X et Y */}
+                    <line x1="50" y1="250" x2="780" y2="250" stroke="#6b7280" strokeWidth="2" />
+                    <line x1="50" y1="50" x2="50" y2="250" stroke="#6b7280" strokeWidth="2" />
+
+                    {/* Courbe du gain net (part de 0) */}
+                    {cumulativeData.length > 1 && (
+                      <polyline
+                        fill="none"
+                        stroke="#10b981"
+                        strokeWidth="3"
+                        points={`50,250 ${cumulativeData.map((d, i) => {
+                          const x = 50 + ((i + 1) / cumulativeData.length) * 730;
+                          const range = Math.max(Math.abs(maxGain), Math.abs(minGain), 10);
+                          const y = 250 - ((d.soldeCumule / range) * 200);
+                          return `${x},${Math.max(50, Math.min(250, y))}`;
+                        }).join(' ')}`}
+                      />
+                    )}
+
+                    {/* Point de départ à 0 */}
+                    <circle cx="50" cy="250" r="4" fill="#6b7280" />
+
+                    {/* Points sur la courbe */}
+                    {cumulativeData.map((d, i) => {
+                      const x = 50 + ((i + 1) / cumulativeData.length) * 730;
+                      const range = Math.max(Math.abs(maxGain), Math.abs(minGain), 10);
+                      const y = 250 - ((d.soldeCumule / range) * 200);
+                      const adjustedY = Math.max(50, Math.min(250, y));
                       
                       return (
-                        <circle 
-                          key={i}
-                          cx={x} 
-                          cy={y} 
-                          r="3" 
-                          fill={color}
-                        />
+                        <g key={i}>
+                          <circle
+                            cx={x}
+                            cy={adjustedY}
+                            r="4"
+                            fill={d.soldeCumule >= 0 ? '#10b981' : '#ef4444'}
+                          />
+                          {/* Tooltip au survol */}
+                          <title>
+                            {d.cbNumber} ({d.date}){'\n'}
+                            Solde: {d.soldeCumule >= 0 ? '+' : ''}{d.soldeCumule}€{'\n'}
+                            ROI: {d.roiCumule >= 0 ? '+' : ''}{d.roiCumule.toFixed(2)}%
+                          </title>
+                        </g>
                       );
                     })}
+
+                    {/* Labels de l'axe Y */}
+                    <text x="45" y="55" textAnchor="end" fontSize="12" fill="#6b7280">
+                      {maxGain > 0 ? `+${maxGain.toFixed(0)}€` : ''}
+                    </text>
+                    <text x="45" y="255" textAnchor="end" fontSize="12" fill="#6b7280">0€</text>
+                    {minGain < 0 && (
+                      <text x="45" y="155" textAnchor="end" fontSize="12" fill="#6b7280">
+                        {minGain.toFixed(0)}€
+                      </text>
+                    )}
+
+                    {/* Labels de l'axe X (début à 0 et dernier) */}
+                    <text x="50" y="270" textAnchor="start" fontSize="11" fill="#6b7280">
+                      0
+                    </text>
+                    {cumulativeData.length > 0 && (
+                      <text x="780" y="270" textAnchor="end" fontSize="11" fill="#6b7280">
+                        {cumulativeData[cumulativeData.length - 1].cbNumber}
+                      </text>
+                    )}
                   </svg>
-                  
-                  {/* Légende Y */}
-                  <div className="absolute left-0 top-0 text-xs text-gray-600">
-                    +{maxGain.toFixed(0)}€
-                  </div>
-                  <div className="absolute left-0 top-1/2 -mt-2 text-xs text-gray-600">
-                    0€
-                  </div>
-                  <div className="absolute left-0 bottom-12 text-xs text-gray-600">
-                    {minGain.toFixed(0)}€
-                  </div>
-                </div>
-                
-                {/* Infos supplémentaires */}
-                <div className="mt-4 text-xs text-gray-600 text-center">
-                  De {cumulativeData[0]?.cbNumber} à {cumulativeData[cumulativeData.length - 1]?.cbNumber} • 
-                  ROI final : {cumulativeData[cumulativeData.length - 1]?.roiCumule.toFixed(2)}%
                 </div>
               </div>
-            )}
-          </div>
+            </div>
+          )}
 
           {/* Evolution Mensuelle */}
           <div className="mb-8">
