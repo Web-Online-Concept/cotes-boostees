@@ -11,7 +11,7 @@ export default function AdminPage() {
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
   const [editingId, setEditingId] = useState(null);
-  const [sortOrder, setSortOrder] = useState('desc'); // 'desc' ou 'asc'
+  const [searchTerm, setSearchTerm] = useState('');
   const [formData, setFormData] = useState({
     cb_number: '',
     date: new Date().toISOString().split('T')[0],
@@ -217,14 +217,16 @@ export default function AdminPage() {
               <Plus className="w-4 h-4" />
               Ajouter un prono
             </button>
-            <select
-              value={sortOrder}
-              onChange={(e) => setSortOrder(e.target.value)}
-              className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none"
-            >
-              <option value="desc">CB ↓ Décroissant</option>
-              <option value="asc">CB ↑ Croissant</option>
-            </select>
+            <div className="relative flex-1 max-w-sm">
+              <Search className="absolute left-3 top-3 w-4 h-4 text-gray-400" />
+              <input
+                type="text"
+                placeholder="Rechercher par N° CB..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+              />
+            </div>
             <button
               onClick={handleLogout}
               className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 flex items-center justify-center gap-2 transition"
@@ -348,13 +350,10 @@ export default function AdminPage() {
                     </td>
                   </tr>
                 ) : (
-                  pronos.sort((a, b) => {
-                    if (sortOrder === 'desc') {
-                      return b.cb_number.localeCompare(a.cb_number); // CB-100 → CB-001
-                    } else {
-                      return a.cb_number.localeCompare(b.cb_number); // CB-001 → CB-100
-                    }
-                  }).map(prono => (
+                  pronos
+                    .filter(p => p.cb_number.toLowerCase().includes(searchTerm.toLowerCase()))
+                    .sort((a, b) => b.cb_number.localeCompare(a.cb_number)) // Toujours décroissant
+                    .map(prono => (
                     <tr key={prono.id} className="hover:bg-gray-50">
                       <td className="px-4 py-3 text-sm font-semibold text-indigo-600">{prono.cb_number}</td>
                       <td className="px-4 py-3 text-sm text-gray-900">
@@ -402,13 +401,10 @@ export default function AdminPage() {
               Aucun prono enregistré. Cliquez sur "Ajouter un prono" pour commencer.
             </div>
           ) : (
-            pronos.sort((a, b) => {
-              if (sortOrder === 'desc') {
-                return b.cb_number.localeCompare(a.cb_number); // CB-100 → CB-001
-              } else {
-                return a.cb_number.localeCompare(b.cb_number); // CB-001 → CB-100
-              }
-            }).map(prono => (
+            pronos
+              .filter(p => p.cb_number.toLowerCase().includes(searchTerm.toLowerCase()))
+              .sort((a, b) => b.cb_number.localeCompare(a.cb_number)) // Toujours décroissant
+              .map(prono => (
               <div key={prono.id} className="bg-white rounded-lg shadow-lg p-4">
                 {/* Header */}
                 <div className="flex items-center justify-between mb-3 pb-3 border-b border-gray-200">

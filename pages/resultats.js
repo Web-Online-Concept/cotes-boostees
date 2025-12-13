@@ -14,7 +14,6 @@ export default function ResultatsPage() {
   const [filterDateDebut, setFilterDateDebut] = useState('');
   const [filterDateFin, setFilterDateFin] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
-  const [sortOrder, setSortOrder] = useState('desc'); // 'desc' ou 'asc'
   const itemsPerPage = 20;
 
   useEffect(() => {
@@ -59,11 +58,7 @@ export default function ResultatsPage() {
   });
 
   const sortedPronos = [...filteredPronos].sort((a, b) => {
-    if (sortOrder === 'desc') {
-      return b.cb_number.localeCompare(a.cb_number); // CB-100 → CB-001
-    } else {
-      return a.cb_number.localeCompare(b.cb_number); // CB-001 → CB-100
-    }
+    return b.cb_number.localeCompare(a.cb_number); // CB-100 → CB-001 (toujours décroissant)
   });
 
   const totalPages = Math.ceil(sortedPronos.length / itemsPerPage);
@@ -76,7 +71,6 @@ export default function ResultatsPage() {
     setFilterStatut('');
     setFilterDateDebut('');
     setFilterDateFin('');
-    setSortOrder('desc');
     setCurrentPage(1);
   };
 
@@ -118,7 +112,7 @@ export default function ResultatsPage() {
           {/* Filtres */}
           <div className="bg-white rounded-lg shadow-lg p-6 mb-6">
             {/* Ligne 1 : Filtres principaux */}
-            <div className="grid grid-cols-1 md:grid-cols-5 gap-4 mb-4">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
               <div className="relative">
                 <Search className="absolute left-3 top-3 w-5 h-5 text-gray-400" />
                 <input
@@ -157,17 +151,6 @@ export default function ResultatsPage() {
                 {statuts.map(st => (
                   <option key={st} value={st}>{st}</option>
                 ))}
-              </select>
-              <select
-                value={sortOrder}
-                onChange={(e) => {
-                  setSortOrder(e.target.value);
-                  setCurrentPage(1);
-                }}
-                className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none"
-              >
-                <option value="desc">CB ↓ Décroissant</option>
-                <option value="asc">CB ↑ Croissant</option>
               </select>
               <button
                 onClick={resetFilters}
