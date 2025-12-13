@@ -11,7 +11,7 @@ export default function AdminPage() {
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
   const [editingId, setEditingId] = useState(null);
-  const [sortBy, setSortBy] = useState('cb'); // 'cb' ou 'date'
+  const [sortOrder, setSortOrder] = useState('desc'); // 'desc' ou 'asc'
   const [formData, setFormData] = useState({
     cb_number: '',
     date: new Date().toISOString().split('T')[0],
@@ -218,12 +218,12 @@ export default function AdminPage() {
               Ajouter un prono
             </button>
             <select
-              value={sortBy}
-              onChange={(e) => setSortBy(e.target.value)}
+              value={sortOrder}
+              onChange={(e) => setSortOrder(e.target.value)}
               className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none"
             >
-              <option value="cb">Tri par N° CB</option>
-              <option value="date">Tri par Date</option>
+              <option value="desc">CB ↓ Décroissant</option>
+              <option value="asc">CB ↑ Croissant</option>
             </select>
             <button
               onClick={handleLogout}
@@ -349,10 +349,10 @@ export default function AdminPage() {
                   </tr>
                 ) : (
                   pronos.sort((a, b) => {
-                    if (sortBy === 'cb') {
-                      return b.cb_number.localeCompare(a.cb_number); // Tri décroissant
+                    if (sortOrder === 'desc') {
+                      return b.cb_number.localeCompare(a.cb_number); // CB-100 → CB-001
                     } else {
-                      return new Date(b.date) - new Date(a.date);
+                      return a.cb_number.localeCompare(b.cb_number); // CB-001 → CB-100
                     }
                   }).map(prono => (
                     <tr key={prono.id} className="hover:bg-gray-50">
@@ -403,10 +403,10 @@ export default function AdminPage() {
             </div>
           ) : (
             pronos.sort((a, b) => {
-              if (sortBy === 'cb') {
-                return b.cb_number.localeCompare(a.cb_number); // Tri décroissant
+              if (sortOrder === 'desc') {
+                return b.cb_number.localeCompare(a.cb_number); // CB-100 → CB-001
               } else {
-                return new Date(b.date) - new Date(a.date);
+                return a.cb_number.localeCompare(b.cb_number); // CB-001 → CB-100
               }
             }).map(prono => (
               <div key={prono.id} className="bg-white rounded-lg shadow-lg p-4">

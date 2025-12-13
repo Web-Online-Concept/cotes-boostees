@@ -14,7 +14,7 @@ export default function ResultatsPage() {
   const [filterDateDebut, setFilterDateDebut] = useState('');
   const [filterDateFin, setFilterDateFin] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
-  const [sortBy, setSortBy] = useState('cb'); // 'cb' ou 'date'
+  const [sortOrder, setSortOrder] = useState('desc'); // 'desc' ou 'asc'
   const itemsPerPage = 20;
 
   useEffect(() => {
@@ -59,12 +59,10 @@ export default function ResultatsPage() {
   });
 
   const sortedPronos = [...filteredPronos].sort((a, b) => {
-    if (sortBy === 'cb') {
-      return b.cb_number.localeCompare(a.cb_number); // Tri décroissant
+    if (sortOrder === 'desc') {
+      return b.cb_number.localeCompare(a.cb_number); // CB-100 → CB-001
     } else {
-      const dateCompare = new Date(b.date) - new Date(a.date);
-      if (dateCompare !== 0) return dateCompare;
-      return b.cb_number.localeCompare(a.cb_number);
+      return a.cb_number.localeCompare(b.cb_number); // CB-001 → CB-100
     }
   });
 
@@ -78,7 +76,7 @@ export default function ResultatsPage() {
     setFilterStatut('');
     setFilterDateDebut('');
     setFilterDateFin('');
-    setSortBy('cb');
+    setSortOrder('desc');
     setCurrentPage(1);
   };
 
@@ -161,15 +159,15 @@ export default function ResultatsPage() {
                 ))}
               </select>
               <select
-                value={sortBy}
+                value={sortOrder}
                 onChange={(e) => {
-                  setSortBy(e.target.value);
+                  setSortOrder(e.target.value);
                   setCurrentPage(1);
                 }}
                 className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none"
               >
-                <option value="cb">Tri par N° CB</option>
-                <option value="date">Tri par Date</option>
+                <option value="desc">CB ↓ Décroissant</option>
+                <option value="asc">CB ↑ Croissant</option>
               </select>
               <button
                 onClick={resetFilters}
