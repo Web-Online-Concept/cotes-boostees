@@ -30,7 +30,7 @@ export default function ResultatsPage() {
   };
 
   const bookmakers = [...new Set(pronos.map(p => p.bookmaker))].sort();
-  const statuts = ['Gagne', 'Perdu', 'Rembourse'];
+  const statuts = ['Gagne', 'Perdu', 'Rembourse', 'En Attente'];
 
   const filteredPronos = pronos.filter(prono => {
     const matchSearch = prono.cb_number.toLowerCase().includes(searchTerm.toLowerCase());
@@ -143,7 +143,7 @@ export default function ResultatsPage() {
             </div>
           </div>
 
-          {/* VERSION DESKTOP - Tableau (inchangé) */}
+          {/* VERSION DESKTOP - Tableau */}
           <div className="hidden lg:block bg-white rounded-lg shadow-lg overflow-hidden">
             <div className="overflow-x-auto">
               <table className="w-full">
@@ -179,6 +179,8 @@ export default function ResultatsPage() {
                       } else if (prono.statut === 'Rembourse') {
                         gain = 0;
                         gainDisplay = '0.00 €';
+                      } else if (prono.statut === 'En Attente') {
+                        gainDisplay = 'En attente';
                       }
 
                       return (
@@ -194,12 +196,14 @@ export default function ResultatsPage() {
                             <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
                               prono.statut === 'Gagne' ? 'bg-green-100 text-green-800' :
                               prono.statut === 'Perdu' ? 'bg-red-100 text-red-800' :
-                              'bg-blue-100 text-blue-800'
+                              prono.statut === 'Rembourse' ? 'bg-blue-100 text-blue-800' :
+                              'bg-orange-100 text-orange-800'
                             }`}>
                               {prono.statut}
                             </span>
                           </td>
                           <td className={`px-4 py-3 text-sm text-right font-semibold ${
+                            prono.statut === 'En Attente' ? 'text-orange-600 italic' :
                             gain > 0 ? 'text-green-600' :
                             gain < 0 ? 'text-red-600' :
                             'text-gray-600'
@@ -275,6 +279,8 @@ export default function ResultatsPage() {
                 } else if (prono.statut === 'Rembourse') {
                   gain = 0;
                   gainDisplay = '0.00 €';
+                } else if (prono.statut === 'En Attente') {
+                  gainDisplay = 'En attente';
                 }
 
                 return (
@@ -285,7 +291,8 @@ export default function ResultatsPage() {
                       <span className={`inline-flex px-3 py-1 text-xs font-semibold rounded-full ${
                         prono.statut === 'Gagne' ? 'bg-green-100 text-green-800' :
                         prono.statut === 'Perdu' ? 'bg-red-100 text-red-800' :
-                        'bg-blue-100 text-blue-800'
+                        prono.statut === 'Rembourse' ? 'bg-blue-100 text-blue-800' :
+                        'bg-orange-100 text-orange-800'
                       }`}>
                         {prono.statut}
                       </span>
@@ -314,6 +321,7 @@ export default function ResultatsPage() {
                       <div className="flex justify-between items-center pt-2 border-t border-gray-200">
                         <span className="text-gray-600 font-medium">Gain :</span>
                         <span className={`text-lg font-bold ${
+                          prono.statut === 'En Attente' ? 'text-orange-600 italic' :
                           gain > 0 ? 'text-green-600' :
                           gain < 0 ? 'text-red-600' :
                           'text-gray-600'
