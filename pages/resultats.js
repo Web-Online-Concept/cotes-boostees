@@ -12,6 +12,7 @@ export default function ResultatsPage() {
   const [filterBookmaker, setFilterBookmaker] = useState('');
   const [filterStatut, setFilterStatut] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
+  const [sortBy, setSortBy] = useState('cb'); // 'cb' ou 'date'
   const itemsPerPage = 20;
 
   useEffect(() => {
@@ -30,7 +31,7 @@ export default function ResultatsPage() {
   };
 
   const bookmakers = [...new Set(pronos.map(p => p.bookmaker))].sort();
-  const statuts = ['Gagne', 'Perdu', 'Rembourse', 'En Attente'];
+  const statuts = ['Gagne', 'Perdu', 'Rembourse'];
 
   const filteredPronos = pronos.filter(prono => {
     const matchSearch = prono.cb_number.toLowerCase().includes(searchTerm.toLowerCase());
@@ -40,9 +41,13 @@ export default function ResultatsPage() {
   });
 
   const sortedPronos = [...filteredPronos].sort((a, b) => {
-    const dateCompare = new Date(b.date) - new Date(a.date);
-    if (dateCompare !== 0) return dateCompare;
-    return b.cb_number.localeCompare(a.cb_number);
+    if (sortBy === 'cb') {
+      return a.cb_number.localeCompare(b.cb_number);
+    } else {
+      const dateCompare = new Date(b.date) - new Date(a.date);
+      if (dateCompare !== 0) return dateCompare;
+      return b.cb_number.localeCompare(a.cb_number);
+    }
   });
 
   const totalPages = Math.ceil(sortedPronos.length / itemsPerPage);
@@ -53,6 +58,7 @@ export default function ResultatsPage() {
     setSearchTerm('');
     setFilterBookmaker('');
     setFilterStatut('');
+    setSortBy('cb');
     setCurrentPage(1);
   };
 
@@ -93,7 +99,7 @@ export default function ResultatsPage() {
 
           {/* Filtres */}
           <div className="bg-white rounded-lg shadow-lg p-6 mb-6">
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
               <div className="relative">
                 <Search className="absolute left-3 top-3 w-5 h-5 text-gray-400" />
                 <input
@@ -133,6 +139,17 @@ export default function ResultatsPage() {
                   <option key={st} value={st}>{st}</option>
                 ))}
               </select>
+              <select
+                value={sortBy}
+                onChange={(e) => {
+                  setSortBy(e.target.value);
+                  setCurrentPage(1);
+                }}
+                className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+              >
+                <option value="cb">Tri par N° CB</option>
+                <option value="date">Tri par Date</option>
+              </select>
               <button
                 onClick={resetFilters}
                 className="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-300 transition flex items-center justify-center gap-2"
@@ -143,7 +160,7 @@ export default function ResultatsPage() {
             </div>
           </div>
 
-          {/* VERSION DESKTOP - Tableau */}
+          {/* VERSION DESKTOP - Tableau (inchangé) */}
           <div className="hidden lg:block bg-white rounded-lg shadow-lg overflow-hidden">
             <div className="overflow-x-auto">
               <table className="w-full">
@@ -179,8 +196,6 @@ export default function ResultatsPage() {
                       } else if (prono.statut === 'Rembourse') {
                         gain = 0;
                         gainDisplay = '0.00 €';
-                      } else if (prono.statut === 'En Attente') {
-                        gainDisplay = 'En attente';
                       }
 
                       return (
@@ -196,14 +211,12 @@ export default function ResultatsPage() {
                             <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
                               prono.statut === 'Gagne' ? 'bg-green-100 text-green-800' :
                               prono.statut === 'Perdu' ? 'bg-red-100 text-red-800' :
-                              prono.statut === 'Rembourse' ? 'bg-blue-100 text-blue-800' :
-                              'bg-orange-100 text-orange-800'
+                              'bg-blue-100 text-blue-800'
                             }`}>
                               {prono.statut}
                             </span>
                           </td>
                           <td className={`px-4 py-3 text-sm text-right font-semibold ${
-                            prono.statut === 'En Attente' ? 'text-orange-600 italic' :
                             gain > 0 ? 'text-green-600' :
                             gain < 0 ? 'text-red-600' :
                             'text-gray-600'
@@ -279,8 +292,6 @@ export default function ResultatsPage() {
                 } else if (prono.statut === 'Rembourse') {
                   gain = 0;
                   gainDisplay = '0.00 €';
-                } else if (prono.statut === 'En Attente') {
-                  gainDisplay = 'En attente';
                 }
 
                 return (
@@ -291,8 +302,7 @@ export default function ResultatsPage() {
                       <span className={`inline-flex px-3 py-1 text-xs font-semibold rounded-full ${
                         prono.statut === 'Gagne' ? 'bg-green-100 text-green-800' :
                         prono.statut === 'Perdu' ? 'bg-red-100 text-red-800' :
-                        prono.statut === 'Rembourse' ? 'bg-blue-100 text-blue-800' :
-                        'bg-orange-100 text-orange-800'
+                        'bg-blue-100 text-blue-800'
                       }`}>
                         {prono.statut}
                       </span>
@@ -321,7 +331,6 @@ export default function ResultatsPage() {
                       <div className="flex justify-between items-center pt-2 border-t border-gray-200">
                         <span className="text-gray-600 font-medium">Gain :</span>
                         <span className={`text-lg font-bold ${
-                          prono.statut === 'En Attente' ? 'text-orange-600 italic' :
                           gain > 0 ? 'text-green-600' :
                           gain < 0 ? 'text-red-600' :
                           'text-gray-600'

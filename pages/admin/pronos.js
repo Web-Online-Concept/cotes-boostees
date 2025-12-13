@@ -11,6 +11,7 @@ export default function AdminPage() {
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
   const [editingId, setEditingId] = useState(null);
+  const [sortBy, setSortBy] = useState('cb'); // 'cb' ou 'date'
   const [formData, setFormData] = useState({
     cb_number: '',
     date: new Date().toISOString().split('T')[0],
@@ -216,6 +217,14 @@ export default function AdminPage() {
               <Plus className="w-4 h-4" />
               Ajouter un prono
             </button>
+            <select
+              value={sortBy}
+              onChange={(e) => setSortBy(e.target.value)}
+              className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+            >
+              <option value="cb">Tri par N° CB</option>
+              <option value="date">Tri par Date</option>
+            </select>
             <button
               onClick={handleLogout}
               className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 flex items-center justify-center gap-2 transition"
@@ -339,7 +348,13 @@ export default function AdminPage() {
                     </td>
                   </tr>
                 ) : (
-                  pronos.sort((a, b) => new Date(b.date) - new Date(a.date)).map(prono => (
+                  pronos.sort((a, b) => {
+                    if (sortBy === 'cb') {
+                      return a.cb_number.localeCompare(b.cb_number);
+                    } else {
+                      return new Date(b.date) - new Date(a.date);
+                    }
+                  }).map(prono => (
                     <tr key={prono.id} className="hover:bg-gray-50">
                       <td className="px-4 py-3 text-sm font-semibold text-indigo-600">{prono.cb_number}</td>
                       <td className="px-4 py-3 text-sm text-gray-900">
@@ -387,7 +402,13 @@ export default function AdminPage() {
               Aucun prono enregistré. Cliquez sur "Ajouter un prono" pour commencer.
             </div>
           ) : (
-            pronos.sort((a, b) => new Date(b.date) - new Date(a.date)).map(prono => (
+            pronos.sort((a, b) => {
+              if (sortBy === 'cb') {
+                return a.cb_number.localeCompare(b.cb_number);
+              } else {
+                return new Date(b.date) - new Date(a.date);
+              }
+            }).map(prono => (
               <div key={prono.id} className="bg-white rounded-lg shadow-lg p-4">
                 {/* Header */}
                 <div className="flex items-center justify-between mb-3 pb-3 border-b border-gray-200">
