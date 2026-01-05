@@ -283,16 +283,24 @@ export default function StatsPage() {
             <div className="mb-8">
               <h2 className="text-xl font-semibold text-gray-900 mb-4">Évolution du Gain Net Cumulé</h2>
               <div className="bg-white rounded-lg shadow-lg p-4 md:p-6">
-                <div className="relative" style={{ height: '300px' }}>
-                  <svg className="w-full h-full" viewBox="0 0 800 300" preserveAspectRatio="none">
+                <div className="relative" style={{ height: '400px' }}>
+                  <svg className="w-full h-full" viewBox="0 0 800 400" preserveAspectRatio="none">
                     {/* Grille horizontale */}
                     {[0, 25, 50, 75, 100].map((percent) => (
                       <g key={percent}>
                         <line
                           x1="50"
-                          y1={250 - (percent * 2)}
+                          y1={200 - (percent * 1.5)}
                           x2="780"
-                          y2={250 - (percent * 2)}
+                          y2={200 - (percent * 1.5)}
+                          stroke="#e5e7eb"
+                          strokeWidth="1"
+                        />
+                        <line
+                          x1="50"
+                          y1={200 + (percent * 1.5)}
+                          x2="780"
+                          y2={200 + (percent * 1.5)}
                           stroke="#e5e7eb"
                           strokeWidth="1"
                         />
@@ -300,33 +308,33 @@ export default function StatsPage() {
                     ))}
 
                     {/* Axe des X et Y */}
-                    <line x1="50" y1="250" x2="780" y2="250" stroke="#6b7280" strokeWidth="2" />
-                    <line x1="50" y1="50" x2="50" y2="250" stroke="#6b7280" strokeWidth="2" />
+                    <line x1="50" y1="200" x2="780" y2="200" stroke="#6b7280" strokeWidth="2" />
+                    <line x1="50" y1="50" x2="50" y2="350" stroke="#6b7280" strokeWidth="2" />
 
                     {/* Courbe du gain net (part de 0) */}
                     {cumulativeData.length > 1 && (
                       <polyline
                         fill="none"
-                        stroke="#10b981"
+                        stroke={gainNet >= 0 ? '#10b981' : '#ef4444'}
                         strokeWidth="3"
-                        points={`50,250 ${cumulativeData.map((d, i) => {
+                        points={`50,200 ${cumulativeData.map((d, i) => {
                           const x = 50 + ((i + 1) / cumulativeData.length) * 730;
                           const range = Math.max(Math.abs(maxGain), Math.abs(minGain), 10);
-                          const y = 250 - ((d.soldeCumule / range) * 200);
-                          return `${x},${Math.max(50, Math.min(250, y))}`;
+                          const y = 200 - ((d.soldeCumule / range) * 150);
+                          return `${x},${Math.max(50, Math.min(350, y))}`;
                         }).join(' ')}`}
                       />
                     )}
 
                     {/* Point de départ à 0 */}
-                    <circle cx="50" cy="250" r="4" fill="#6b7280" />
+                    <circle cx="50" cy="200" r="4" fill="#6b7280" />
 
                     {/* Points sur la courbe */}
                     {cumulativeData.map((d, i) => {
                       const x = 50 + ((i + 1) / cumulativeData.length) * 730;
                       const range = Math.max(Math.abs(maxGain), Math.abs(minGain), 10);
-                      const y = 250 - ((d.soldeCumule / range) * 200);
-                      const adjustedY = Math.max(50, Math.min(250, y));
+                      const y = 200 - ((d.soldeCumule / range) * 150);
+                      const adjustedY = Math.max(50, Math.min(350, y));
                       
                       return (
                         <g key={i}>
@@ -350,19 +358,19 @@ export default function StatsPage() {
                     <text x="45" y="55" textAnchor="end" fontSize="12" fill="#6b7280">
                       {maxGain > 0 ? `+${maxGain.toFixed(0)}€` : ''}
                     </text>
-                    <text x="45" y="255" textAnchor="end" fontSize="12" fill="#6b7280">0€</text>
+                    <text x="45" y="205" textAnchor="end" fontSize="12" fill="#6b7280">0€</text>
                     {minGain < 0 && (
-                      <text x="45" y="155" textAnchor="end" fontSize="12" fill="#6b7280">
+                      <text x="45" y="355" textAnchor="end" fontSize="12" fill="#6b7280">
                         {minGain.toFixed(0)}€
                       </text>
                     )}
 
                     {/* Labels de l'axe X (début à 0 et dernier) */}
-                    <text x="50" y="270" textAnchor="start" fontSize="11" fill="#6b7280">
+                    <text x="50" y="220" textAnchor="start" fontSize="11" fill="#6b7280">
                       0
                     </text>
                     {cumulativeData.length > 0 && (
-                      <text x="780" y="270" textAnchor="end" fontSize="11" fill="#6b7280">
+                      <text x="780" y="220" textAnchor="end" fontSize="11" fill="#6b7280">
                         {cumulativeData[cumulativeData.length - 1].cbNumber}
                       </text>
                     )}
