@@ -112,7 +112,7 @@ export default function AbonnementPage() {
             <div className="bg-gradient-to-r from-green-500 to-emerald-600 rounded-xl p-6 mb-8 text-white text-center">
               <div className="text-5xl font-bold mb-2">110 €</div>
               <div className="text-xl font-semibold">Abonnement annuel 2026</div>
-              <p className="text-sm mt-2 opacity-90">Accès du 1er Janvier au 31 décembre 2026</p>
+              <p className="text-sm mt-2 opacity-90">Accès du 1er Février au 31 décembre 2026</p>
             </div>
 
             {/* Formulaire ou Bouton PayPal */}
