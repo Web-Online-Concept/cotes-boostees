@@ -110,10 +110,10 @@ export default function HomePage() {
             {/* Bookmakers les plus utilisés */}
             <div className="bg-white rounded-xl shadow-lg p-8 transform transition hover:shadow-2xl">
               <h2 className="text-2xl font-bold text-gray-900 mb-2 text-center">Les Bookmakers les plus utilisés</h2>
-              <p className="text-center text-gray-600 mb-6">Nous surveillons l'ensemble des CB proposés par tous les books Arjel, mais avec ces 5 bookmakers, vous couvrirez 90% des CB que nous jouons</p>
+              <p className="text-center text-gray-600 mb-6">Nous surveillons l'ensemble des CB proposés par tous les books Arjel, mais avec ces 6 bookmakers, vous couvrirez 90% des CB que nous jouons</p>
               
-              <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
-                {[1, 2, 3, 4, 5].map((num) => (
+              <div className="grid grid-cols-2 md:grid-cols-6 gap-4">
+                {[1, 2, 3, 4, 5, 6].map((num) => (
                   <div 
                     key={num}
                     className="relative overflow-hidden rounded-lg shadow-md hover:shadow-xl transform transition hover:scale-105 cursor-pointer"

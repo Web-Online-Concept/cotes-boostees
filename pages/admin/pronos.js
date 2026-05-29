@@ -35,7 +35,8 @@ export default function AdminPage() {
     'Netbet',
     'Vbet',
     'Olybet',
-    'DAZNBet'
+    'DAZNBet',
+    'Bet365'
   ];
 
   useEffect(() => {
